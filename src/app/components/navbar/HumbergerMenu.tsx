@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useIntroData } from '@/app/contexts/introContext';
 import { NavBarType } from '@/app/types/NavbarType';
-import { useScrollToRef } from '@/app/hooks/useScrol';
+import { useScrollToRef } from '@/app/hooks/useScroll';
 
 /**
  * ハンバーガーメニューコンポーネント
@@ -14,10 +14,10 @@ const HumbergerMenu = () => {
     const { introData, refData } = useIntroData();
     const navBarData: NavBarType = introData!.navbar_data;
     // hooks
-    const aboutScrolToRef = useScrollToRef(refData?.aboutRef);
-    const careerScrolToRef = useScrollToRef(refData?.careerRef);
-    const skillsScrolToRef = useScrollToRef(refData?.skillsRef);
-    const contactScrolToRef = useScrollToRef(refData?.contactRef);
+    const aboutScrollToRef = useScrollToRef(refData?.aboutRef);
+    const careerScrollToRef = useScrollToRef(refData?.careerRef);
+    const skillsScrollToRef = useScrollToRef(refData?.skillsRef);
+    const contactScrollToRef = useScrollToRef(refData?.contactRef);
     
     // handle
     const handleMenuOpen = () => {
@@ -47,7 +47,7 @@ const HumbergerMenu = () => {
                     <li 
                         className="flex justify-between content-center border-b-2 border-dashed border-dblue"
                         onClick={() => {
-                            aboutScrolToRef();
+                            aboutScrollToRef();
                             handleMenuOpen();
                         }}>
                         <div className="pl-[125px] py-5 text-2xl inline-block">
@@ -63,7 +63,7 @@ const HumbergerMenu = () => {
                     <li 
                         className="flex justify-between content-center border-b-2 border-dashed border-dblue"
                         onClick={() => {
-                            careerScrolToRef();
+                            careerScrollToRef();
                             handleMenuOpen();
                         }}>
                         <div className="pl-[125px] py-5 text-2xl inline-block">
@@ -79,7 +79,7 @@ const HumbergerMenu = () => {
                     <li 
                         className="flex justify-between content-center border-b-2 border-dashed border-dblue"
                         onClick={() => {
-                            skillsScrolToRef();
+                            skillsScrollToRef();
                             handleMenuOpen();
                         }}>
                         <div className="pl-[125px] py-5 text-2xl inline-block">
@@ -95,7 +95,7 @@ const HumbergerMenu = () => {
                     <li 
                         className="flex justify-between content-center border-b-2 border-dashed border-dblue"
                         onClick={() => {
-                            contactScrolToRef();
+                            contactScrollToRef();
                             handleMenuOpen();
                         }}>
                         <div className="pl-[125px] py-5 text-2xl inline-block">

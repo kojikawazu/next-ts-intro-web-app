@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { useScrollToRef } from '@/app/hooks/useScrol';
+import { useScrollToRef } from '@/app/hooks/useScroll';
 import FooterLink from '@/app/components/footer/FooterLink';
 
-jest.mock('@/app/hooks/useScrol', () => ({
+jest.mock('@/app/hooks/useScroll', () => ({
     useScrollToRef: jest.fn(),
 }));
 

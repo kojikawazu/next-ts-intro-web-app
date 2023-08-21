@@ -2,11 +2,11 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import NormalMenu from '@/app/components/navbar/NormalMenu';
 import { useIntroData } from '@/app/contexts/introContext';
-import { useScrollToRef } from '@/app/hooks/useScrol';
+import { useScrollToRef } from '@/app/hooks/useScroll';
 
 // Mocks
 jest.mock('@/app/contexts/introContext');
-jest.mock('@/app/hooks/useScrol');
+jest.mock('@/app/hooks/useScroll');
 
 /** NormalMenuコンポーネントのテスト */
 describe('<NormalMenu />', () => {

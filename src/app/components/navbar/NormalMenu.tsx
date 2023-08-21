@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntroData } from '@/app/contexts/introContext';
 import { NavBarType } from '@/app/types/NavbarType';
-import { useScrollToRef } from '@/app/hooks/useScrol';
+import { useScrollToRef } from '@/app/hooks/useScroll';
 
 /**
  * ノーマルメニューコンポーネント

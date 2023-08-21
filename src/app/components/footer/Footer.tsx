@@ -2,7 +2,7 @@ import React from 'react';
 import { useIntroData } from '@/app/contexts/introContext';
 import { NavBarType } from '@/app/types/NavbarType';
 import { FooterType } from '@/app/types/FooterType';
-import { useScrolTop } from '@/app/hooks/useScrol';
+import { useScrollTop } from '@/app/hooks/useScroll';
 import FooterLink from './FooterLink';
 
 /**
@@ -26,7 +26,7 @@ const Footer = () => {
 
             <div className="flex w-full">
                 <div className="basis-1/3">
-                    <button className="pl-8 pt-4" onClick={useScrolTop}>
+                    <button className="pl-8 pt-4" onClick={useScrollTop}>
                         <h4 className="text-sm sm:text-lg">
                             {navbarData.link_title}
                         </h4>
@@ -34,7 +34,7 @@ const Footer = () => {
                 </div>
 
                 <div className="basis-1/3 flex justify-center">
-                    <button className="mt-24" onClick={useScrolTop}>
+                    <button className="mt-24" onClick={useScrollTop}>
                         <svg 
                             aria-label="scroll-up-icon"
                             xmlns="http://www.w3.org/2000/svg" 

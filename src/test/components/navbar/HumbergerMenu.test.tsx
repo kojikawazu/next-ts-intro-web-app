@@ -2,11 +2,11 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import HumbergerMenu from '@/app/components/navbar/HumbergerMenu';
 import { useIntroData } from '@/app/contexts/introContext';
-import { useScrollToRef } from '@/app/hooks/useScrol';
+import { useScrollToRef } from '@/app/hooks/useScroll';
 
 // Mocks
 jest.mock('@/app/contexts/introContext');
-jest.mock('@/app/hooks/useScrol');
+jest.mock('@/app/hooks/useScroll');
 
 /** ハンバーガーメニューコンポーネントのテスト */
 describe('<HumbergerMenu />', () => {
@@ -23,6 +23,14 @@ describe('<HumbergerMenu />', () => {
         mockSkillsScroll = jest.fn();
         mockContactScroll = jest.fn();
 
+        (useScrollToRef as jest.Mock).mockImplementation((refData) => {
+            if (refData === 'aboutRef') return mockAboutScroll;
+            if (refData === 'careerRef') return mockCareerScroll;
+            if (refData === 'skillsRef') return mockSkillsScroll;
+            if (refData === 'contactRef') return mockContactScroll;
+            return () => {};
+        });
+
         (useIntroData as jest.Mock).mockReturnValue({
             introData: {
                 navbar_data: {
@@ -33,18 +41,21 @@ describe('<HumbergerMenu />', () => {
                 }
             },
             refData: {
-                aboutRef: { current: {} },
-                careerRef: { current: {} },
-                skillsRef: { current: {} },
-                contactRef: { current: {} }
+                aboutRef: 'aboutRef',
+                careerRef: 'careerRef',
+                skillsRef: 'skillsRef',
+                contactRef: 'contactRef'
             }
         });
+    });
 
-        (useScrollToRef as jest.Mock)
-            .mockReturnValueOnce(mockAboutScroll)
-            .mockReturnValueOnce(mockCareerScroll)
-            .mockReturnValueOnce(mockSkillsScroll)
-            .mockReturnValueOnce(mockContactScroll);
+    it('displays the menu items with the correct data', () => {
+        render(<HumbergerMenu />);
+        
+        expect(screen.getByText('About')).toBeInTheDocument();
+        expect(screen.getByText('Career')).toBeInTheDocument();
+        expect(screen.getByText('Skills')).toBeInTheDocument();
+        expect(screen.getByText('Contact')).toBeInTheDocument();
     });
 
     it('toggles the menu when hamburger button is clicked', async () => {
@@ -72,5 +83,29 @@ describe('<HumbergerMenu />', () => {
         await waitFor(() => {
             expect(closedMenu).toHaveClass('top-[-100%]');
         });
+    });
+
+    it('calls the appropriate scroll function when each menu item is clicked', async () => {
+        render(<HumbergerMenu />);
+
+        const openingButton = screen.getByRole('button', { name: "openingHumbergerButton" });
+        fireEvent.click(openingButton);
+
+        await waitFor(() => {
+            const openMenu = screen.getByRole('navigation');
+            expect(openMenu).not.toHaveClass('top-[-100%]');
+        });
+
+        fireEvent.click(screen.getByText('About'));
+        expect(mockAboutScroll).toHaveBeenCalledTimes(1);
+
+        fireEvent.click(screen.getByText('Career'));
+        expect(mockCareerScroll).toHaveBeenCalledTimes(1);
+
+        fireEvent.click(screen.getByText('Skills'));
+        expect(mockSkillsScroll).toHaveBeenCalledTimes(1);
+
+        fireEvent.click(screen.getByText('Contact'));
+        expect(mockContactScroll).toHaveBeenCalledTimes(1);
     });
 });

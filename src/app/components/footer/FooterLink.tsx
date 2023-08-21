@@ -1,5 +1,5 @@
 import React from 'react';
-import { useScrollToRef } from '@/app/hooks/useScrol';
+import { useScrollToRef } from '@/app/hooks/useScroll';
 
 /** Propsの型定義 */
 type Props = {

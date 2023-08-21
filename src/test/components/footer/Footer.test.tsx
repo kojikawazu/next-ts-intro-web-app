@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useIntroData } from '@/app/contexts/introContext';
-import { useScrolTop } from '@/app/hooks/useScrol';
+import { useScrollTop } from '@/app/hooks/useScroll';
 import Footer from '@/app/components/footer/Footer';
 
 // Mocks
 jest.mock('@/app/contexts/introContext');
-jest.mock('@/app/hooks/useScrol', () => ({
-    useScrolTop: jest.fn(),
+jest.mock('@/app/hooks/useScroll', () => ({
+    useScrollTop: jest.fn(),
     useScrollToRef: jest.fn(),
 }));
 
@@ -39,7 +39,7 @@ describe('<Footer />', () => {
             }
         });
 
-        (useScrolTop as jest.Mock).mockImplementation(() => jest.fn());
+        (useScrollTop as jest.Mock).mockImplementation(() => jest.fn());
     });
 
     it('renders links correctly', () => {
@@ -60,13 +60,13 @@ describe('<Footer />', () => {
         render(<Footer />);
         const button = screen.getByText('Go Top').closest('button');
         if (button) fireEvent.click(button);
-        expect(useScrolTop).toHaveBeenCalled();
+        expect(useScrollTop).toHaveBeenCalled();
     });
 
     test('SVG button click', () => {
         render(<Footer />);
         const scrollUpIcon = screen.getByLabelText("scroll-up-icon");
         if(scrollUpIcon) fireEvent.click(scrollUpIcon);
-        expect(useScrolTop).toHaveBeenCalled();
+        expect(useScrollTop).toHaveBeenCalled();
     });
 });

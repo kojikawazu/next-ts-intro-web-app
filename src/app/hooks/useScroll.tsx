@@ -1,7 +1,7 @@
 /**
  * 先頭へスクロールするhook
  */
-export const useScrolTop = () => {
+export const useScrollTop = () => {
     window.scroll({ 
         top: 0, 
         behavior: 'smooth' 

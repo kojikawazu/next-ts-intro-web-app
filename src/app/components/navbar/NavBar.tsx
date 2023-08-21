@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntroData } from '@/app/contexts/introContext';
 import { NavBarType } from '@/app/types/NavbarType';
-import { useScrolTop } from '@/app/hooks/useScrol';
+import { useScrollTop } from '@/app/hooks/useScroll';
 import HumbergerMenu from './HumbergerMenu';
 import NormalMenu from './NormalMenu';
 
@@ -17,7 +17,7 @@ const NavBar= () => {
         <div className="flex justify-between items-center bg-lblue w-full h-[100px]">
             <button 
                 className="text-sm xs:text-2xl sm:text-3xl pl-9 underline decoration-1 decoration-solid underline-offset-8"
-                onClick={useScrolTop}>
+                onClick={useScrollTop}>
                 <h1>{navBarData.link_title}</h1>
             </button>
 

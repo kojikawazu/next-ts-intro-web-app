@@ -2,12 +2,12 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import NavBar from '@/app/components/navbar/NavBar';
 import { useIntroData } from '@/app/contexts/introContext';
-import { useScrolTop } from '@/app/hooks/useScrol';
+import { useScrollTop } from '@/app/hooks/useScroll';
 
 // Mocks
 jest.mock('@/app/contexts/introContext');
-jest.mock('@/app/hooks/useScrol', () => ({
-    useScrolTop: jest.fn(),
+jest.mock('@/app/hooks/useScroll', () => ({
+    useScrollTop: jest.fn(),
     useScrollToRef: jest.fn(),
 }));
 jest.mock('@/app/components/navbar/HumbergerMenu', () => {
@@ -36,7 +36,7 @@ describe('<NavBar />', () => {
             }
         });
 
-        (useScrolTop as jest.Mock).mockImplementation(() => jest.fn());
+        (useScrollTop as jest.Mock).mockImplementation(() => jest.fn());
     });
 
     it('renders the link title correctly', () => {
@@ -47,6 +47,6 @@ describe('<NavBar />', () => {
     it('triggers useScrolTop on title click', () => {
         render(<NavBar />);
         fireEvent.click(screen.getByText('Simple Title'));
-        expect(useScrolTop).toHaveBeenCalled();
+        expect(useScrollTop).toHaveBeenCalled();
     });
 });

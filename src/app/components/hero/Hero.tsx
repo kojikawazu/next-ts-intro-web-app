@@ -5,9 +5,10 @@ import { HeroType } from '@/app/types/IntroType';
 
 /**
  * Heroコンポーネント
- * @returns 
+ * @returns JSX
  */
 const Hero = () => {
+  // context
   const { introData } = useIntroData();
   const heroData: HeroType = introData!.hero_data;
 

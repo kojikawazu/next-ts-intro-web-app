@@ -17,6 +17,7 @@ const config: Config = {
         'footer': '#007994'
       },
       screens: {
+        xxs: '250px',
         xs: '300px',
       },
     },

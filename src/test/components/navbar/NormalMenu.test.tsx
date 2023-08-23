@@ -1,8 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import NormalMenu from '@/app/components/navbar/NormalMenu';
+
+import { mockInitialData, mockRefData } from '@/test/mocks/mockData';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import { useIntroData } from '@/app/contexts/introContext';
 import { useScrollToRef } from '@/app/hooks/useScroll';
+import NormalMenu from '@/app/components/navbar/NormalMenu';
 
 // Mocks
 jest.mock('@/app/contexts/introContext');
@@ -23,20 +26,8 @@ describe('<NormalMenu />', () => {
         mockContactScroll = jest.fn();
 
         (useIntroData as jest.Mock).mockReturnValue({
-            introData: {
-                navbar_data: {
-                    about_name:   "About",
-                    career_name:  "Career",
-                    skills_name:  "Skills",
-                    contact_name: "Contact"
-                }
-            },
-            refData: {
-                aboutRef:   { current: {} },
-                careerRef:  { current: {} },
-                skillsRef:  { current: {} },
-                contactRef: { current: {} }
-            }
+            introData: mockInitialData,
+            refData: mockRefData
         });
 
         (useScrollToRef as jest.Mock)
@@ -46,28 +37,60 @@ describe('<NormalMenu />', () => {
             .mockReturnValueOnce(mockContactScroll);
     });
 
-    it('renders the menu items correctly', () => {
-        render(<NormalMenu />);
-
-        expect(screen.getByText('About')).toBeInTheDocument();
-        expect(screen.getByText('Career')).toBeInTheDocument();
-        expect(screen.getByText('Skills')).toBeInTheDocument();
-        expect(screen.getByText('Contact')).toBeInTheDocument();
+    /** 各テストの後処理 */
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
-    it('calls the correct scroll function when each button is clicked', () => {
-        render(<NormalMenu />);
+    /** 正常系 */
+    /** ----------------------------------------------------------------------------------- */
 
-        fireEvent.click(screen.getByText('About'));
-        expect(mockAboutScroll).toHaveBeenCalled();
+    describe('<NormalMenu /> - Positive Scenarios', () => {
+        it('renders the menu items correctly', () => {
+            render(<NormalMenu />);
 
-        fireEvent.click(screen.getByText('Career'));
-        expect(mockCareerScroll).toHaveBeenCalled();
+            expect(screen.getByText('About')).toBeInTheDocument();
+            expect(screen.getByText('Career')).toBeInTheDocument();
+            expect(screen.getByText('Skills')).toBeInTheDocument();
+            expect(screen.getByText('Contact')).toBeInTheDocument();
+        });
 
-        fireEvent.click(screen.getByText('Skills'));
-        expect(mockSkillsScroll).toHaveBeenCalled();
+        it('calls the correct scroll function when each button is clicked', () => {
+            render(<NormalMenu />);
+    
+            fireEvent.click(screen.getByText('About'));
+            expect(mockAboutScroll).toHaveBeenCalled();
+    
+            fireEvent.click(screen.getByText('Career'));
+            expect(mockCareerScroll).toHaveBeenCalled();
+    
+            fireEvent.click(screen.getByText('Skills'));
+            expect(mockSkillsScroll).toHaveBeenCalled();
+    
+            fireEvent.click(screen.getByText('Contact'));
+            expect(mockContactScroll).toHaveBeenCalled();
+        });
+    });
 
-        fireEvent.click(screen.getByText('Contact'));
-        expect(mockContactScroll).toHaveBeenCalled();
+    describe('<NormalMenu /> - Negative Scenarios', () => {
+        it('renders ErrorComponent when introData is missing', () => {
+            (useIntroData as jest.Mock).mockReturnValue({
+                introData: null,
+                refData: mockRefData
+            });
+            
+            render(<NormalMenu />);
+            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+        });
+    
+        it('renders ErrorComponent when refData is missing', () => {
+            (useIntroData as jest.Mock).mockReturnValue({
+                introData: mockInitialData,
+                refData: null
+            });
+            
+            render(<NormalMenu />);
+            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+        });
     });
 });

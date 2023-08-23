@@ -62,12 +62,13 @@ const IntroHomePage: React.FC<Props> = ({ data }) => {
         <Contact />
         <Footer />
         {/**
+         * <NavBar />
          * <Hero />
            <About />
-        <Careers />
-        <Skills />
-        <Contact />
-        <Footer /> */}
+           <Careers />
+           <Skills />
+           <Contact />
+           <Footer /> */}
       </IntroLayout>
     </IntroDataProvider>
   );

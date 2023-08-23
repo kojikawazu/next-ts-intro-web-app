@@ -1,23 +1,36 @@
 import React from 'react';
+
+import { MESSAGES } from '@/app/shared/constants/constants';
 import { useIntroData } from '@/app/contexts/introContext';
 import { NavBarType } from '@/app/types/NavbarType';
 import { useScrollTop } from '@/app/hooks/useScroll';
-import HumbergerMenu from './HumbergerMenu';
-import NormalMenu from './NormalMenu';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
+import HamburgerMenu from '@/app/components/navbar/HamburgerMenu';
+import NormalMenu from '@/app/components/navbar/NormalMenu';
 
 /**
- * MavBarコンポーネント
+ * NavBarコンポーネント
  * @returns JSX
  */
 const NavBar= () => {
+    // Context
     const { introData } = useIntroData();
-    const navBarData: NavBarType = introData!.navbar_data;
+    // Functions
+    const handleScrollTop = useScrollTop();
+
+    // エラーハンドリング
+    if (!introData || !introData.navbar_data) {
+        return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
+    }
+
+    const navBarData: NavBarType = introData.navbar_data;
 
     return (
         <div className="flex justify-between items-center bg-lblue w-full h-[100px]">
             <button 
+                aria-label="Scroll to top"
                 className="text-sm xs:text-2xl sm:text-3xl pl-9 underline decoration-1 decoration-solid underline-offset-8"
-                onClick={useScrollTop}>
+                onClick={handleScrollTop}>
                 <h1>{navBarData.link_title}</h1>
             </button>
 
@@ -26,7 +39,7 @@ const NavBar= () => {
                     <NormalMenu />
                 </div>
                 <div className="inline-block md:hidden">
-                    <HumbergerMenu />
+                    <HamburgerMenu />
                 </div>
             </div>
         </div>

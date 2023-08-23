@@ -10,14 +10,13 @@ jest.mock('@/app/hooks/useScroll', () => ({
     useScrollTop: jest.fn(),
     useScrollToRef: jest.fn(),
 }));
+const mockRef = React.createRef();
 
 /** Footerコンポーネントテスト */
 describe('<Footer />', () => {
 
     /** 各テストの前準備 */
     beforeEach(() => {
-        // デフォルトのモックデータと関数を提供
-
         (useIntroData as jest.Mock).mockReturnValue({
             introData: {
                 navbar_data: {
@@ -32,41 +31,57 @@ describe('<Footer />', () => {
                 }
             },
             refData: {
-                aboutRef: React.createRef(),
-                careerRef: React.createRef(),
-                skillsRef: React.createRef(),
-                contactRef: React.createRef(),
+                aboutRef:   mockRef,
+                careerRef:  mockRef,
+                skillsRef:  mockRef,
+                contactRef: mockRef,
             }
         });
 
         (useScrollTop as jest.Mock).mockImplementation(() => jest.fn());
     });
 
-    it('renders links correctly', () => {
-        render(<Footer />);
-        expect(screen.getByText('About')).toBeInTheDocument();
-        expect(screen.getByText('Career')).toBeInTheDocument();
-        expect(screen.getByText('Skills')).toBeInTheDocument();
-        expect(screen.getByText('Contact')).toBeInTheDocument();
+    /** 各テストの後処理 */
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
-    it('renders go top link and copyright correctly', () => {
-        render(<Footer />);
-        expect(screen.getByText('Go Top')).toBeInTheDocument();
-        expect(screen.getByText('© 2023 Company Name')).toBeInTheDocument();
-    });
+     /** 正常系 */
+    /** ----------------------------------------------------------------------------------- */
 
-    it('triggers useScrolTop on click', () => {
-        render(<Footer />);
-        const button = screen.getByText('Go Top').closest('button');
-        if (button) fireEvent.click(button);
-        expect(useScrollTop).toHaveBeenCalled();
-    });
+    describe('<Footer /> - Positive Scenarios', () => {
 
-    test('SVG button click', () => {
-        render(<Footer />);
-        const scrollUpIcon = screen.getByLabelText("scroll-up-icon");
-        if(scrollUpIcon) fireEvent.click(scrollUpIcon);
-        expect(useScrollTop).toHaveBeenCalled();
+        it('renders links correctly', () => {
+            render(<Footer />);
+            expect(screen.getByText('About')).toBeInTheDocument();
+            expect(screen.getByText('Career')).toBeInTheDocument();
+            expect(screen.getByText('Skills')).toBeInTheDocument();
+            expect(screen.getByText('Contact')).toBeInTheDocument();
+        });
+
+        it('renders go top link and copyright correctly', () => {
+            render(<Footer />);
+            expect(screen.getByText('Go Top')).toBeInTheDocument();
+            expect(screen.getByText('© 2023 Company Name')).toBeInTheDocument();
+        });
+
+        it('triggers useScrolTop on click', () => {
+            render(<Footer />);
+            const button = screen.getByText('Go Top').closest('button');
+            if (!button) {
+                throw new Error('Button not found!');
+            }
+            fireEvent.click(button as HTMLButtonElement);
+            expect(useScrollTop).toHaveBeenCalled();
+            expect(useScrollTop).toHaveBeenCalledTimes(1);
+        });
+
+        test('SVG button click', () => {
+            render(<Footer />);
+            const scrollUpIcon = screen.getByLabelText("scroll-up-icon");
+            fireEvent.click(scrollUpIcon);
+            expect(useScrollTop).toHaveBeenCalled();
+            expect(useScrollTop).toHaveBeenCalledTimes(1);
+        });
     });
 });

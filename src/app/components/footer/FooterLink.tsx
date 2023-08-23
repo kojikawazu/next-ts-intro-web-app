@@ -2,9 +2,9 @@ import React from 'react';
 import { useScrollToRef } from '@/app/hooks/useScroll';
 
 /** Propsの型定義 */
-type Props = {
+type FooterLinkProps = {
     linkTitle: string;
-    isEnd: Boolean;
+    isEnd: boolean;
     refData: React.RefObject<HTMLDivElement> | undefined;
 }
 
@@ -13,21 +13,20 @@ type Props = {
  * @param props Props
  * @returns JSX
  */
-const FooterLink = (props: Props) => {
+const FooterLink = (props: FooterLinkProps) => {
     const { linkTitle, isEnd, refData } = props;
     // hooks
-    const scrolToRef = useScrollToRef(refData);
+    const scrollToRef = useScrollToRef(refData);
 
-    const styles = (isEnd 
-        ? "text-white text-xs sm:text-base lg:text-xl px-5 sm:px-8 mx-1 sm:mx-2 my-4 sm:my-8"
-        : "text-white text-xs sm:text-base lg:text-xl px-5 sm:px-8 mx-1 sm:mx-2 my-4 sm:my-8 border-r"
-    );
+    const baseStyles = "text-white text-xs sm:text-base lg:text-xl px-5 sm:px-8 mx-1 sm:mx-2 my-4 sm:my-8";
+    const conditionalStyles = isEnd ? "" : "border-r";
+    const styles = `${baseStyles} ${conditionalStyles}`;
     
     return (
         <div>
             <button 
                 className={styles} 
-                onClick={scrolToRef!}>
+                onClick={scrollToRef}>
                 {linkTitle}
             </button>
         </div>

@@ -10,7 +10,7 @@ import Title from '@/app/components/common/Title';
 import AboutContents from '@/app/components/about/AboutContents';
 
 /**
- * 
+ * Aboutコンポーネント
  * @returns JSX
  */
 const About = () => {

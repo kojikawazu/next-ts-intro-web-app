@@ -2,10 +2,12 @@
  * 先頭へスクロールするhook
  */
 export const useScrollTop = () => {
-    window.scroll({ 
-        top: 0, 
-        behavior: 'smooth' 
-    });
+    return () => {
+        window.scroll({ 
+            top: 0, 
+            behavior: 'smooth' 
+        });
+    };
 }
 
 /**

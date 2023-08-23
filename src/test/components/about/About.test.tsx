@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import { render } from '@testing-library/react';
 
 import { mockInitialData, mockRefData } from '@/test/mocks/mockData';
-
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { useIntroData } from '@/app/contexts/introContext';
 import About from '@/app/components/about/About';
@@ -52,7 +51,7 @@ describe('<About />', () => {
         it('renders the ErrorComponent when data is missing', () => {
             require('@/app/contexts/introContext').useIntroData.mockReturnValueOnce({
                 introData: null,
-                refData: { aboutRef: null }
+                refData: null 
             });
 
             const { getByText } = render(<About />);

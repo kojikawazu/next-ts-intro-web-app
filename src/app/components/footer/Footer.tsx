@@ -8,6 +8,25 @@ import ErrorComponent from '@/app/components/common/ErrorComponent';
 import FooterLink from '@/app/components/footer/FooterLink';
 
 /**
+ * スクロールトップアイコンコンポーネント
+ * @returns JSX
+ */
+const ScrollTopIcon = () => {
+    return (
+        <svg 
+            aria-label="scroll-up-icon"
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            strokeWidth="1.5" 
+            stroke="currentColor" 
+            className="w-8 h-8">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+        </svg>
+    );
+};
+
+/**
  * Footerコンポーネント
  * @returns JSX
  */
@@ -51,16 +70,7 @@ const Footer = () => {
                         className="mt-24" 
                         aria-label="Scroll to top"
                         onClick={scrollTop}>
-                        <svg 
-                            aria-label="scroll-up-icon"
-                            xmlns="http://www.w3.org/2000/svg" 
-                            fill="none" 
-                            viewBox="0 0 24 24" 
-                            strokeWidth="1.5" 
-                            stroke="currentColor" 
-                            className="w-8 h-8">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                        </svg>
+                        <ScrollTopIcon />
                     </button>
                 </div>
                 

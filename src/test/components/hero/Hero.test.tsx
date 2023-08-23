@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Hero from '@/app/components/hero/Hero';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import { useIntroData } from '@/app/contexts/introContext';
+import Hero from '@/app/components/hero/Hero';
 
 // Mocks
 jest.mock('@/app/contexts/introContext', () => ({
@@ -21,10 +22,24 @@ describe('<Hero />', () => {
         });
     }); 
     
-    it('renders the hero image', () => {
-        render(<Hero />);
+    describe('<Hero /> - Positive Scenarios', () => {
+        it('renders the hero image', () => {
+            render(<Hero />);
 
-        const imageElement = screen.getByAltText('hero_background');
-        expect(imageElement).toBeInTheDocument();
+            const imageElement = screen.getByAltText('hero_background');
+            expect(imageElement).toBeInTheDocument();
+        });
+    });
+
+    describe('<Hero /> - Negative Scenarios', () => {
+        it('renders ErrorComponent when introData is missing', () => {
+            (useIntroData as jest.Mock).mockReturnValue({
+                introData: null,
+            });
+
+            render(<Hero />);
+            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+        });
+    
     });
 });

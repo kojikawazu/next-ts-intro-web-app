@@ -1,7 +1,9 @@
 import React from 'react';
 import { Image } from 'next/dist/client/image-component';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import { useIntroData } from '@/app/contexts/introContext';
 import { HeroType } from '@/app/types/IntroType';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
 
 /**
  * Heroコンポーネント
@@ -10,7 +12,12 @@ import { HeroType } from '@/app/types/IntroType';
 const Hero = () => {
   // context
   const { introData } = useIntroData();
-  const heroData: HeroType = introData!.hero_data;
+
+  // エラーハンドリング
+  if (!introData || !introData.hero_data) {
+    return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
+  }
+  const heroData: HeroType = introData.hero_data;
 
   return (
     <div className='relative max-w-full h-screen'>

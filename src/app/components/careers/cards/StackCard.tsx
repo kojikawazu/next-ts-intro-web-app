@@ -10,8 +10,9 @@ type StackCardProps = {
  * @param props stackName: スタック名
  * @returns JSX
  */
-const StackCard = (props: StackCardProps) => {
-    const { stackName } = props;
+const StackCard: React.FC<StackCardProps> = ({ 
+    stackName 
+}) => {
     return (
         <div className="bg-lblue px-4 mx-1 my-1 rounded-2xl">
             {stackName}

@@ -7,7 +7,7 @@ describe('<CareerMember />', () => {
 
     const mockCareerTitle  = 'Software Engineer Member';
     const mockCareerDetail = 'Managed a team of 5 developers';
-    const mockClassName    = '';
+    const mockClassName    = 'sample-class';
 
     /** テストの前準備 */
     beforeEach(() => {
@@ -28,6 +28,10 @@ describe('<CareerMember />', () => {
             const colonElement = screen.getByText(':');
             expect(colonElement).toBeInTheDocument();
         });
-    
+
+        test('applies the correct className', () => {
+            const careerElement = screen.getByText(mockCareerTitle).parentElement;
+            expect(careerElement).toHaveClass(mockClassName);
+        });
     });
 });

@@ -8,8 +8,7 @@ describe('<CareerPeriod />', () => {
     const mockCareerTitle = 'Software Engineer Period';
     const mockCareerStart = '01/01/2020';
     const mockCareerEnd   = '12/31/2022';
-    const mockClassName   = '';
-
+    const mockClassName   = 'sample-class';
 
     /** テストの前準備 */
     beforeEach(() => {
@@ -37,5 +36,9 @@ describe('<CareerPeriod />', () => {
             expect(tildeElement).toBeInTheDocument();
         });
 
+        test('applies the correct className', () => {
+            const careerElement = screen.getByText(mockCareerTitle).parentElement;
+            expect(careerElement).toHaveClass(mockClassName);
+        });
     });
 });

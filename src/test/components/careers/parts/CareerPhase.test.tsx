@@ -12,7 +12,7 @@ describe('<CareerPhase />', () => {
     
     const mockCareerTitle  = 'Software Engineer Phase';
     const mockCareerPhases = ['Phase 1', 'Phase 2', 'Phase 3'];
-    const mockClassName    = '';
+    const mockClassName    = 'sample-class';
 
     /** テストの前準備 */
     beforeEach(() => {
@@ -37,5 +37,9 @@ describe('<CareerPhase />', () => {
             });
         });
 
+        test('applies the correct className', () => {
+            const careerElement = screen.getByText(mockCareerTitle).parentElement?.parentElement;
+            expect(careerElement).toHaveClass(mockClassName);
+        });
     });
 });

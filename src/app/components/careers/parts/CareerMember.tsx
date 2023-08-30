@@ -9,12 +9,16 @@ type CareerMemberProps = {
 
 /**
  * CareerMemberコンポーネント
- * @param props careerTitle, careerDetail, className
+ * @param careerTitle
+ * @param careerDetail
+ * @param className
  * @returns JSX
  */
-const CareerMember = (props: CareerMemberProps) => {
-    const { careerTitle, careerDetail, className } = props;
-
+const CareerMember: React.FC<CareerMemberProps>  = ({ 
+    careerTitle, 
+    careerDetail, 
+    className = ""
+}) => {
     return (
         <div className={`flex ${className} pb-4`}>
             <div className="">{careerTitle}</div>

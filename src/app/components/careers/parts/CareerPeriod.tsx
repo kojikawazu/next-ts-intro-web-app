@@ -10,14 +10,18 @@ type CareerPeriodProps = {
 
 /**
  * CareerPeriodコンポーネント
- * @param props careerTitle
- *              careerStart
- *              careerEnd
- *              className
+ * @param careerTitle
+ * @param careerStart
+ * @param careerEnd
+ * @param className
  * @returns JSX
  */
-const CareerPeriod = (props: CareerPeriodProps) => {
-    const { careerTitle, careerStart, careerEnd, className } = props;
+const CareerPeriod: React.FC<CareerPeriodProps> = ({ 
+    careerTitle, 
+    careerStart, 
+    careerEnd, 
+    className = "" 
+}) => {
     
     return (
         <div className={`flex ${className} pb-1`}>

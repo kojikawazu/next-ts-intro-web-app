@@ -11,11 +11,18 @@ type CareerNavigatorProps = {
 
 /**
  * CareerNavigatorコンポーネント
- * @param props direction, className, onClick
+ * @param direction
+ * @param componentClassName
+ * @param btnclassName
+ * @param onClick
  * @returns JSX
  */
-const CareerNavigator = (props: CareerNavigatorProps) => {
-    const { direction, componentClassName = "", btnclassName = "", onClick } = props;
+const CareerNavigator: React.FC<CareerNavigatorProps> = ({ 
+    direction, 
+    componentClassName = "", 
+    btnclassName = "", 
+    onClick 
+}) => {
     const isPrev = direction === 'prev';
 
     return (

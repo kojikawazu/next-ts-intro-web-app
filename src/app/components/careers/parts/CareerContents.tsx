@@ -9,11 +9,16 @@ type CareerContentsProps = {
 
 /**
  * CareerContentsコンポーネント
- * @param props careerTitle, careerDescription, className
+ * @param careerTitle
+ * @param careerDescription
+ * @param className
  * @returns JSX
  */
-const CareerContents = (props: CareerContentsProps) => {
-    const { careerTitle, careerDescription, className } = props;
+const CareerContents: React.FC<CareerContentsProps> = ({ 
+    careerTitle, 
+    careerDescription, 
+    className = ""
+}) => {
 
     return (
         <div className={`${className} pb-4`}>

@@ -7,7 +7,7 @@ describe('<CareerContents />', () => {
 
     const mockCareerTitle       = 'Software Engineer Contents';
     const mockCareerDescription = 'Developed various web applications.';
-    const mockClassName         = '';
+    const mockClassName         = 'sample-class';
 
     /** テストの前準備 */
     beforeEach(() => {
@@ -16,8 +16,11 @@ describe('<CareerContents />', () => {
 
     describe('Positive Scenarios', () => {
         
-        test('renders careerTitle and careerDescription correctly', () => {
+        test('renders careerTitle correctly', () => {
             expect(screen.getByText(mockCareerTitle)).toBeInTheDocument();
+        });
+
+        test('renders careerDescription correctly', () => {
             expect(screen.getByText(mockCareerDescription)).toBeInTheDocument();
         });
 
@@ -26,5 +29,9 @@ describe('<CareerContents />', () => {
             expect(colonElement).toBeInTheDocument();
         });
 
+        test('applies the correct className', () => {
+            const careerElement = screen.getByText(mockCareerTitle).parentElement?.parentElement;
+            expect(careerElement).toHaveClass(mockClassName);
+        });
     });
 });

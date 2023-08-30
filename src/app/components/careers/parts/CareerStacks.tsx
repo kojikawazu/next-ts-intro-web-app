@@ -10,11 +10,16 @@ type CareerStacksProps = {
 
 /**
  * CareerStacksコンポーネント
- * @param props careerTitle, careerSkillStack, className
+ * @param careerTitle
+ * @param careerSkillStack
+ * @param className
  * @returns JSX
  */
-const CareerStacks = (props: CareerStacksProps) => {
-    const { careerTitle, careerStacks, className } = props;
+const CareerStacks: React.FC<CareerStacksProps> = ({ 
+    careerTitle, 
+    careerStacks, 
+    className = "" 
+}) => {
 
     return (
         <div className={`${className} pb-4`}>

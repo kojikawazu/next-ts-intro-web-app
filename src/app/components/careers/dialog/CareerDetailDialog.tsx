@@ -19,11 +19,12 @@ type CareerDetailDialogProps = {
 
 /**
  * CareerDetailDialogコンポーネント
- * @param props currentIndex
+ * @param currentIndex
  * @returns JSX
  */
-const CareerDetailDialog = (props: CareerDetailDialogProps) => {
-    const { currentIndex }  = props;
+const CareerDetailDialog: React.FC<CareerDetailDialogProps> = ({ 
+    currentIndex 
+}) => {
     // Context
     const { introData }     = useIntroData();
     const careerTitleData   = introData?.career_title_data;

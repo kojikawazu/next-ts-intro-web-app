@@ -7,15 +7,26 @@ type Props = {
     skill: SkillsCardType;
 }
 
+/**
+ * スキルカードコンポーネント
+ * @param skill スキルデータ
+ * @returns JSX
+ */
 const SkillCard = (props: Props) => {
     const { skill } = props;
 
+    // css
+    let classAppend = "flex justify-center items-center m-2 p-2 rounded-2xl";
+    classAppend = `${classAppend} w-[210px] xs:w-[250px] ssssm:w-[280px] sssm:w-[350px] h-[110px]`;
+    classAppend = `${classAppend} text-xxs xxs:text-xs xs:text-xs ssssm:text-sm sssm:text-base`;
+    classAppend = `${classAppend} bg-white text-black`;
+
     return (
-        <div className="flex bg-white m-2 rounded-2xl w-[350px] h-[110px]">
+        <div className={`${classAppend}`}>
             <div className="basis-1/3">
-                <div className="">
+                <div className="flex justify-center items-center">
                     <Image
-                        className="m-auto mt-5"
+                        className="m-auto"
                         src={skill.skills_card_icon} 
                         alt="skill_icon"
                         width={50}
@@ -24,15 +35,14 @@ const SkillCard = (props: Props) => {
                 </div>
             </div>
             <div className="basis-2/3">
-                <div className="w-72">
-                    <div className="p-2">
+                <div className="">
+                    <h3 className="p-2 pt-0">
                         {skill.skills_card_name}
-                    </div>
-                    <div className="px-2">
+                    </h3>
+                    <p className="pl-2 pr-4">
                         {skill.skills_card_contents}
-                    </div>
+                    </p>
                 </div>
-                
             </div>
         </div>
     );

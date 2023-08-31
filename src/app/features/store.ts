@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import dialogReducer from '@/app/features/dialog/dialogSlice';
+import loadLimitReducer from '@/app/features/loadlimit/loadLimitSlice';
 
 /** store */
 export const store = configureStore({
     reducer: {
-        dialog: dialogReducer
+        dialog: dialogReducer,
+        loadLimit: loadLimitReducer
     }
 });
 

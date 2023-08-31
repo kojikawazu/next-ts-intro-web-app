@@ -9,10 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        xxs:  '250px',
-        xs:   '300px',
-        sssm: '414px',
-        ssm:  '500px',
+        xxs:   '250px',
+        xs:    '300px',
+        ssssm: '350px',
+        sssm:  '414px',
+        ssm:   '500px',
       },
       colors: {
         'lblue':  'rgba(157, 237, 255, 0.70)',

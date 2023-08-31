@@ -71,15 +71,15 @@ const HamburgerMenu = () => {
                             <li 
                                 key={item.label} 
                                 role="menuitem"
-                                className="flex justify-between content-center border-b-2 border-dashed border-dblue" 
+                                className="flex justify-between content-center border-b-2 border-dashed border-dblue hover:bg-hoverdblue" 
                                 onClick={() => {
                                     item.action();
                                     toggleMenu();
                                 }}>
-                                <div className="pl-[125px] py-5 text-2xl inline-block">
+                                <div className="pl-10 xs:pl-20 ssm:pl-32 py-5 text-2xl inline-block">
                                     {item.label}
                                 </div>
-                                <div className="pr-2 py-5">
+                                <div className="pr-8 py-5">
                                     <ArrowIcon />
                                 </div>
                             </li>
@@ -95,7 +95,7 @@ const HamburgerMenu = () => {
                     onClick={toggleMenu}
                     aria-label="メニューを開く"
                     className="z-50 w-10 h-10 space-y-2 mr-7">
-                    <div className="w-8 h-0.5 bg-dblue"></div>
+                    <div className="w-8 h-0.5 bg-dblue "></div>
                     <div className="w-8 h-0.5 bg-dblue mt-1.5"></div>
                     <div className="w-8 h-0.5 bg-dblue mt-1.5"></div>
                 </button>

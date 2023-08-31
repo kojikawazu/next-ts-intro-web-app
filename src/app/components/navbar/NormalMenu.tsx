@@ -14,10 +14,13 @@ const NormalMenu = () => {
     // Context
     const { introData, refData } = useIntroData();
     // hooks
-    const aboutScrollToRef = useScrollToRef(refData?.aboutRef);
-    const careerScrollToRef = useScrollToRef(refData?.careerRef);
-    const skillsScrollToRef = useScrollToRef(refData?.skillsRef);
+    const aboutScrollToRef   = useScrollToRef(refData?.aboutRef);
+    const careerScrollToRef  = useScrollToRef(refData?.careerRef);
+    const skillsScrollToRef  = useScrollToRef(refData?.skillsRef);
     const contactScrollToRef = useScrollToRef(refData?.contactRef);
+    // styles
+    const borderColorStyles = "border-black";
+    const btnStyles         = "hover:text-gray-500";
 
     // エラーハンドリング
     if (!introData || !introData.navbar_data || !refData) {
@@ -28,29 +31,33 @@ const NormalMenu = () => {
 
     return (
         <>
-            <div className="flex mt-3 mr-3">
-                <div className="px-6 border-r border-black">
+            <div className="flex mt-3 mr-3 border-black">
+                <div className={`px-6 border-r ${borderColorStyles}`}>
                     <button
                         type="button"
                         aria-label="Navigate to About section"
+                        className={`${btnStyles}`}
                         onClick={aboutScrollToRef}>{navBarData.about_name}</button>
                 </div>
-                <div className="px-6 border-r border-black">
+                <div className={`px-6 border-r ${borderColorStyles}`}>
                     <button 
                         type="button"
                         aria-label="Navigate to Career section" 
+                        className={`${btnStyles}`}
                         onClick={careerScrollToRef}>{navBarData.career_name}</button>
                 </div>
-                <div className="px-6 border-r border-black">
+                <div className={`px-6 border-r ${borderColorStyles}`}>
                     <button 
                         type="button" 
                         aria-label="Navigate to Skills section"
+                        className={`${btnStyles}`}
                         onClick={skillsScrollToRef}>{navBarData.skills_name}</button>
                 </div>
-                <div className="px-6">
+                <div className={`px-6 ${borderColorStyles}`}>
                     <button 
                         type="button"
                         aria-label="Navigate to Contact section"
+                        className={`${btnStyles}`}
                         onClick={contactScrollToRef}>{navBarData.contact_name}</button>
                 </div>
             </div>

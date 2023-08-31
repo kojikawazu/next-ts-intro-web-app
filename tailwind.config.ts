@@ -16,12 +16,13 @@ const config: Config = {
         ssm:   '500px',
       },
       colors: {
-        'lblue':  'rgba(157, 237, 255, 0.70)',
-        'dblue':  'rgba(0, 121, 148, 1)',
-        'hero':   'rgba(173, 216, 230, 0.51)',
-        'career': '#84C1CE',
-        'skills': '#D3D3D3',
-        'footer': '#007994'
+        'lblue':       'rgba(157, 237, 255, 0.70)',
+        'dblue':       'rgba(0, 121, 148, 1)',
+        'hoverdblue':  'rgba(0, 221, 248, 0.1)',
+        'hero':        'rgba(173, 216, 230, 0.51)',
+        'career':      '#84C1CE',
+        'skills':      '#D3D3D3',
+        'footer':      '#007994'
       },
       fontSize: {
         xxxxs: [ '0.05rem', {

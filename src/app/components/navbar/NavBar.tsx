@@ -29,7 +29,7 @@ const NavBar= () => {
         <div className="flex justify-between items-center bg-lblue w-full h-[100px]">
             <button 
                 aria-label="Scroll to top"
-                className="text-sm xs:text-2xl sm:text-3xl pl-9 underline decoration-1 decoration-solid underline-offset-8"
+                className="text-sm xs:text-2xl sm:text-3xl pl-9 underline decoration-1 decoration-solid underline-offset-8 hover:text-gray-600"
                 onClick={handleScrollTop}>
                 <h1>{navBarData.link_title}</h1>
             </button>

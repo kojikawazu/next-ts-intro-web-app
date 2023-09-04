@@ -3,6 +3,8 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { useIntroData } from '@/app/contexts/introContext';
 import { useScrollToRef } from '@/app/hooks/useScroll';
+import { mockInitialData, mockRefData } from '@/test/mocks/mockData';
+import { NavBarMenuType } from '@/app/types/NavBarMenuType';
 import HamburgerMenu from '@/app/components/navbar/HamburgerMenu';
 
 // Mocks
@@ -16,6 +18,7 @@ describe('<HamburgerMenu />', () => {
     let mockCareerScroll: jest.Mock;
     let mockSkillsScroll: jest.Mock;
     let mockContactScroll: jest.Mock;
+    let menuList: NavBarMenuType[] = [];
 
     /** 各テストの前準備 */
     beforeEach(() => {
@@ -24,30 +27,23 @@ describe('<HamburgerMenu />', () => {
         mockSkillsScroll = jest.fn();
         mockContactScroll = jest.fn();
 
-        (useScrollToRef as jest.Mock).mockImplementation((refData) => {
-            if (refData === 'aboutRef') return mockAboutScroll;
-            if (refData === 'careerRef') return mockCareerScroll;
-            if (refData === 'skillsRef') return mockSkillsScroll;
-            if (refData === 'contactRef') return mockContactScroll;
-            return () => {};
+        (useIntroData as jest.Mock).mockReturnValue({
+            introData: mockInitialData,
+            refData: mockRefData
         });
 
-        (useIntroData as jest.Mock).mockReturnValue({
-            introData: {
-                navbar_data: {
-                    about_name: "About",
-                    career_name: "Career",
-                    skills_name: "Skills",
-                    contact_name: "Contact"
-                }
-            },
-            refData: {
-                aboutRef: 'aboutRef',
-                careerRef: 'careerRef',
-                skillsRef: 'skillsRef',
-                contactRef: 'contactRef'
-            }
-        });
+        (useScrollToRef as jest.Mock)
+            .mockReturnValueOnce(mockAboutScroll)
+            .mockReturnValueOnce(mockCareerScroll)
+            .mockReturnValueOnce(mockSkillsScroll)
+            .mockReturnValueOnce(mockContactScroll);
+        
+        menuList = [
+            { label: mockInitialData.navbar_data.about_name,   ariaLabel: "About",   action: mockAboutScroll },
+            { label: mockInitialData.navbar_data.career_name,  ariaLabel: "Career",  action: mockCareerScroll },
+            { label: mockInitialData.navbar_data.skills_name,  ariaLabel: "Skills",  action: mockSkillsScroll },
+            { label: mockInitialData.navbar_data.contact_name, ariaLabel: "Contact", action: mockContactScroll }
+        ];
     });
 
     /** 各テストの後処理 */
@@ -61,7 +57,7 @@ describe('<HamburgerMenu />', () => {
     describe('<HamburgerMenu /> - Positive Scenarios', () => {
 
         it('displays the menu items with the correct data', () => {
-            render(<HamburgerMenu />);
+            render(<HamburgerMenu menuList={menuList} />);
             
             expect(screen.getByText('About')).toBeInTheDocument();
             expect(screen.getByText('Career')).toBeInTheDocument();
@@ -70,7 +66,7 @@ describe('<HamburgerMenu />', () => {
         });
 
         it('toggles the menu when hamburger button is clicked', async () => {
-            render(<HamburgerMenu />);
+            render(<HamburgerMenu menuList={menuList} />);
 
             /// メニューが閉じているか確認
             const closedMenu = screen.getByRole('navigation', { hidden: true });
@@ -95,7 +91,7 @@ describe('<HamburgerMenu />', () => {
         });
 
         it('calls the appropriate scroll function when each menu item is clicked', async () => {
-            render(<HamburgerMenu />);
+            render(<HamburgerMenu menuList={menuList} />);
 
             const openingButton = screen.getByRole('button', { name: "メニューを開く" });
             fireEvent.click(openingButton);
@@ -121,12 +117,7 @@ describe('<HamburgerMenu />', () => {
 
     describe('<HamburgerMenu /> - Negative Scenarios', () => {
         it('displays error component when data is missing', () => {
-            (useIntroData as jest.Mock).mockReturnValue({
-                introData: null,
-                refData: null
-            });
-            
-            render(<HamburgerMenu />);
+            render(<HamburgerMenu menuList={[]} />);
             
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
         });

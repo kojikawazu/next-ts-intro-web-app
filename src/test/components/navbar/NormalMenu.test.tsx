@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-
 import { mockInitialData, mockRefData } from '@/test/mocks/mockData';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { useIntroData } from '@/app/contexts/introContext';
 import { useScrollToRef } from '@/app/hooks/useScroll';
+import { NavBarMenuType } from '@/app/types/NavBarMenuType';
 import NormalMenu from '@/app/components/navbar/NormalMenu';
 
 // Mocks
@@ -17,6 +17,7 @@ describe('<NormalMenu />', () => {
     let mockCareerScroll: jest.Mock;
     let mockSkillsScroll: jest.Mock;
     let mockContactScroll: jest.Mock;
+    let menuList: NavBarMenuType[] = [];
 
     /** 各テストの前準備 */
     beforeEach(() => {
@@ -35,6 +36,12 @@ describe('<NormalMenu />', () => {
             .mockReturnValueOnce(mockCareerScroll)
             .mockReturnValueOnce(mockSkillsScroll)
             .mockReturnValueOnce(mockContactScroll);
+        menuList = [
+            { label: mockInitialData.navbar_data.about_name,   ariaLabel: "About",   action: mockAboutScroll },
+            { label: mockInitialData.navbar_data.career_name,  ariaLabel: "Career",  action: mockCareerScroll },
+            { label: mockInitialData.navbar_data.skills_name,  ariaLabel: "Skills",  action: mockSkillsScroll },
+            { label: mockInitialData.navbar_data.contact_name, ariaLabel: "Contact", action: mockContactScroll }
+        ];
     });
 
     /** 各テストの後処理 */
@@ -45,9 +52,9 @@ describe('<NormalMenu />', () => {
     /** 正常系 */
     /** ----------------------------------------------------------------------------------- */
 
-    describe('<NormalMenu /> - Positive Scenarios', () => {
+    describe('Positive Scenarios', () => {
         it('renders the menu items correctly', () => {
-            render(<NormalMenu />);
+            render(<NormalMenu menuList={menuList} />);
 
             expect(screen.getByText('About')).toBeInTheDocument();
             expect(screen.getByText('Career')).toBeInTheDocument();
@@ -56,7 +63,14 @@ describe('<NormalMenu />', () => {
         });
 
         it('calls the correct scroll function when each button is clicked', () => {
-            render(<NormalMenu />);
+            const menuList = [
+                { label: mockInitialData.navbar_data.about_name,   ariaLabel: "About",   action: mockAboutScroll },
+                { label: mockInitialData.navbar_data.career_name,  ariaLabel: "Career",  action: mockCareerScroll },
+                { label: mockInitialData.navbar_data.skills_name,  ariaLabel: "Skills",  action: mockSkillsScroll },
+                { label: mockInitialData.navbar_data.contact_name, ariaLabel: "Contact", action: mockContactScroll }
+            ];
+            
+            render(<NormalMenu menuList={menuList} />);
     
             fireEvent.click(screen.getByText('About'));
             expect(mockAboutScroll).toHaveBeenCalled();
@@ -72,24 +86,9 @@ describe('<NormalMenu />', () => {
         });
     });
 
-    describe('<NormalMenu /> - Negative Scenarios', () => {
+    describe('Negative Scenarios', () => {
         it('renders ErrorComponent when introData is missing', () => {
-            (useIntroData as jest.Mock).mockReturnValue({
-                introData: null,
-                refData: mockRefData
-            });
-            
-            render(<NormalMenu />);
-            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
-        });
-    
-        it('renders ErrorComponent when refData is missing', () => {
-            (useIntroData as jest.Mock).mockReturnValue({
-                introData: mockInitialData,
-                refData: null
-            });
-            
-            render(<NormalMenu />);
+            render(<NormalMenu menuList={[]} />);
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
         });
     });

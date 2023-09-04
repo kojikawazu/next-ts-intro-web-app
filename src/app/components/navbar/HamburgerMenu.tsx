@@ -1,16 +1,31 @@
 import React, { useState } from 'react';
-
+import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { useIntroData } from '@/app/contexts/introContext';
-import { useScrollToRef } from '@/app/hooks/useScroll';
+import { consoleLog } from '@/app/shared/utils/utilities';
+import { NavBarMenuType } from '@/app/types/NavBarMenuType';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import HamburgerOpenBtn from '@/app/components/navbar/hamburger/HamburgerOpenBtn';
+import HamburgerCloseBtn from '@/app/components/navbar/hamburger/HamburgerCloseBtn';
+import HamburgerLink from '@/app/components/navbar/hamburger/HamburgerLink';
+
+/** Propsの型定義 */
+type HamburgerMenuProps = {
+    menuList: Array<NavBarMenuType>;
+}
 
 /**
  * 矢印サブコンポーネント
  * @returns JSX
  */
 const ArrowIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6" aria-hidden="true">
+    <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        fill="none" 
+        viewBox="0 0 24 24" 
+        strokeWidth="1.5" 
+        stroke="currentColor" 
+        className="w-6 h-6" 
+        aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
     </svg>
 );
@@ -19,35 +34,26 @@ const ArrowIcon = () => (
  * ハンバーガーメニューコンポーネント
  * @returns JSX
  */
-const HamburgerMenu = () => {
+const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
+    menuList
+}) => {
     // state
     const [isOpen, setIsOpen] = useState(false);
-    // Context
-    const { introData, refData } = useIntroData();
-    // hooks
-    const aboutScrollToRef = useScrollToRef(refData?.aboutRef);
-    const careerScrollToRef = useScrollToRef(refData?.careerRef);
-    const skillsScrollToRef = useScrollToRef(refData?.skillsRef);
-    const contactScrollToRef = useScrollToRef(refData?.contactRef);
     // CSS
-    const navClass = 
-        `z-40 top-0 text-left fixed bg-lblue left-0 w-full h-screen flex flex-col justify-start pt-24 px-3 ease-linear duration-300 
-        ${isOpen ? '' : 'top-[-100%]'}`;
-    // Item
-    const navItems = [
-        { action: aboutScrollToRef,   label: introData?.navbar_data.about_name },
-        { action: careerScrollToRef,  label: introData?.navbar_data.career_name },
-        { action: skillsScrollToRef,  label: introData?.navbar_data.skills_name },
-        { action: contactScrollToRef, label: introData?.navbar_data.contact_name }
-    ];
-    
+    const baseClass = ['z-40', 'top-0', 'left-0', 'fixed', 'w-full', 'h-screen', 'pt-24', 'px-3', { 'top-[-100%]': !isOpen }];
+    const textClass      = ['text-left'];
+    const colorClass     = ['bg-lblue'];
+    const animationClass = ['ease-linear', 'duration-300'];
+    const flexClass      = ['flex', 'flex-col', 'justify-start'];
+    const navClass = classNames(baseClass, textClass, colorClass, animationClass, flexClass);
     // handle
     const toggleMenu = () => {
         setIsOpen(prevState => !prevState);
     };
 
     // エラーハンドリング
-    if (!introData || !introData.navbar_data || !refData) {
+    if (!Array.isArray(menuList) || menuList.length === 0) {
+        consoleLog("[HamburgerMenu]: " + MESSAGES.ERRORS.DATA_ERROR);
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
     }
 
@@ -56,49 +62,29 @@ const HamburgerMenu = () => {
             {/* nav */}
             <nav className={navClass}>
                 <div className="absolute top-10 right-10 w-10 h-10">
-                    <button 
-                        role="button"
-                        aria-label="メニューを閉じる"
-                        onClick={toggleMenu}>
-                        <div className="w-10 h-0.5 bg-dblue transform rotate-45"></div>
-                        <div className="w-10 h-0.5 bg-dblue transform -rotate-45"></div>
-                    </button>
+                    <HamburgerCloseBtn
+                        onClick={toggleMenu}
+                        ariaLabel="メニューを閉じる" />
                 </div>
-                <ul 
-                    className=""
-                    role="menu">
-                        {navItems.map((item) => (
-                            <li 
-                                key={item.label} 
-                                role="menuitem"
-                                className="flex justify-between content-center border-b-2 border-dashed border-dblue hover:bg-hoverdblue" 
+                <ul role="menu">
+                        {menuList.map((menu) => (
+                            <HamburgerLink
+                                key={menu.label}
+                                label={menu.label}
                                 onClick={() => {
-                                    item.action();
+                                    menu.action();
                                     toggleMenu();
-                                }}>
-                                <div className="pl-10 xs:pl-20 ssm:pl-32 py-5 text-2xl inline-block">
-                                    {item.label}
-                                </div>
-                                <div className="pr-8 py-5">
-                                    <ArrowIcon />
-                                </div>
-                            </li>
+                                }}
+                                iconComponent={<ArrowIcon />} />
                         ))}
                 </ul>
             </nav>
 
             {/* humbergerbutton */}
             {!isOpen && (
-                <button
-                    role="button"
-                    type="button"
+                <HamburgerOpenBtn 
                     onClick={toggleMenu}
-                    aria-label="メニューを開く"
-                    className="z-50 w-10 h-10 space-y-2 mr-7">
-                    <div className="w-8 h-0.5 bg-dblue "></div>
-                    <div className="w-8 h-0.5 bg-dblue mt-1.5"></div>
-                    <div className="w-8 h-0.5 bg-dblue mt-1.5"></div>
-                </button>
+                    ariaLabel="メニューを開く" />
             )}
         </>
     );

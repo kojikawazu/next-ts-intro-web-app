@@ -1,65 +1,46 @@
 import React from 'react';
-
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { useIntroData } from '@/app/contexts/introContext';
-import { NavBarType } from '@/app/types/NavbarType';
-import { useScrollToRef } from '@/app/hooks/useScroll';
+import { consoleLog } from '@/app/shared/utils/utilities';
+import { NavBarMenuType } from '@/app/types/NavBarMenuType';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import NormalHMenuLink from '@/app/components/navbar/normal/NormalHeaderMenuLink';
+
+/** Propsの型定義 */
+type NormalMenuProps = {
+    menuList: Array<NavBarMenuType>;
+}
 
 /**
  * NormalMenuコンポーネント
  * @returns JSX
  */
-const NormalMenu = () => {
-    // Context
-    const { introData, refData } = useIntroData();
-    // hooks
-    const aboutScrollToRef   = useScrollToRef(refData?.aboutRef);
-    const careerScrollToRef  = useScrollToRef(refData?.careerRef);
-    const skillsScrollToRef  = useScrollToRef(refData?.skillsRef);
-    const contactScrollToRef = useScrollToRef(refData?.contactRef);
-    // styles
-    const borderColorStyles = "border-black";
-    const btnStyles         = "hover:text-gray-500";
-
+const NormalMenu: React.FC<NormalMenuProps> = ({
+    menuList
+}) => { 
     // エラーハンドリング
-    if (!introData || !introData.navbar_data || !refData) {
+    if (!Array.isArray(menuList) || menuList.length === 0) {
+        consoleLog("[NormalMenu]: " + MESSAGES.ERRORS.DATA_ERROR);
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
     }
-
-    const navBarData: NavBarType = introData.navbar_data;
 
     return (
         <>
             <div className="flex mt-3 mr-3 border-black">
-                <div className={`px-6 border-r ${borderColorStyles}`}>
-                    <button
-                        type="button"
-                        aria-label="Navigate to About section"
-                        className={`${btnStyles}`}
-                        onClick={aboutScrollToRef}>{navBarData.about_name}</button>
-                </div>
-                <div className={`px-6 border-r ${borderColorStyles}`}>
-                    <button 
-                        type="button"
-                        aria-label="Navigate to Career section" 
-                        className={`${btnStyles}`}
-                        onClick={careerScrollToRef}>{navBarData.career_name}</button>
-                </div>
-                <div className={`px-6 border-r ${borderColorStyles}`}>
-                    <button 
-                        type="button" 
-                        aria-label="Navigate to Skills section"
-                        className={`${btnStyles}`}
-                        onClick={skillsScrollToRef}>{navBarData.skills_name}</button>
-                </div>
-                <div className={`px-6 ${borderColorStyles}`}>
-                    <button 
-                        type="button"
-                        aria-label="Navigate to Contact section"
-                        className={`${btnStyles}`}
-                        onClick={contactScrollToRef}>{navBarData.contact_name}</button>
-                </div>
+                {menuList.map((menu, index) => {
+                    const isLastItem = menuList.length - 1 !== index;
+                    const menuItemStyle = `px-6 ${isLastItem ? "border-r border-black" : "border-black"}`;
+                    const btnStyles = "hover:text-gray-500";
+                    
+                    return (
+                        <NormalHMenuLink
+                            key={menu.label}
+                            menuClass={menuItemStyle}
+                            ariaLabel={`Navigate to ${menu.ariaLabel} section`}
+                            btnClass={btnStyles}
+                            onClick={menu.action}
+                            btnLabel={menu.label} />
+                    );
+                })}
             </div>
         </>
     );

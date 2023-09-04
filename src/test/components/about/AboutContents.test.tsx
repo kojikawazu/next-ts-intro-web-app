@@ -1,8 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { IntroDataProvider } from '@/app/contexts/introContext';
 import AboutContents from '@/app/components/about/AboutContents';
-import { mockInitialData, mockRefData } from '@/test/mocks/mockData';
+import { mockInitialData } from '@/test/mocks/mockData';
 
 // Types
 type MockedImageProps = {
@@ -12,16 +11,15 @@ type MockedImageProps = {
 
 // Mocks
 jest.mock('next/image', () => {
-    return function MockedImage({ src, alt }: MockedImageProps) {
+    return function MockedImage({ src, alt, ...rest }: MockedImageProps) {
         // eslint-disable-next-line @next/next/no-img-element
-        return <img src={src} alt={alt} />;
+        return <img src={src} alt={alt} {...rest} />;
     };
 });
 
 /** AboutContentsコンポーネントテスト */
 describe('<AboutContents />', () => {
     const mockImageUrl = 'https://example.com/profile.jpg';
-    const expectedUrl = `http://localhost/_next/image?url=${encodeURIComponent(mockImageUrl)}&w=3840&q=75`;
 
     /** 正常系 */
     /** ----------------------------------------------------------------------------------- */
@@ -29,21 +27,17 @@ describe('<AboutContents />', () => {
     describe('<AboutContents /> - Positive Scenarios', () => {
         it('renders the component with the provided image URL', () => {
             const { getByAltText } = render(
-                <IntroDataProvider initialData={mockInitialData} initialRefData={mockRefData}>
-                    <AboutContents intro_img_url={mockImageUrl} />
-                </IntroDataProvider>
+                <AboutContents aboutData={mockInitialData.about_data} introImgUrl={mockImageUrl} />
             );
             
             const imageElement = getByAltText('Profile background image') as HTMLImageElement;
             expect(imageElement).toBeInTheDocument();
-            expect(imageElement.src).toBe(expectedUrl);
+            expect(imageElement.src).toBe(mockImageUrl);
         });
 
         it('renders the ProfileCard and ProfileContentsCard', () => {
             const { queryByTestId } = render(
-                <IntroDataProvider initialData={mockInitialData} initialRefData={mockRefData}>
-                    <AboutContents intro_img_url={mockImageUrl} />
-                </IntroDataProvider>
+                <AboutContents aboutData={mockInitialData.about_data} introImgUrl={mockImageUrl} />
             );
             
             // ProfileCard のトップレベルエレメントに `data-testid="profile-card"` を追加することを想定

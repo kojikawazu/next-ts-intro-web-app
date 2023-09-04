@@ -1,84 +1,88 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-
 import { MESSAGES } from '@/app/shared/constants/constants';
 import ProfileCard from '@/app/components/about/ProfileCard';
-import { useIntroData } from '@/app/contexts/introContext';
-
-// Mocks
-jest.mock('@/app/contexts/introContext', () => ({
-  useIntroData: jest.fn(),
-}));
+import { mockInitialData } from '@/test/mocks/mockData';
 
 /** ProfileCardコンポーネントテスト */
 describe('<ProfileCard />', () => {
-    /** テストデータ */
-    const mockAboutData = {
-        intro_icon_url: '/path/to/icon.jpg',
-        intro_name: 'John Doe',
-        intro_x_url: '/link-to-x',
-        intro_x_img: '/path/to/x-img.jpg',
-        intro_github_url: '/link-to-github',
-        intro_github_img: '/path/to/github-img.jpg',
+    /** Mockデータ */
+    const mockNegativeProfileData = {
+        about_name: "Test Name",
+        about_icon_url: "Test Icon URL",
+        about_img_url: "Test Image URL",
+        sns_list: [],
+        about_contents: [],
     };
-
-    /** 各テストの前準備 */
-    beforeEach(() => {
-        (useIntroData as jest.Mock).mockReturnValue({
-            introData: { about_data: mockAboutData },
-        });
-    });
-
-    /** 各テストの後処理 */
-    afterEach(() => {
-        jest.clearAllMocks();
-    });
     
     /** 正常系 */
     /** ----------------------------------------------------------------------------------- */
 
-    describe('<ProfileCard /> - Positive Scenarios', () => {
+    describe('Positive Scenarios', () => {
         it('renders the provided about_data', () => {
-            render(<ProfileCard />);
+            render(<ProfileCard profileData={mockInitialData.about_data} />);
 
-            const iconElement = screen.getByAltText('about_icon');
+            const iconElement = screen.getByAltText('profile_icon');
             expect(iconElement).toBeInTheDocument();
 
-            const nameElement = screen.getByText(mockAboutData.intro_name);
+            const nameElement = screen.getByText(mockInitialData.about_data.about_name);
             expect(nameElement).toBeInTheDocument();
 
-            const xIconElement = screen.getByAltText('skill_icon_x');
-            expect(xIconElement).toBeInTheDocument();
+            const sample01IconElement = screen.getByAltText('sample01_image');
+            expect(sample01IconElement).toBeInTheDocument();
 
-            const githubIconElement = screen.getByAltText('skill_icon_github');
-            expect(githubIconElement).toBeInTheDocument();
+            const sample02IconElement = screen.getByAltText('sample02_image');
+            expect(sample02IconElement).toBeInTheDocument();
         });
 
         it('renders the correct links for icons', () => {
-            render(<ProfileCard />);
+            render(<ProfileCard profileData={mockInitialData.about_data} />);
             
-            const xLinkElement = screen.getByRole('link', { name: /skill_icon_x/ });
-            expect(xLinkElement).toHaveAttribute('href', mockAboutData.intro_x_url);
+            const xLinkElement = screen.getByRole('link', { name: /sample01_image/ });
+            expect(xLinkElement).toHaveAttribute('href', mockInitialData.about_data.sns_list[0].sns_url);
         
-            const githubLinkElement = screen.getByRole('link', { name: /skill_icon_github/ });
-            expect(githubLinkElement).toHaveAttribute('href', mockAboutData.intro_github_url);
+            const githubLinkElement = screen.getByRole('link', { name: /sample02_image/ });
+            expect(githubLinkElement).toHaveAttribute('href', mockInitialData.about_data.sns_list[1].sns_url);
         });
     });
 
     /** 異常系 */
     /** ----------------------------------------------------------------------------------- */
 
-    describe('<ProfileCard /> - Negative Scenarios', () => {
-        it('renders the error component when no data is provided', () => {
-            (useIntroData as jest.Mock).mockReturnValue({});
-            render(<ProfileCard />);
+    describe('Negative Scenarios', () => {
+        it('renders the error component when sns_list data is provided', () => {
+            /** Mockデータ */
+            const mockNegativeProfileData = {
+                about_name: "Test Name",
+                about_icon_url: "/Test_Icon_URL",
+                about_img_url: "/Test_Image_URL",
+                sns_list: [],
+                about_contents: [],
+            };
+
+            render(<ProfileCard profileData={mockNegativeProfileData} />);
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
         });
 
-        it('renders the error component when about_data is missing', () => {
-            (useIntroData as jest.Mock).mockReturnValue({ introData: {} });
-            render(<ProfileCard />);
-            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+        it('renders the error component when about_name data is provided', () => {
+            /** Mockデータ */
+            const mockNegativeProfileData = {
+                about_name: "",
+                about_icon_url: "/Test_Icon_URL",
+                about_img_url: "/Test_Image_URL",
+                sns_list: [
+                    {
+                        sns_name: "sample01",
+                        sns_url: "/sample.com",
+                        sns_img: "/sample_img.jpg"
+                    },
+                ],
+                about_contents: [],
+            };
+
+            render(<ProfileCard profileData={mockNegativeProfileData} />);
+            const nameElement = screen.getByText("unknown name");
+            expect(nameElement).toBeInTheDocument();
         });
     });
 });

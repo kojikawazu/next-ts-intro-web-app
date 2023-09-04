@@ -1,32 +1,34 @@
 import React from 'react';
-
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { useIntroData } from '@/app/contexts/introContext';
-import { AboutType } from '@/app/types/AboutType';
+import { consoleLog } from '@/app/shared/utils/utilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { isEnvTest } from '@/app/shared/utils/utilities';
+
+/** Propsの型定義 */
+type ProfileContentsCardProps = {
+  profileContents: Array<string>;
+}
 
 /**
  * ProfileContentsカードコンポーネント
  * @returns JSX
  */
-const ProfileContentsCard = () => {
-  // Context
-  const { introData } = useIntroData();
-
+const ProfileContentsCard: React.FC<ProfileContentsCardProps> = ({
+  profileContents,
+}) => {
   // エラーハンドリング
-  if (!introData || !introData.about_data) {
-    return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
+  if (!Array.isArray(profileContents) || profileContents.length === 0) {
+      consoleLog("[ProfileContentsCard]: " + MESSAGES.ERRORS.DATA_ERROR);
+      return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
   }
-
-  const aboutData: AboutType = introData.about_data;
+  const className = "text-xs sm:text-sm md:text-base";
 
   return (
-    <div 
-      className="p-8 pb-4 text-xs sm:text-sm md:text-base" 
-      {...(process.env.NODE_ENV === 'test' ? { "data-testid": "profile-contents-card" } : {})}>
-      {aboutData.intro_contents.map((content) => (
+    <div className={`p-8 pb-4 ${className}`}
+      {...(isEnvTest() ? { "data-testid": "profile-contents-card" } : {})}>
+      {profileContents.map((content, index) => (
           <div 
-            key={content}
+            key={index}
             className="mb-5 last:mb-0">
               <div>{content}</div>
           </div>

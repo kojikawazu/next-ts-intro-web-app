@@ -1,11 +1,14 @@
 /** About型定義 */
 export interface AboutType {
-    intro_name: string;
-    intro_icon_url: string;
-    intro_img_url: string;
-    intro_x_url: string;
-    intro_github_url: string;
-    intro_x_img: string;
-    intro_github_img: string;
-    intro_contents: Array<string>;
+    about_name: string;
+    about_icon_url: string;
+    about_img_url: string;
+    sns_list: Array<SnsLinkType>;
+    about_contents: Array<string>;
+}
+
+export interface SnsLinkType {
+    sns_name: string;
+    sns_url: string;
+    sns_img: string;
 }

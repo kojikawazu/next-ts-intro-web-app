@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
-import { render } from '@testing-library/react';
-
+import { render, screen } from '@testing-library/react';
 import { mockInitialData, mockRefData } from '@/test/mocks/mockData';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { useIntroData } from '@/app/contexts/introContext';
@@ -35,12 +34,12 @@ describe('<About />', () => {
     /** 正常系 */
     /** ----------------------------------------------------------------------------------- */
 
-    describe('<About /> - Positive Scenarios', () => {
+    describe('Positive Scenarios', () => {
         it('renders the AboutContents component when data is available', () => {
-            const { getByText, getByAltText } = render(<About />);
+            render(<About />);
 
-            expect(getByText('About')).toBeInTheDocument();
-            expect(getByAltText('Profile background image')).toBeInTheDocument();
+            expect(screen.getByText('About')).toBeInTheDocument();
+            expect(screen.getByAltText('Profile background image')).toBeInTheDocument();
         });
     });
 
@@ -54,9 +53,8 @@ describe('<About />', () => {
                 refData: null 
             });
 
-            const { getByText } = render(<About />);
-
-            expect(getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            render(<About />);
+            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
         });
     });
 });

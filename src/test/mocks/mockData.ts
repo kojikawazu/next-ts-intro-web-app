@@ -13,14 +13,22 @@ export const mockInitialData: IntroDataType = {
         hero_img_url: "https://example.com/hero.jpg",
     },
     about_data: {
-        intro_name: "John Doe",
-        intro_icon_url: "https://example.com/icon.jpg",
-        intro_img_url: "https://example.com/img.jpg",
-        intro_x_url: "https://example.com",
-        intro_github_url: "https://github.com",
-        intro_x_img: "https://example.com/x_img.jpg",
-        intro_github_img: "https://example.com/github_img.jpg",
-        intro_contents: ["Introduction content 1", "Introduction content 2"]
+        about_name: "John Doe",
+        about_icon_url: "https://example.com/icon.jpg",
+        about_img_url: "https://example.com/img.jpg",
+        sns_list: [
+            {
+                sns_name: "sample01",
+                sns_url: "https://sample.com",
+                sns_img: "https://example.com/sample_img.jpg"
+            },
+            {
+                sns_name: "sample02",
+                sns_url: "https://sample.com",
+                sns_img: "https://example.com/sample_img.jpg"
+            }
+        ],
+        about_contents: ["Introduction content 1", "Introduction content 2"]
     },
     career_title_data: {
         career_title_period: "2020-2023",

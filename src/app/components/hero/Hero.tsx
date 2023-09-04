@@ -1,9 +1,9 @@
 import React from 'react';
-import { Image } from 'next/dist/client/image-component';
 import { MESSAGES } from '@/app/shared/constants/constants';
+import { consoleLog } from '@/app/shared/utils/utilities';
 import { useIntroData } from '@/app/contexts/introContext';
-import { HeroType } from '@/app/types/IntroType';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import HeroBackground from './background/HeroBackground';
 
 /**
  * Heroコンポーネント
@@ -15,18 +15,16 @@ const Hero = () => {
 
   // エラーハンドリング
   if (!introData || !introData.hero_data) {
+    consoleLog("[Hero]: " + MESSAGES.ERRORS.DATA_ERROR);
     return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
   }
-  const heroData: HeroType = introData.hero_data;
+  const heroData = introData.hero_data;
 
   return (
-    <div className='relative max-w-full h-screen'>
-      <Image 
-        src={heroData.hero_img_url} 
-        alt="hero_background"
-        fill />
-      <div className='absolute top-0 left-0 w-full h-screen bg-hero'></div>
-    </div>
+    <HeroBackground 
+      url={heroData.hero_img_url}
+      alt="hero_background"
+      coverBackgroundColor="bg-hero" />
   );
 };
 

@@ -22,7 +22,7 @@ describe('<Hero />', () => {
         });
     }); 
     
-    describe('<Hero /> - Positive Scenarios', () => {
+    describe('Positive Scenarios', () => {
         it('renders the hero image', () => {
             render(<Hero />);
 
@@ -31,7 +31,7 @@ describe('<Hero />', () => {
         });
     });
 
-    describe('<Hero /> - Negative Scenarios', () => {
+    describe('Negative Scenarios', () => {
         it('renders ErrorComponent when introData is missing', () => {
             (useIntroData as jest.Mock).mockReturnValue({
                 introData: null,
@@ -40,6 +40,14 @@ describe('<Hero />', () => {
             render(<Hero />);
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
         });
-    
+
+        it('renders ErrorComponent when hero_data is missing', () => {
+            (useIntroData as jest.Mock).mockReturnValue({
+                introData: { someOtherData: {} },
+            });
+        
+            render(<Hero />);
+            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+        });
     });
 });

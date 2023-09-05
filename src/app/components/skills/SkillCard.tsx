@@ -1,41 +1,67 @@
 import React from 'react';
-import { Image } from 'next/dist/client/image-component';
+import Image from 'next/image';
+import classNames from 'classnames';
+import { MESSAGES } from '@/app/shared/constants/constants';
+import { consoleLog } from '@/app/shared/utils/utilities';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
 import { SkillsCardType } from '@/app/types/SkillsType';
 
+/** 定数 */
+const SKILL_CARD_IMAGE_DEFAULT_SIZE  = 50;
+const SKILL_CARD_IMAGE_DEFAULT_SCALE = "10%";
+const IMAGE_SCALE_REGEX              = /^\d{1,2}%$/;
+
 /** Propsの型定義 */
-type Props = {
+type SkillCardProps = {
     skill: SkillsCardType;
+    imageAlt?: string;
+    imageSize?: number;
+    imageScale?: string;
 }
 
 /**
  * スキルカードコンポーネント
- * @param skill スキルデータ
  * @returns JSX
  */
-const SkillCard = (props: Props) => {
-    const { skill } = props;
+const SkillCard: React.FC<SkillCardProps> = ({
+    skill,
+    imageAlt   = "skill_icon",
+    imageSize  = SKILL_CARD_IMAGE_DEFAULT_SIZE,
+    imageScale = SKILL_CARD_IMAGE_DEFAULT_SCALE
+}) => {
+    // エラーハンドリング
+    if (!skill || !skill.skills_card_icon || !skill.skills_card_name || !skill.skills_card_contents) {
+        consoleLog("[SkillCard]: " + MESSAGES.ERRORS.DATA_ERROR);
+        return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
+    }
 
     // css
-    let classAppend = "flex justify-center items-center m-2 p-2 rounded-2xl";
-    classAppend = `${classAppend} w-[210px] xs:w-[250px] ssssm:w-[280px] sssm:w-[350px] h-[110px]`;
-    classAppend = `${classAppend} text-xxs xxs:text-xs xs:text-xs ssssm:text-sm sssm:text-base`;
-    classAppend = `${classAppend} bg-white text-black`;
+    const baseClasses      = ['m-2', 'p-2', 'rounded-2xl'];
+    const flexClasses      = ['flex', 'justify-center', 'items-center'];
+    const sizeClasses      = ['w-[210px]', 'xs:w-[250px]', 'ssssm:w-[280px]', 'sssm:w-[350px]', 'h-[130px]'];
+    const textSizeClasses  = ['text-xxs', 'xxs:text-xs', 'xs:text-xs', 'ssssm:text-sm', 'sssm:text-base'];
+    const colorClasses     = ['bg-white', 'text-black'];
+    const className        = classNames(baseClasses, flexClasses, sizeClasses, textSizeClasses, colorClasses);
+    const imageSizeValue   = (imageSize <= 0 ? SKILL_CARD_IMAGE_DEFAULT_SIZE : imageSize);
+    const imageScaleValue  = (IMAGE_SCALE_REGEX.test(imageScale) ? imageScale : SKILL_CARD_IMAGE_DEFAULT_SCALE);
 
     return (
-        <div className={`${classAppend}`}>
+        <div className={`${className}`}>
             <div className="basis-1/3">
-                <div className="flex justify-center items-center">
+                <figure className="flex justify-center items-center">
                     <Image
                         className="m-auto"
                         src={skill.skills_card_icon} 
-                        alt="skill_icon"
-                        width={50}
-                        height={50}
-                        sizes="10%" />  
-                </div>
+                        alt={imageAlt}
+                        width={imageSizeValue}
+                        height={imageSizeValue}
+                        sizes={imageScaleValue}
+                        placeholder="blur"
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iNTAiIGZpbGw9IiNDRUNFQ0UiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgZHk9Ii4zZW0iIHRleHQtYW5jaG9yPSJtaWRkbGUiPuODreODvOODh+OCo+ODs+OCsOS4rTwvdGV4dD4KPC9zdmc+" />  
+                </figure>
             </div>
             <div className="basis-2/3">
-                <div className="">
+                <div>
                     <h3 className="p-2 pt-0">
                         {skill.skills_card_name}
                     </h3>
@@ -48,4 +74,4 @@ const SkillCard = (props: Props) => {
     );
 };
 
-export default SkillCard;
+export default React.memo(SkillCard);

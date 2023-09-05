@@ -29,3 +29,48 @@ export const isValidSpecialCharacters = (text: string): boolean => {
     const specialCharsRegex = /[<>!@#$%^&*()_+\-=\[\]{}':"\\|,~]/;
     return !specialCharsRegex.test(text);
 }
+
+/**
+ * props検証(文字列)
+ * @param props 
+ * @param errorMessage 
+ * @returns エラーメッセージ or null
+ */
+export const validateStringProps = (props: string[], errorMessage: string): string | null => {
+    for (const prop of props) {
+        if (!prop) {
+        return errorMessage;
+        }
+    }
+    return null;
+};
+
+/**
+ * props検証(number型)
+ * @param props 
+ * @param errorMessage 
+ * @returns エラーメッセージ or null
+ */
+export const validateNumberProps = (props: (number | undefined)[], errorMessage: string): string | null => {
+    for (const prop of props) {
+      if (prop === null || prop === undefined) {
+        return errorMessage;
+      }
+    }
+    return null;
+};
+
+/**
+ * props検証(関数)
+ * @param props 
+ * @param errorMessage 
+ * @returns エラーメッセージ or null
+ */
+export const validateFunctionProps = (props: ((...args: any[]) => any)[] | undefined[], errorMessage: string): string | null => {
+    for (const prop of props) {
+      if (!prop) {
+        return errorMessage;
+      }
+    }
+    return null;
+};

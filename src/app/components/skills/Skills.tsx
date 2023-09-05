@@ -1,23 +1,24 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/consoleLog';
+import { consoleLog } from '@/app/shared/utils/utilities';
 import { useIntroData } from '@/app/contexts/introContext';
 import { useLoadLimitLogic } from '@/app/features/loadlimit/useLoadLimit';
 import { NavBarType } from '@/app/types/NavbarType';
 import { SkillsType } from '@/app/types/SkillsType';
 import Title from '@/app/components/common/Title';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
-import SkillCard from './SkillCard';
-import SkillsAndMore from './SkillsAndMore';
+import SkillCard from '@/app/components/skills/SkillCard';
+import SkillsAndMore from '@/app/components/skills/SkillsAndMore';
 
 /** ロード数 */
-const CURRENT_INDEX = 6;
+const CARD_ADDITION_COUNT = 6;
 
 /**
  * スキルコンポーネント
  * @returns JSX
  */
 const Skills = () => {
+  console.log("<Skills />");
   // Context
   const { introData, refData } = useIntroData();
   // hook
@@ -25,7 +26,7 @@ const Skills = () => {
 
   // エラーハンドリング
   if (!introData?.navbar_data || !introData?.skills_data || !refData) {
-    consoleLog("Skillsコンポーネントのデータが不足しています");
+    consoleLog("[Skills]: " + MESSAGES.ERRORS.DATA_ERROR);
     return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
   }
 
@@ -52,7 +53,8 @@ const Skills = () => {
       <div className="flex justify-center py-5 pb-12">
         <SkillsAndMore
           updateCardDisplayLimit={incrementWithLimit}
-          currentIndex={CURRENT_INDEX}
+          currentIndex={currentLoadSum}
+          cardAdditionCount={CARD_ADDITION_COUNT}
           cardTotal={skillsData.skills_cards.length}
           buttonLabel={skillsData.skills_more}
           />

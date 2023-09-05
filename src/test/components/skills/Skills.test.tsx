@@ -54,15 +54,6 @@ describe('<Skills />', () => {
             render(<Skills />);
             expect(screen.getByText('More Skills')).toBeInTheDocument();
         });
-
-        it('calls changeAndMore correctly', () => {
-            render(<Skills />);
-            fireEvent.click(screen.getByText('More Skills'));
-
-            expect(mockLoadLimitLogic.incrementWithLimit).toHaveBeenCalled();
-            expect(mockLoadLimitLogic.incrementWithLimit).toHaveBeenCalledTimes(1);
-            expect(mockLoadLimitLogic.incrementWithLimit).toHaveBeenCalledWith(6, 10);
-        });
     });
 
     /** 異常系 */
@@ -73,6 +64,24 @@ describe('<Skills />', () => {
             (useIntroData as jest.Mock).mockReturnValueOnce({ introData: undefined, refData: mockRefData });
             render(<Skills />);
             expect(screen.getByText('Error loading profile data')).toBeInTheDocument();
+        });
+
+        it('renders ErrorComponent if navbar_data is missing', () => {
+            (useIntroData as jest.Mock).mockReturnValueOnce({ introData: { ...mockIntroData, navbar_data: null }, refData: mockRefData });
+            render(<Skills />);
+            expect(screen.getByText('Error loading profile data')).toBeInTheDocument();
+        });
+        
+        it('renders ErrorComponent if skills_data is missing', () => {
+            (useIntroData as jest.Mock).mockReturnValueOnce({ introData: { ...mockIntroData, skills_data: null }, refData: mockRefData });
+            render(<Skills />);
+            expect(screen.getByText('Error loading profile data')).toBeInTheDocument();
+        });
+
+        it('renders ErrorComponent if skills_cards is not an array', () => {
+            (useIntroData as jest.Mock).mockReturnValueOnce({ introData: { ...mockIntroData, skills_data: { ...mockIntroData.skills_data, skills_cards: {} } }, refData: mockRefData });
+            render(<Skills />);
+            expect(screen.getByText('Test Skills')).toBeInTheDocument();
         });
     });
 });

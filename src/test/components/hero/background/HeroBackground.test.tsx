@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import HeroBackground from '@/app/components/hero/background/HeroBackground';
 
 /** HeroBackgroundコンポーネントテスト */
@@ -34,6 +35,21 @@ describe('<HeroBackground />', () => {
     
             const imageElement = screen.getByRole('img');
             expect(imageElement).toHaveAttribute('alt', 'hero background');
+        });
+    });
+
+    /** 異常系 */
+    /** ----------------------------------------------------------------------------------- */
+
+    describe('Negative Scenarios', () => {
+        it('displays an error message when provided with an empty url', () => {
+            render(<HeroBackground url="" coverBackgroundColor="bg-red-500" />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty coverBackgroundColor', () => {
+            render(<HeroBackground url="/path/to/image.jpg" coverBackgroundColor="" />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

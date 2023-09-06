@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
 import { validateFunctionProps } from '@/app/shared/utils/validateUtilities';
 import SkillsAndMore from '@/app/components/skills/SkillsAndMore';
@@ -63,9 +64,9 @@ describe('<SkillsAndMore />', () => {
 
     describe('Negative Scenarios', () => {
         it('logs an error when validateFunctionProps indicates a missing function', () => {
-            (validateFunctionProps as jest.Mock).mockReturnValueOnce("Missing function.");
+            (validateFunctionProps as jest.Mock).mockReturnValueOnce(MESSAGES.ERRORS.NOT_FUNCTIONS);
             render(<SkillsAndMore updateCardDisplayLimit={mockFn} currentIndex={0} cardAdditionCount={6} cardTotal={10} buttonLabel={LOAD_MORE} />);
-            expect(consoleLog).toHaveBeenCalledWith(expect.stringContaining('[SkillsAndMore]: Missing function.'));
+            expect(consoleLog).toHaveBeenCalledWith(expect.stringContaining(`[SkillsAndMore]: ${MESSAGES.ERRORS.NOT_FUNCTIONS}`));
         });
         
         it('does not invoke the updateCardDisplayLimit function when the button is disabled', () => {

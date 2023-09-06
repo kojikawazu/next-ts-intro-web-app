@@ -33,16 +33,14 @@ const SkillsAndMore: React.FC<SkillsAndMoreProps>  = ({
 
   // propsの検証
   useEffect(() => {
-    let error = validateFunctionProps([updateCardDisplayLimit], MESSAGES.ERRORS.NOT_FUNCTIONS);
-    if (!error) {
-      error = validateNumberProps([currentIndex, cardAdditionCount, cardTotal], MESSAGES.ERRORS.NOT_NUMBERS);
-    }
-    if (!error) {
-      error = validateStringProps([buttonLabel], MESSAGES.ERRORS.NOT_STRING);
-    }
+    setHasError(false);
+    const functionError = validateFunctionProps([updateCardDisplayLimit], MESSAGES.ERRORS.NOT_FUNCTIONS);
+    const numberError   = validateNumberProps([currentIndex, cardAdditionCount, cardTotal], MESSAGES.ERRORS.NOT_NUMBERS);
+    const stringError   = validateStringProps([buttonLabel], MESSAGES.ERRORS.NOT_STRING);
+    const errors = [functionError, numberError, stringError].filter(e => e !== null && e !== undefined);
 
-    if (error) {
-      consoleLog(`[SkillsAndMore]: ${error}`);
+    if (errors.length > 0) {
+      consoleLog(`[SkillsAndMore]: ${errors.join(' ')}`);
       setHasError(true);
     } else {
       setHasError(false);
@@ -69,7 +67,7 @@ const SkillsAndMore: React.FC<SkillsAndMoreProps>  = ({
   return (
     hasError 
     ? ( 
-      <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} /> 
+      <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> 
     )
     : (
       <button

@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import Skills from '@/app/components/skills/Skills';
 import { useIntroData } from '@/app/contexts/introContext';
 import { useLoadLimitLogic } from '@/app/features/loadlimit/useLoadLimit';
@@ -63,19 +64,31 @@ describe('<Skills />', () => {
         it('renders ErrorComponent if data is insufficient', () => {
             (useIntroData as jest.Mock).mockReturnValueOnce({ introData: undefined, refData: mockRefData });
             render(<Skills />);
-            expect(screen.getByText('Error loading profile data')).toBeInTheDocument();
+            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+        });
+
+        it('renders ErrorComponent if data is insufficient', () => {
+            (useIntroData as jest.Mock).mockReturnValueOnce({ introData: mockIntroData, refData: undefined });
+            render(<Skills />);
+            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+        });
+
+        it('renders ErrorComponent if data is insufficient', () => {
+            (useIntroData as jest.Mock).mockReturnValueOnce({ introData: {}, refData: mockRefData });
+            render(<Skills />);
+            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
         });
 
         it('renders ErrorComponent if navbar_data is missing', () => {
             (useIntroData as jest.Mock).mockReturnValueOnce({ introData: { ...mockIntroData, navbar_data: null }, refData: mockRefData });
             render(<Skills />);
-            expect(screen.getByText('Error loading profile data')).toBeInTheDocument();
+            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
         });
         
         it('renders ErrorComponent if skills_data is missing', () => {
             (useIntroData as jest.Mock).mockReturnValueOnce({ introData: { ...mockIntroData, skills_data: null }, refData: mockRefData });
             render(<Skills />);
-            expect(screen.getByText('Error loading profile data')).toBeInTheDocument();
+            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
         });
 
         it('renders ErrorComponent if skills_cards is not an array', () => {

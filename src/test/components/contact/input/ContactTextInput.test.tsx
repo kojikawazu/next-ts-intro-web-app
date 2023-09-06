@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import ContactTextInput from '@/app/components/contact/input/ContactTextInput';
 
 /** ContactTextInputのテストコード */
@@ -58,6 +59,81 @@ describe('<ContactTextInput />', () => {
     
             fireEvent.change(getByPlaceholderText('Test Placeholder'), { target: { value: 'New Value' } });
             expect(handleChange).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    /** 異常系 */
+    /** ----------------------------------------------------------------------------------- */
+
+    describe('Negative Scenarios', () => {
+        it('displays an error message when provided with an empty inputId', () => {
+            const props = {
+                inputId: "",
+                inputName: "testName",
+                inputType: "text",
+                inputValue: "",
+                inputStyle: "testStyle",
+                placeholder: "Test Placeholder",
+                onChange: () => {}
+            };
+            render( <ContactTextInput {...props} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty inputName', () => {
+            const props = {
+                inputId: "testId",
+                inputName: "",
+                inputType: "text",
+                inputValue: "",
+                inputStyle: "testStyle",
+                placeholder: "Test Placeholder",
+                onChange: () => {}
+            };
+            render( <ContactTextInput {...props} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty inputType', () => {
+            const props = {
+                inputId: "testId",
+                inputName: "testName",
+                inputType: "",
+                inputValue: "",
+                inputStyle: "testStyle",
+                placeholder: "Test Placeholder",
+                onChange: () => {}
+            };
+            render( <ContactTextInput {...props} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty inputStyle', () => {
+            const props = {
+                inputId: "testId",
+                inputName: "testName",
+                inputType: "text",
+                inputValue: "",
+                inputStyle: "",
+                placeholder: "Test Placeholder",
+                onChange: () => {}
+            };
+            render( <ContactTextInput {...props} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty placeholder', () => {
+            const props = {
+                inputId: "testId",
+                inputName: "testName",
+                inputType: "text",
+                inputValue: "",
+                inputStyle: "testStyle",
+                placeholder: "",
+                onChange: () => {}
+            };
+            render( <ContactTextInput {...props} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import ContactInput from '@/app/components/contact/input/ContactInput';
 
 /** ContactInputのテストコード */
@@ -59,6 +60,38 @@ describe('<ContactInput />', () => {
             );
 
             expect(queryByText('*')).toBeNull();
+        });
+    });
+
+    /** 異常系 */
+    /** ----------------------------------------------------------------------------------- */
+
+    describe('Negative Scenarios', () => {
+        it('displays an error message when provided with an empty inputId', () => {
+            render(
+                <ContactInput inputId="" labelName="Test Label" labelStyle="testStyle" isRequired={false}>
+                    <span>Child component</span>
+                </ContactInput>
+            );
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty labelName', () => {
+            render(
+                <ContactInput inputId="testId" labelName="" labelStyle="testStyle" isRequired={false}>
+                    <span>Child component</span>
+                </ContactInput>
+            );
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty labelStyle', () => {
+            render(
+                <ContactInput inputId="testId" labelName="Test Label" labelStyle="" isRequired={false}>
+                    <span>Child component</span>
+                </ContactInput>
+            );
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

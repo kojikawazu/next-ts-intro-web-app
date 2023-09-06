@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import ContactButton from '@/app/components/contact/input/ContactButton';
 
 /** ContactButtonのテストコード */
@@ -13,20 +14,19 @@ describe('<ContactButton />', () => {
           const { getByText } = render(
             <ContactButton btnType="button" btnName="Test Button" />
           );
-      
           expect(getByText('Test Button')).toBeInTheDocument();
         });
-      
-        it('fires the onClick event when clicked', () => {
-          const handleClick = jest.fn();
-      
-          const { getByText } = render(
-            <ContactButton btnType="button" btnName="Click Me" onClick={handleClick} />
-          );
-      
-          fireEvent.click(getByText('Click Me'));
-      
-          expect(handleClick).toHaveBeenCalledTimes(1);
+
+        it('renders with correct button type', () => {
+          const { getByLabelText } = render(<ContactButton btnType="submit" btnName="Test Button" />);
+          const button = getByLabelText('Test Button');
+          expect(button).toHaveAttribute('type', 'submit');
+        });
+
+        it('renders with correct default button type', () => {
+          const { getByLabelText } = render(<ContactButton btnName="Test Button" />);
+          const button = getByLabelText('Test Button');
+          expect(button).toHaveAttribute('type', 'submit');
         });
       
         it('applies default and custom class names', () => {
@@ -38,6 +38,16 @@ describe('<ContactButton />', () => {
           );
       
           expect(container.firstChild).toHaveClass('btn btn-primary bg-lblue p-3 w-3/4 ssm:w-[350px] h-[60px] rounded-xl shadow-lg custom-class');
+        });
+
+        it('applies default and custom default class names', () => {
+          const { container } = render(
+            <ContactButton 
+              btnType="button" 
+              btnName="Styled Button" />
+          );
+      
+          expect(container.firstChild).toHaveClass('btn btn-primary bg-lblue p-3 w-3/4 ssm:w-[350px] h-[60px] rounded-xl shadow-lg');
         });
       
         it('sets the correct aria-label', () => {
@@ -55,5 +65,27 @@ describe('<ContactButton />', () => {
       
           expect(getByLabelText('Test Button')).toBeInTheDocument();
         });
+
+        it('fires the onClick event when clicked', () => {
+          const handleClick = jest.fn();
+      
+          const { getByText } = render(
+            <ContactButton btnType="button" btnName="Click Me" onClick={handleClick} />
+          );
+      
+          fireEvent.click(getByText('Click Me'));
+      
+          expect(handleClick).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    /** 異常系 */
+    /** ----------------------------------------------------------------------------------- */
+
+    describe('Negative Scenarios', () => {
+      it('renders an error message when given an empty button name', () => {
+        render( <ContactButton btnType="button" btnName="" />);
+        expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+      });
     });
 });

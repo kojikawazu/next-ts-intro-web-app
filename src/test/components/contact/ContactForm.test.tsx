@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import ContactForm from '@/app/components/contact/ContactForm';
 
 /** ContactFormのテストコード */
@@ -91,7 +92,7 @@ describe('<ContactForm />', () => {
         });
     });
 
-     /** 異常系 */
+    /** 異常系 */
     /** ----------------------------------------------------------------------------------- */
 
     describe('Negative Scenarios', () => {
@@ -104,6 +105,94 @@ describe('<ContactForm />', () => {
             
             expect(mockValidate).toHaveBeenCalled();
             expect(mockSubmit).not.toHaveBeenCalled();
+        });
+
+        it('displays an error message when provided with an empty contact_name', () => {
+            const mockErrorContactData = {
+                contact_name: "",
+                contact_email: "contactEmail",
+                contact_contents: "contactContents",
+                contact_btn_name: "contactBtnName"
+            }
+            const props = {
+                contactData: mockErrorContactData,
+                contactName: "",
+                contactEmail: "",
+                contactMessage: "",
+                validationErrors: mockValidationErrors,
+                setContactName: jest.fn(),
+                setContactEmail: jest.fn(),
+                setContactMessage: jest.fn(),
+                validate: jest.fn()
+            };
+            render( <ContactForm {...props} /> );
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty contact_email', () => {
+            const mockErrorContactData = {
+                contact_name: "contactName",
+                contact_email: "",
+                contact_contents: "contactContents",
+                contact_btn_name: "contactBtnName"
+            }
+            const props = {
+                contactData: mockErrorContactData,
+                contactName: "",
+                contactEmail: "",
+                contactMessage: "",
+                validationErrors: mockValidationErrors,
+                setContactName: jest.fn(),
+                setContactEmail: jest.fn(),
+                setContactMessage: jest.fn(),
+                validate: jest.fn()
+            };
+            render( <ContactForm {...props} /> );
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty contact_contents', () => {
+            const mockErrorContactData = {
+                contact_name: "contactName",
+                contact_email: "contactEmail",
+                contact_contents: "",
+                contact_btn_name: "contactBtnName"
+            }
+            const props = {
+                contactData: mockErrorContactData,
+                contactName: "",
+                contactEmail: "",
+                contactMessage: "",
+                validationErrors: mockValidationErrors,
+                setContactName: jest.fn(),
+                setContactEmail: jest.fn(),
+                setContactMessage: jest.fn(),
+                validate: jest.fn()
+            };
+            render( <ContactForm {...props} /> );
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty contact_btn_name', () => {
+            const mockErrorContactData = {
+                contact_name: "contactName",
+                contact_email: "contactEmail",
+                contact_contents: "contactContents",
+                contact_btn_name: ""
+            }
+            const props = {
+                contactData: mockErrorContactData,
+                contactName: "",
+                contactEmail: "",
+                contactMessage: "",
+                validationErrors: mockValidationErrors,
+                setContactName: jest.fn(),
+                setContactEmail: jest.fn(),
+                setContactMessage: jest.fn(),
+                validate: jest.fn()
+            };
+            render( <ContactForm {...props} /> );
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

@@ -1,4 +1,8 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
+import { MESSAGES } from '@/app/shared/constants/constants';
+import { consoleLog } from '@/app/shared/utils/utilities';
+import { validateStringProps, validateFunctionProps } from '@/app/shared/utils/validateUtilities';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
 import { ContactType } from '@/app/types/ContactType';
 import { handleFieldChange } from '@/app/shared/utils/formUtilities';
 import { ValidationErrors } from '@/app/features/contact/contactSlice';
@@ -20,7 +24,7 @@ type ContactFormProps = {
     validate: () => boolean;
 }
 
-// 定数
+/** 定数 */ 
 const LABEL_STYLE = "text-gray-500 font-bold text-sm xs:text-base mb-1 pr-2 sssm:text-right";
 const INPUT_STYLE = "w-full sssm:w-11/12 border bg-gray-50 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5";
 
@@ -39,6 +43,23 @@ const ContactForm: React.FC<ContactFormProps> = ({
     setContactMessage,
     validate
 }) => {
+    // Props検証
+    const functionError = validateFunctionProps([
+        setContactName, 
+        setContactEmail, 
+        setContactMessage, 
+        validate], MESSAGES.ERRORS.NOT_FUNCTIONS);
+    const stringError   = validateStringProps([
+        contactData.contact_name, 
+        contactData.contact_email, 
+        contactData.contact_contents, 
+        contactData.contact_btn_name], MESSAGES.ERRORS.NOT_STRING);
+    const errors = [functionError, stringError].filter(e => e !== null);
+    if (errors.length > 0) {
+        consoleLog(`[ContactForm]: ${errors.join(' ')}`);
+        return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
+    }
+
     // actions
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();

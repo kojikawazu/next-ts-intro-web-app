@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import ContactFreeTextInput from '@/app/components/contact/input/ContactFreeTextInput';
 
 /** ContactFreeTextInputのテストコード */
@@ -89,4 +90,47 @@ describe('<ContactFreeTextInput />', () => {
         });
     });
 
+    /** 異常系 */
+    /** ----------------------------------------------------------------------------------- */
+
+    describe('Negative Scenarios', () => {
+        it('displays an error message when provided with an empty inputId', () => {
+            const props = {
+                inputId: "",
+                inputName: "testName",
+                inputValue: "testValue",
+                inputStyle: "testStyle",
+                rows: 5,
+                onChange: jest.fn(),
+            };
+            render(<ContactFreeTextInput {...props} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty inputName', () => {
+            const props = {
+                inputId: "testId",
+                inputName: "",
+                inputValue: "testValue",
+                inputStyle: "testStyle",
+                rows: 5,
+                onChange: jest.fn(),
+            };
+            render(<ContactFreeTextInput {...props} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty testStyle', () => {
+            const props = {
+                inputId: "testId",
+                inputName: "testName",
+                inputValue: "testValue",
+                inputStyle: "",
+                rows: 5,
+                onChange: jest.fn(),
+            };
+            render(<ContactFreeTextInput {...props} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+    });
 });

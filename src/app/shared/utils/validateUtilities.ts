@@ -66,11 +66,26 @@ export const validateNumberProps = (props: (number | undefined)[], errorMessage:
  * @param errorMessage 
  * @returns エラーメッセージ or null
  */
-export const validateFunctionProps = (props: ((...args: any[]) => any)[] | undefined[], errorMessage: string): string | null => {
+export const validateFunctionProps = (props: Array<((...args: any[]) => any) | undefined>, errorMessage: string): string | null => {
     for (const prop of props) {
       if (!prop) {
         return errorMessage;
       }
     }
     return null;
+};
+
+/**
+ * データ検証
+ * @param args 
+ * @param errorMessage
+ * @returns エラーメッセージ or null
+ */
+export const validateData = (args: any[], errorMessage: string): string | null => {
+  for (const arg of args) {
+      if (!arg) {
+        return errorMessage;
+      }
+  }
+  return null;
 };

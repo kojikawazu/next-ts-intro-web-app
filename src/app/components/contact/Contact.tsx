@@ -1,6 +1,7 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/consoleLog';
+import { consoleLog } from '@/app/shared/utils/utilities';
+import { validateStringProps, validateFunctionProps, validateData } from '@/app/shared/utils/validateUtilities';
 import { useIntroData } from '@/app/contexts/introContext';
 import Title from '@/app/components/common/Title';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
@@ -25,14 +26,33 @@ const Contact = () => {
         setMessage: setContactMessage,
         validate
      } = useContactLogic();
-    
-    // エラーハンドリング
-    if (!introData?.navbar_data || !introData?.contact_data || !refData) {
-        consoleLog("Contactコンポーネントのデータが不足しています");
-        return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
+
+
+     // Props検証
+     if (!introData || !refData) {
+        return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />;
     }
-    const {navbar_data: navbarData, contact_data: contactData} = introData;
+    const functionError = validateFunctionProps([
+        setContactName, 
+        setContactEmail, 
+        setContactMessage, 
+        validate], MESSAGES.ERRORS.NOT_FUNCTIONS);
+    const dataError = validateData([
+        introData.navbar_data,
+        introData.contact_data,
+    ], MESSAGES.ERRORS.NOT_DATA);
+    const stringError   = validateStringProps([
+        introData.contact_data.contact_name ?? "", 
+        introData.contact_data.contact_email ?? "", 
+        introData.contact_data.contact_contents ?? "", 
+        introData.contact_data.contact_btn_name ?? ""], MESSAGES.ERRORS.NOT_STRING);
+    const errors = [functionError, dataError, stringError].filter(e => e !== null);
+    if (errors.length > 0) {
+        consoleLog(`[Contact]: ${errors.join(' ')}`);
+        return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
+    }
     
+    const {navbar_data: navbarData, contact_data: contactData} = introData;
     return (
         <div 
             className="w-cfull bg-white" 

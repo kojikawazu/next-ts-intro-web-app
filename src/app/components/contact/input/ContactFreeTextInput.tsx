@@ -1,4 +1,8 @@
 import React, { ChangeEvent } from 'react';
+import { MESSAGES } from '@/app/shared/constants/constants';
+import { consoleLog } from '@/app/shared/utils/utilities';
+import { validateStringProps, validateNumberProps, validateFunctionProps } from '@/app/shared/utils/validateUtilities';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
 
 /** Propsの型定義 */
 type ContactFreeTextInputProps = {
@@ -24,6 +28,16 @@ const ContactFreeTextInput: React.FC<ContactFreeTextInputProps> = ({
     onChange,
     error
 }) => {
+    // Props検証
+    const functionError = validateFunctionProps([onChange], MESSAGES.ERRORS.NOT_FUNCTIONS);
+    const numberError   = validateNumberProps([rows], MESSAGES.ERRORS.NOT_NUMBERS);
+    const stringError   = validateStringProps([inputId, inputName, inputStyle], MESSAGES.ERRORS.NOT_STRING);
+    const errors = [functionError, numberError, stringError].filter(e => e !== null);
+    if (errors.length > 0) {
+        consoleLog(`[ContactFreeTextInput]: ${errors.join(' ')}`);
+        return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
+    }
+
     return (
         <>
             <textarea 

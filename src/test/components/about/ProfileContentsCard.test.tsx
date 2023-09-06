@@ -3,6 +3,13 @@ import { render, screen } from '@testing-library/react';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import ProfileContentsCard from '@/app/components/about/ProfileContentsCard';
 import { mockInitialData } from '@/test/mocks/mockData';
+import { isEnvTest } from '@/app/shared/utils/utilities';
+
+// Mocks
+jest.mock('@/app/shared/utils/utilities', () => ({
+    ...jest.requireActual('@/app/shared/utils/utilities'),
+    isEnvTest: jest.fn()
+}));
 
 /** ProfileContentsCardコンポーネントテスト */
 describe('<ProfileContentsCard/>', () => {
@@ -26,8 +33,14 @@ describe('<ProfileContentsCard/>', () => {
         it('renders the error component when profileContents is empty', () => {
             render(<ProfileContentsCard profileContents={[]} />);
             
-            const errorElement = screen.getByText(MESSAGES.ERRORS.DATA_LOADING);
+            const errorElement = screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS);
             expect(errorElement).toBeInTheDocument();
+        });
+
+        it('does not have data-testid attribute when isEnvTest returns false', () => {
+            (isEnvTest as jest.Mock).mockReturnValue(false);
+            const { queryByTestId } = render(<ProfileContentsCard profileContents={['sample content']} />);
+            expect(queryByTestId('profile-contents-card')).toBeNull();
         });
     });
 });

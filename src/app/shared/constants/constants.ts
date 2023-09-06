@@ -9,6 +9,7 @@ export const MESSAGES = {
         NOT_NUMBERS:        "A number is null or undefined.",
         NOT_STRING:         "A required string is missing.",
         NOT_DATA:           "Missing data.",
+        NOT_ARRAYS:         "Missing list.",
 
         COMPONENT_TITLE:  "コンポーネントでエラー発生",
         DATA_ERROR:       "データチェックでエラー発生しました。"

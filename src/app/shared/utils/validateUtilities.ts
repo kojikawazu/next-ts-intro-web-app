@@ -89,3 +89,18 @@ export const validateData = (args: any[], errorMessage: string): string | null =
   }
   return null;
 };
+
+/**
+ * 配列検証
+ * @param list 
+ * @param errorMessage 
+ * @returns エラーメッセージ or null
+ */
+export const validateArrays = (list: (Array<any> | undefined)[], errorMessage: string): string | null => {
+  for (const arg of list) {
+      if (!Array.isArray(arg) || arg.length === 0) {
+        return errorMessage;
+      }
+  }
+  return null;
+};

@@ -1,6 +1,7 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog, isEnvTest } from '@/app/shared/utils/utilities';
+import { validateStringProps, validateArrays } from '@/app/shared/utils/validateUtilities';
 import { AboutType } from '@/app/types/AboutType';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
 import SnsIconLink from '@/app/components/common/icons/SnsIconLink';
@@ -25,11 +26,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     profileIconSize = 120,
     snsIconSize = 15
 }) => {
-    // エラーハンドリング
-    if (!profileData.about_icon_url || !profileData.about_img_url ||
-        !Array.isArray(profileData.sns_list) || profileData.sns_list.length === 0) {
-        consoleLog("[ProfileCard]: " + MESSAGES.ERRORS.DATA_ERROR);
-        return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
+    // Props検証
+    const stringError = validateStringProps([profileData.about_icon_url, profileData.about_img_url], MESSAGES.ERRORS.NOT_STRING);
+    const arrayError  = validateArrays([profileData.sns_list], MESSAGES.ERRORS.NOT_ARRAYS)
+    const errors = [stringError, arrayError].filter(e => e !== null && e !== undefined);
+    if (errors.length > 0) {
+        consoleLog(`[ProfileCard]: ${errors.join(' ')}`);
+        return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
     const profileClassName = "text-sm sm:text-base md:text-lg";
     

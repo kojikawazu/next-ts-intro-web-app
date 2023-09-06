@@ -27,7 +27,7 @@ const ContactButton: React.FC<ContactButtonProps> = ({
   // Props検証
   //const functionError = validateFunctionProps([onClick], MESSAGES.ERRORS.NOT_FUNCTIONS);
   const stringError   = validateStringProps([btnName], MESSAGES.ERRORS.NOT_STRING);
-  const errors = [stringError].filter(e => e !== null);
+  const errors = [stringError].filter(e => e !== null && e !== undefined);
   if (errors.length > 0) {
     consoleLog(`[ContactButton]: ${errors.join(' ')}`);
     return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;

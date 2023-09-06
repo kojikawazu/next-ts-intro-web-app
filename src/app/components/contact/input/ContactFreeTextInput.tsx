@@ -32,7 +32,7 @@ const ContactFreeTextInput: React.FC<ContactFreeTextInputProps> = ({
     const functionError = validateFunctionProps([onChange], MESSAGES.ERRORS.NOT_FUNCTIONS);
     const numberError   = validateNumberProps([rows], MESSAGES.ERRORS.NOT_NUMBERS);
     const stringError   = validateStringProps([inputId, inputName, inputStyle], MESSAGES.ERRORS.NOT_STRING);
-    const errors = [functionError, numberError, stringError].filter(e => e !== null);
+    const errors = [functionError, numberError, stringError].filter(e => e !== null && e !== undefined);
     if (errors.length > 0) {
         consoleLog(`[ContactFreeTextInput]: ${errors.join(' ')}`);
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;

@@ -46,7 +46,7 @@ const Contact = () => {
         introData.contact_data.contact_email ?? "", 
         introData.contact_data.contact_contents ?? "", 
         introData.contact_data.contact_btn_name ?? ""], MESSAGES.ERRORS.NOT_STRING);
-    const errors = [functionError, dataError, stringError].filter(e => e !== null);
+    const errors = [functionError, dataError, stringError].filter(e => e !== null && e !== undefined);
     if (errors.length > 0) {
         consoleLog(`[Contact]: ${errors.join(' ')}`);
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;

@@ -54,7 +54,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
         contactData.contact_email, 
         contactData.contact_contents, 
         contactData.contact_btn_name], MESSAGES.ERRORS.NOT_STRING);
-    const errors = [functionError, stringError].filter(e => e !== null);
+    const errors = [functionError, stringError].filter(e => e !== null && e !== undefined);
     if (errors.length > 0) {
         consoleLog(`[ContactForm]: ${errors.join(' ')}`);
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;

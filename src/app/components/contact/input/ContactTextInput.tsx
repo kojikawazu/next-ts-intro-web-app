@@ -33,7 +33,7 @@ const ContactTextInput: React.FC<ContactTextInputProps> = ({
   // Props検証
   const functionError = validateFunctionProps([onChange], MESSAGES.ERRORS.NOT_FUNCTIONS);
   const stringError   = validateStringProps([inputId, inputName, inputType, inputStyle, placeholder], MESSAGES.ERRORS.NOT_STRING);
-  const errors = [functionError, stringError].filter(e => e !== null);
+  const errors = [functionError, stringError].filter(e => e !== null && e !== undefined);
   if (errors.length > 0) {
       consoleLog(`[ContactTextInput]: ${errors.join(' ')}`);
       return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;

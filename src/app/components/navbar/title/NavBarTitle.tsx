@@ -1,9 +1,13 @@
 import React from 'react';
+import { MESSAGES } from '@/app/shared/constants/constants';
+import { consoleLog } from '@/app/shared/utils/utilities';
+import { validateStringProps, validateFunctionProps } from '@/app/shared/utils/validateUtilities';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
 
 /** Propsの型定義 */
 type NavBarTitleProps = {
     ariaLabel: string;
-    btnClass: string;
+    btnClass?: string;
     onClick: () => void;
     label: string;
 }
@@ -14,10 +18,19 @@ type NavBarTitleProps = {
  */
 const NavBarTitle: React.FC<NavBarTitleProps> = ({
     ariaLabel,
-    btnClass,
+    btnClass = "",
     onClick,
     label
 }) => {
+    // Props検証
+    const functionError = validateFunctionProps([onClick], MESSAGES.ERRORS.NOT_FUNCTIONS);
+    const stringError   = validateStringProps([ariaLabel, label], MESSAGES.ERRORS.NOT_STRING);
+    const errors = [functionError, stringError].filter(e => e !== null && e !== undefined);
+    if (errors.length > 0) {
+        consoleLog(`[NavBarTitle]: ${errors.join(' ')}`);
+        return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
+    }
+
     return (
         <button 
             aria-label={ariaLabel}

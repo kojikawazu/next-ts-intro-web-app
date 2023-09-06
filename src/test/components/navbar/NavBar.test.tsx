@@ -39,6 +39,9 @@ describe('<NavBar />', () => {
             refData: mockRefData
         });
 
+        const mockScrollTop = jest.fn();
+        (useScrollTop as jest.Mock).mockReturnValue(mockScrollTop);
+
         (useScrollToRef as jest.Mock)
             .mockReturnValueOnce(mockAboutScroll)
             .mockReturnValueOnce(mockCareerScroll)

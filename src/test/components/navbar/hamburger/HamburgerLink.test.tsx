@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import HamburgerLink from '@/app/components/navbar/hamburger/HamburgerLink';
 
 /** HamburgerLinkコンポーネントのテスト */
@@ -40,6 +41,17 @@ describe('<HamburgerLink />', () => {
             const buttonElement = getByRole('button');
             fireEvent.click(buttonElement);
             expect(mockOnClick).toHaveBeenCalledTimes(1);
+        });
+    });
+
+     /** 異常系 */
+    /** ----------------------------------------------------------------------------------- */
+
+    describe('Negative Scenarios', () => {
+        it('displays an error message when provided with an empty label', () => {
+            const mockOnClick = jest.fn();
+            render(<HamburgerLink onClick={mockOnClick} label="" iconComponent={<ArrowIcon />} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

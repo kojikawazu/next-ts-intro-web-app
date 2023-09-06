@@ -1,4 +1,8 @@
 import React from 'react';
+import { MESSAGES } from '@/app/shared/constants/constants';
+import { consoleLog } from '@/app/shared/utils/utilities';
+import { validateStringProps, validateFunctionProps } from '@/app/shared/utils/validateUtilities';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
 
 /** Propsの型定義 */
 type HamburgerLinkProps = {
@@ -16,6 +20,15 @@ const HamburgerLink: React.FC<HamburgerLinkProps> = ({
   onClick,
   iconComponent
 }) => {
+  // Props検証
+  const functionError = validateFunctionProps([onClick], MESSAGES.ERRORS.NOT_FUNCTIONS);
+  const stringError   = validateStringProps([label], MESSAGES.ERRORS.NOT_STRING);
+  const errors = [functionError, stringError].filter(e => e !== null && e !== undefined);
+  if (errors.length > 0) {
+      consoleLog(`[HamburgerLink]: ${errors.join(' ')}`);
+      return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
+  }
+
   return (
       <li
         role="menuitem" 

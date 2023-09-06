@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import NormalHeaderMenuLink from '@/app/components/navbar/normal/NormalHeaderMenuLink';
 
 /** NormalHeaderMenuLinkコンポーネントテスト */
@@ -37,6 +38,57 @@ describe('<NormalHeaderMenuLink />', () => {
 
             fireEvent.click(getByText("テストボタン"));
             expect(mockOnClick).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    /** 異常系 */
+    /** ----------------------------------------------------------------------------------- */
+
+    describe('Negative Scenarios', () => {
+        it('displays an error message when provided with an empty menuClass', () => {
+            const mockOnClick = jest.fn();
+            render(<NormalHeaderMenuLink 
+                ariaLabel="テストメニュー"
+                btnClass="testBtnClass"
+                onClick={mockOnClick}
+                btnLabel="テストボタン"
+             />);
+            expect(screen.getByText("テストボタン")).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty ariaLabel', () => {
+            const mockOnClick = jest.fn();
+            render(<NormalHeaderMenuLink 
+                menuClass="testMenuClass"
+                ariaLabel=""
+                btnClass="testBtnClass"
+                onClick={mockOnClick}
+                btnLabel="テストボタン"
+             />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty btnClass', () => {
+            const mockOnClick = jest.fn();
+            render(<NormalHeaderMenuLink 
+                menuClass="testMenuClass"
+                ariaLabel="テストメニュー"
+                onClick={mockOnClick}
+                btnLabel="テストボタン"
+             />);
+            expect(screen.getByText("テストボタン")).toBeInTheDocument();
+        });
+
+        it('displays an error message when provided with an empty btnLabel', () => {
+            const mockOnClick = jest.fn();
+            render(<NormalHeaderMenuLink 
+                menuClass="testMenuClass"
+                ariaLabel="テストメニュー"
+                btnClass="testBtnClass"
+                onClick={mockOnClick}
+                btnLabel=""
+             />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

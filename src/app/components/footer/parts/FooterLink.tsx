@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
 import { validateStringProps, validateRefProps } from '@/app/shared/utils/validateUtilities';
@@ -33,11 +34,11 @@ const FooterLink: React.FC<FooterLinkProps> = ({
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
-    const baseStyles = "text-white";
-    const textStyles = "text-xxs sssm:text-xs sm:text-base md:text-xl";
-    const pmStyles   = "px-2 xs:px-3 ssssm:px-5 sm:px-8 mx-1 sm:mx-2 my-4 sm:my-8"; 
-    const conditionalStyles = isEnd ? "" : "border-r";
-    const styles = `${baseStyles} ${textStyles} ${pmStyles} ${conditionalStyles}`;
+    const baseStyles = ["text-white"];
+    const textStyles = ["text-xxs", "sssm:text-xs", "sm:text-base", "md:text-xl"];
+    const pmStyles   = ["px-2", "xs:px-3", "ssssm:px-5", "sm:px-8", "mx-1", "sm:mx-2", "my-4", "sm:my-8"]; 
+    const conditionalStyles = [isEnd ? "" : "border-r"];
+    const styles = classNames(baseStyles, textStyles, pmStyles, conditionalStyles);
     
     return (
         <div>

@@ -16,6 +16,7 @@ describe('<ContactFreeTextInput />', () => {
                 inputName: "testName",
                 inputValue: "testValue",
                 inputStyle: "testStyle",
+                errorStyle: "text-red-500",
                 rows: 5,
                 onChange: jest.fn(),
             };
@@ -38,6 +39,7 @@ describe('<ContactFreeTextInput />', () => {
                 inputName: "testName",
                 inputValue: "",
                 inputStyle: "testStyle",
+                errorStyle: "text-red-500",
                 rows: 5,
                 onChange,
             };
@@ -50,12 +52,13 @@ describe('<ContactFreeTextInput />', () => {
             expect(onChange).toHaveBeenCalledTimes(1);
         });
 
-        it('displays error if provided', () => {
+        it('displays provided error message', () => {
             const props = {
                 inputId: "testId",
                 inputName: "testName",
                 inputValue: "testValue",
                 inputStyle: "testStyle",
+                errorStyle: "text-red-500",
                 rows: 5,
                 onChange: jest.fn(),
                 error: "This is an error",
@@ -72,6 +75,7 @@ describe('<ContactFreeTextInput />', () => {
                 inputName: "testName",
                 inputValue: "testValue",
                 inputStyle: "testStyle",
+                errorStyle: "text-red-500",
                 rows: 5,
                 onChange: jest.fn(),
             };
@@ -88,6 +92,22 @@ describe('<ContactFreeTextInput />', () => {
                 expect(errorElement?.textContent).toBe('\u00A0');
             }
         });
+
+        it('applies default errorStyle when error is provided and errorStyle is not', () => {
+            const props = {
+                inputId: "testId",
+                inputName: "testName",
+                inputValue: "testValue",
+                inputStyle: "testStyle",
+                rows: 5,
+                onChange: jest.fn(),
+                error: "This is an error",
+            };
+
+            const { getByText } = render(<ContactFreeTextInput {...props} />);
+            const errorElement = getByText(props.error);
+            expect(errorElement).toHaveClass('text-red-500');
+        });
     });
 
     /** 異常系 */
@@ -100,6 +120,7 @@ describe('<ContactFreeTextInput />', () => {
                 inputName: "testName",
                 inputValue: "testValue",
                 inputStyle: "testStyle",
+                errorStyle: "text-red-500",
                 rows: 5,
                 onChange: jest.fn(),
             };
@@ -113,6 +134,7 @@ describe('<ContactFreeTextInput />', () => {
                 inputName: "",
                 inputValue: "testValue",
                 inputStyle: "testStyle",
+                errorStyle: "text-red-500",
                 rows: 5,
                 onChange: jest.fn(),
             };
@@ -120,12 +142,13 @@ describe('<ContactFreeTextInput />', () => {
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
 
-        it('displays an error message when provided with an empty testStyle', () => {
+        it('displays an error message when provided with an empty inputStyle', () => {
             const props = {
                 inputId: "testId",
                 inputName: "testName",
                 inputValue: "testValue",
                 inputStyle: "",
+                errorStyle: "text-red-500",
                 rows: 5,
                 onChange: jest.fn(),
             };

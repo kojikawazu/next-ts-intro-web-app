@@ -37,7 +37,7 @@ describe('<ContactButton />', () => {
               className="custom-class" />
           );
       
-          expect(container.firstChild).toHaveClass('btn btn-primary bg-lblue p-3 w-3/4 ssm:w-[350px] h-[60px] rounded-xl shadow-lg custom-class');
+          expect(container.firstChild).toHaveClass('btn btn-primary bg-lblue rounded-xl shadow-lg custom-class');
         });
 
         it('applies default and custom default class names', () => {
@@ -47,7 +47,7 @@ describe('<ContactButton />', () => {
               btnName="Styled Button" />
           );
       
-          expect(container.firstChild).toHaveClass('btn btn-primary bg-lblue p-3 w-3/4 ssm:w-[350px] h-[60px] rounded-xl shadow-lg');
+          expect(container.firstChild).toHaveClass('btn btn-primary bg-lblue rounded-xl shadow-lg');
         });
       
         it('sets the correct aria-label', () => {

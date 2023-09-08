@@ -10,7 +10,8 @@ type ContactFreeTextInputProps = {
     inputName: string;
     inputValue: string;
     inputStyle: string;
-    rows: number;
+    errorStyle?: string;
+    rows?: number;
     onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
     error?: string;
 }
@@ -24,15 +25,15 @@ const ContactFreeTextInput: React.FC<ContactFreeTextInputProps> = ({
     inputName,
     inputValue,
     inputStyle,
-    rows,
+    errorStyle = "text-red-500",
+    rows = 5,
     onChange,
     error
 }) => {
     // Props検証
     const functionError = validateFunctionProps([onChange], MESSAGES.ERRORS.NOT_FUNCTIONS);
-    const numberError   = validateNumberProps([rows], MESSAGES.ERRORS.NOT_NUMBERS);
     const stringError   = validateStringProps([inputId, inputName, inputStyle], MESSAGES.ERRORS.NOT_STRING);
-    const errors = [functionError, numberError, stringError].filter(e => e !== null && e !== undefined);
+    const errors = [functionError, stringError].filter(e => e !== null && e !== undefined);
     if (errors.length > 0) {
         consoleLog(`[ContactFreeTextInput]: ${errors.join(' ')}`);
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
@@ -48,7 +49,7 @@ const ContactFreeTextInput: React.FC<ContactFreeTextInputProps> = ({
                 onChange={onChange}
                 value={inputValue}
                 aria-describedby={error ? `${inputId}-error` : undefined} />
-            <p id={`${inputId}-error`} className="text-red-500 py-1">{error || '\u00A0'}</p>
+            <p id={`${inputId}-error`} className={`py-1 ${errorStyle}`}>{error || '\u00A0'}</p>
         </>
     );
 };

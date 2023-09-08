@@ -114,14 +114,13 @@ const ContactForm: React.FC<ContactFormProps> = ({
                         inputName="message"
                         inputValue={contactMessage}
                         inputStyle={INPUT_STYLE}
-                        rows={5}
                         onChange={(e) => handleFieldChange(e, setContactMessage)}
                         error={validationErrors.message} />
             </ContactInput>
             
             <div className="flex justify-center mb-6">
                 <ContactButton 
-                    btnType="submit"
+                    className="w-3/4 ssm:w-[350px] h-[60px] p-3 text-xs xs:text-sm sssm:text-base"
                     btnName={contactData.contact_btn_name} />
             </div>
         </form>

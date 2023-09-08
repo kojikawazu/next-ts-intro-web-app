@@ -18,6 +18,7 @@ describe('<ContactTextInput />', () => {
                     inputType="text"
                     inputValue=""
                     inputStyle="testStyle"
+                    errorStyle="text-red-500"
                     placeholder="Test Placeholder"
                     onChange={() => {}}
                 />
@@ -34,6 +35,7 @@ describe('<ContactTextInput />', () => {
                     inputType="text"
                     inputValue=""
                     inputStyle="testStyle"
+                    errorStyle="text-red-500"
                     placeholder="Test Placeholder"
                     onChange={() => {}}
                     error="Test Error"
@@ -52,6 +54,7 @@ describe('<ContactTextInput />', () => {
                     inputType="text"
                     inputValue=""
                     inputStyle="testStyle"
+                    errorStyle="text-red-500"
                     placeholder="Test Placeholder"
                     onChange={handleChange}
                 />
@@ -59,6 +62,26 @@ describe('<ContactTextInput />', () => {
     
             fireEvent.change(getByPlaceholderText('Test Placeholder'), { target: { value: 'New Value' } });
             expect(handleChange).toHaveBeenCalledTimes(1);
+        });
+
+        it('applies default errorStyle when errorStyle is not provided', () => {
+            const mockOnChange = jest.fn();
+    
+            const { container } = render(
+                <ContactTextInput 
+                    inputId="test-id"
+                    inputName="test-name"
+                    inputType="text"
+                    inputValue="test-value"
+                    inputStyle="test-style"
+                    placeholder="test-placeholder"
+                    onChange={mockOnChange}
+                    error="This is a test error."
+                />
+            );
+    
+            const errorElement = container.querySelector(`#test-id-error`);
+            expect(errorElement).toHaveClass('text-red-500');
         });
     });
 
@@ -73,6 +96,7 @@ describe('<ContactTextInput />', () => {
                 inputType: "text",
                 inputValue: "",
                 inputStyle: "testStyle",
+                errorStyle: "text-red-500",
                 placeholder: "Test Placeholder",
                 onChange: () => {}
             };
@@ -87,6 +111,7 @@ describe('<ContactTextInput />', () => {
                 inputType: "text",
                 inputValue: "",
                 inputStyle: "testStyle",
+                errorStyle: "text-red-500",
                 placeholder: "Test Placeholder",
                 onChange: () => {}
             };
@@ -101,6 +126,7 @@ describe('<ContactTextInput />', () => {
                 inputType: "",
                 inputValue: "",
                 inputStyle: "testStyle",
+                errorStyle: "text-red-500",
                 placeholder: "Test Placeholder",
                 onChange: () => {}
             };
@@ -115,6 +141,7 @@ describe('<ContactTextInput />', () => {
                 inputType: "text",
                 inputValue: "",
                 inputStyle: "",
+                errorStyle: "text-red-500",
                 placeholder: "Test Placeholder",
                 onChange: () => {}
             };
@@ -129,6 +156,7 @@ describe('<ContactTextInput />', () => {
                 inputType: "text",
                 inputValue: "",
                 inputStyle: "testStyle",
+                errorStyle: "text-red-500",
                 placeholder: "",
                 onChange: () => {}
             };

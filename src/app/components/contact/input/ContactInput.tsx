@@ -9,6 +9,7 @@ type ContactInputProps = {
     inputId: string;
     labelName: string;
     labelStyle: string;
+    requireStyle?: string;
     isRequired?: boolean;
     children: React.ReactNode;
 }
@@ -21,6 +22,7 @@ const ContactInput: React.FC<ContactInputProps> = ({
     inputId,
     labelName,
     labelStyle,
+    requireStyle = "text-red-600",
     isRequired = false,
     children
 }) => {
@@ -40,7 +42,7 @@ const ContactInput: React.FC<ContactInputProps> = ({
                         htmlFor={inputId}
                         className={`form-label block ${labelStyle}`}>
                         {labelName}
-                        {isRequired && <span className="text-red-600 pr-1">*</span>}
+                        {isRequired && <span className={`pr-1 ${requireStyle}`}>*</span>}
                         :
                     </label>
                 </div>

@@ -11,6 +11,7 @@ type ContactTextInputProps = {
     inputType: string;
     inputValue: string;
     inputStyle: string;
+    errorStyle?: string;
     placeholder: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     error?: string;
@@ -26,6 +27,7 @@ const ContactTextInput: React.FC<ContactTextInputProps> = ({
     inputType,
     inputValue,
     inputStyle,
+    errorStyle = "text-red-500",
     placeholder,
     onChange,
     error
@@ -50,7 +52,7 @@ const ContactTextInput: React.FC<ContactTextInputProps> = ({
             onChange={onChange}
             value={inputValue}
             aria-describedby={error ? `${inputId}-error` : undefined} />
-        <p id={`${inputId}-error`} className="text-red-500 py-1">{error || '\u00A0'}</p>
+        <p id={`${inputId}-error`} className={`py-1 ${errorStyle}`}>{error || '\u00A0'}</p>
     </>
   );
 };

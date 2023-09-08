@@ -27,7 +27,6 @@ const Contact = () => {
         validate
      } = useContactLogic();
 
-
      // Props検証
      if (!introData || !refData) {
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />;

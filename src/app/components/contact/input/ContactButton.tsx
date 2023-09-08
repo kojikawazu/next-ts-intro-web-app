@@ -36,7 +36,7 @@ const ContactButton: React.FC<ContactButtonProps> = ({
   return (
     <button 
         type={btnType}
-        className={`btn btn-primary bg-lblue p-3 w-3/4 ssm:w-[350px] h-[60px] rounded-xl shadow-lg ${className}`}
+        className={`btn btn-primary bg-lblue rounded-xl shadow-lg ${className}`}
         onClick={onClick}
         aria-label={ariaLabel || btnName}>
         {btnName}

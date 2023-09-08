@@ -13,7 +13,7 @@ describe('<ContactInput />', () => {
 
         it('should render child component', () => {
             const { getByText } = render(
-                <ContactInput inputId="testId" labelName="Test Label" labelStyle="testStyle">
+                <ContactInput inputId="testId" labelName="Test Label" labelStyle="testStyle" requireStyle="text-red-600">
                     <span>Child component</span>
                 </ContactInput>
             );
@@ -23,7 +23,7 @@ describe('<ContactInput />', () => {
 
         it('should render the label with the provided text', () => {
             const { getByText } = render(
-                <ContactInput inputId="testId" labelName="Test Label" labelStyle="testStyle">
+                <ContactInput inputId="testId" labelName="Test Label" labelStyle="testStyle" requireStyle="text-red-600">
                     <span>Child component</span>
                 </ContactInput>
             );
@@ -33,7 +33,7 @@ describe('<ContactInput />', () => {
 
         it('applies the provided label style', () => {
             const { getByText } = render(
-                <ContactInput inputId="testId" labelName="Test Label" labelStyle="testStyle">
+                <ContactInput inputId="testId" labelName="Test Label" labelStyle="testStyle" requireStyle="text-red-600">
                     <span>Child component</span>
                 </ContactInput>
             );
@@ -44,7 +44,7 @@ describe('<ContactInput />', () => {
 
         it('displays an asterisk if isRequired is true', () => {
             const { getByText } = render(
-                <ContactInput inputId="testId" labelName="Test Label" labelStyle="testStyle" isRequired={true}>
+                <ContactInput inputId="testId" labelName="Test Label" labelStyle="testStyle" requireStyle="text-red-600" isRequired={true}>
                     <span>Child component</span>
                 </ContactInput>
             );
@@ -54,12 +54,23 @@ describe('<ContactInput />', () => {
 
         it('does not display an asterisk if isRequired is false or not provided', () => {
             const { queryByText } = render(
-                <ContactInput inputId="testId" labelName="Test Label" labelStyle="testStyle" isRequired={false}>
+                <ContactInput inputId="testId" labelName="Test Label" labelStyle="testStyle" requireStyle="text-red-600" isRequired={false}>
                     <span>Child component</span>
                 </ContactInput>
             );
 
             expect(queryByText('*')).toBeNull();
+        });
+
+        it('displays an asterisk if isRequired is true', () => {
+            const { getByText } = render(
+                <ContactInput inputId="testId" labelName="Test Label" labelStyle="testStyle" isRequired={true}>
+                    <span>Child component</span>
+                </ContactInput>
+            );
+
+            expect(getByText('*')).toBeInTheDocument();
+            expect(getByText('*')).toHaveClass("text-red-600");
         });
     });
 

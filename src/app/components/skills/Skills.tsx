@@ -18,7 +18,6 @@ const CARD_ADDITION_COUNT = 6;
  * @returns JSX
  */
 const Skills = () => {
-  console.log("<Skills />");
   // Context
   const { introData, refData } = useIntroData();
   // hook

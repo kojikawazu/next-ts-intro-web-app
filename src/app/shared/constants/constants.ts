@@ -10,6 +10,7 @@ export const MESSAGES = {
         NOT_STRING:         "A required string is missing.",
         NOT_DATA:           "Missing data.",
         NOT_ARRAYS:         "Missing list.",
+        NOT_REF:            "Missing RefObject",
 
         COMPONENT_TITLE:  "コンポーネントでエラー発生",
         DATA_ERROR:       "データチェックでエラー発生しました。"

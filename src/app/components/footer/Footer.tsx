@@ -5,26 +5,10 @@ import { NavBarType } from '@/app/types/NavbarType';
 import { FooterType } from '@/app/types/FooterType';
 import { useScrollTop } from '@/app/hooks/useScroll';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
-import FooterLink from '@/app/components/footer/FooterLink';
-
-/**
- * スクロールトップアイコンコンポーネント
- * @returns JSX
- */
-const ScrollTopIcon = () => {
-    return (
-        <svg 
-            aria-label="scroll-up-icon"
-            xmlns="http://www.w3.org/2000/svg" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            strokeWidth="1.5" 
-            stroke="currentColor" 
-            className="w-8 h-8">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-        </svg>
-    );
-};
+import FooterArrowLink from '@/app/components/footer/parts/FooterArrowLink';
+import FooterLink from '@/app/components/footer/parts/FooterLink';
+import FooterCopyRight from '@/app/components/footer/parts/FooterCopyRight';
+import FooterTitleBtn from '@/app/components/footer/parts/FooterTitleBtn';
 
 /**
  * Footerコンポーネント
@@ -55,29 +39,23 @@ const Footer = () => {
 
             <div className="flex w-full">
                 <div className="basis-1/3">
-                    <button 
-                        className="pl-8 pt-4"
-                        aria-label="Scroll to top" 
-                        onClick={scrollTop}>
-                        <h4 className="text-sm sm:text-lg">
-                            {navbarData.link_title}
-                        </h4>
-                    </button>
+                    <FooterTitleBtn 
+                        className="pl-1 xxs:pl-2 xs:pl-4 ssssm:pl-8 sssm:pl-16 pt-4"
+                        onClick={scrollTop}
+                        labelClassName="text-xxs sssm:text-xs ssm:text-sm sm:text-lg"
+                        label={navbarData.link_title} />
                 </div>
 
                 <div className="basis-1/3 flex justify-center">
-                    <button 
-                        className="mt-24" 
-                        aria-label="Scroll to top"
-                        onClick={scrollTop}>
-                        <ScrollTopIcon />
-                    </button>
+                    <FooterArrowLink 
+                         className="mt-24"
+                         onClick={scrollTop} />
                 </div>
                 
                 <div className="basis-1/3 flex justify-end">
-                    <h4 className="pt-14 pr-10 text-sm sm:text-lg">
-                        {footerData.copyright}
-                    </h4>
+                    <FooterCopyRight    
+                        className="pt-14 pr-1 xxs:pr-2 xs:pr-4 ssssm:pr-8 sssm:pr-16 ssm:pr-20 text-xxs sssm:text-xs ssm:text-sm sm:text-lg"
+                        label={footerData.copyright} />
                 </div>
             </div>
         </footer>

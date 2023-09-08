@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import { useScrollToRef } from '@/app/hooks/useScroll';
-import FooterLink from '@/app/components/footer/FooterLink';
+import FooterLink from '@/app/components/footer/parts/FooterLink';
 
 // Mocks
 jest.mock('@/app/hooks/useScroll', () => ({
@@ -28,7 +29,7 @@ describe('<FooterLink />', () => {
         jest.clearAllMocks();
     });
 
-    describe('<FooterLink /> - Positive Scenarios', () => {
+    describe('Positive Scenarios', () => {
         it('renders the link correctly', () => {
             render(<FooterLink linkTitle="About" isEnd={false} refData={mockRef} />);
             expect(screen.getByText('About')).toBeInTheDocument();
@@ -48,8 +49,34 @@ describe('<FooterLink />', () => {
             render(<FooterLink linkTitle="About" isEnd={false} refData={mockRef} />);
             const link = screen.getByText('About');
             fireEvent.click(link);
-
             expect(mockRef.current!.scrollIntoView).toHaveBeenCalled();
+        });
+    });
+
+    /** 異常系 */
+    /** ----------------------------------------------------------------------------------- */
+
+    describe('Negative Scenarios', () => {
+        it('renders error message when linkTitle is an empty string', () => {
+            const innerProps = {
+                linkTitle: "",
+                isEnd: false,
+                refData: mockRef
+            }
+
+            render( <FooterLink {...innerProps} /> );
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('renders error message when refData is undefined', () => {
+            const innerProps = {
+                linkTitle: "About",
+                isEnd: false,
+                refData: undefined
+            }
+
+            render( <FooterLink {...innerProps} /> );
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

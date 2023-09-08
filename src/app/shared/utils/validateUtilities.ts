@@ -104,3 +104,18 @@ export const validateArrays = (list: (Array<any> | undefined)[], errorMessage: s
   }
   return null;
 };
+
+/**
+ * ref検証
+ * @param refList 
+ * @param errorMessage 
+ * @returns エラーメッセージ or null
+ */
+export const validateRefProps = (refList: (React.RefObject<HTMLDivElement> | undefined)[], errorMessage: string): string | null => {
+  for (const ref of refList) {
+      if (!ref) {
+        return errorMessage;
+      }
+  }
+  return null;
+};

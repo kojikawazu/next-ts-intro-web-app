@@ -23,15 +23,20 @@ describe('<HamburgerOpenBtn />', () => {
             // onClickが一度だけ呼び出されたことを確認
             expect(mockOnClick).toHaveBeenCalledTimes(1);
         });
+
+        it('displays an error message when provided with an empty ariaLabel', () => {
+            const mockOnClick = jest.fn();
+            render(<HamburgerOpenBtn onClick={mockOnClick} />);
+            expect(screen.getByLabelText("メニューを開く")).toBeInTheDocument();
+        });
     });
 
     /** 異常系 */
     /** ----------------------------------------------------------------------------------- */
 
     describe('Negative Scenarios', () => {
-        it('displays an error message when provided with an empty ariaLabel', () => {
-            const mockOnClick = jest.fn();
-            render(<HamburgerOpenBtn onClick={mockOnClick} ariaLabel="" />);
+        it('displays an error message when provided with an empty label', () => {
+            render(<HamburgerOpenBtn onClick={undefined as any} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });

@@ -41,7 +41,7 @@ const NavBar = () => {
     const baseClass       = ["h-[100px]"];
     const flexClass       = ["flex", "justify-between", "items-center"];
     const backgroundClass = ["bg-lblue"];
-    const className = classNames(baseClass, flexClass, backgroundClass);
+    const className       = classNames(baseClass, flexClass, backgroundClass);
 
     const navBarBaseClass            = ["pl-9"];
     const navBarTitleUnderLineClass  = ["underline", "decoration-1", "decoration-solid", "underline-offset-8"];

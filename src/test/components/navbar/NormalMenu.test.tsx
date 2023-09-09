@@ -89,7 +89,7 @@ describe('<NormalMenu />', () => {
     describe('Negative Scenarios', () => {
         it('renders ErrorComponent when introData is missing', () => {
             render(<NormalMenu menuList={[]} />);
-            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

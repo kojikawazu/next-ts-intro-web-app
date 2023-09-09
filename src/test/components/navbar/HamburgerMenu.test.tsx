@@ -119,7 +119,7 @@ describe('<HamburgerMenu />', () => {
         it('displays error component when data is missing', () => {
             render(<HamburgerMenu menuList={[]} />);
             
-            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

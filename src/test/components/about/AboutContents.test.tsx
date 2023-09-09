@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import AboutContents from '@/app/components/about/AboutContents';
 import { mockInitialData } from '@/test/mocks/mockData';
 
@@ -19,34 +20,42 @@ jest.mock('next/image', () => {
 
 /** AboutContentsコンポーネントテスト */
 describe('<AboutContents />', () => {
-    const mockImageUrl = 'https://example.com/profile.jpg';
+    const defaultProps = {
+        aboutData: mockInitialData.about_data
+    }
 
     /** 正常系 */
     /** ----------------------------------------------------------------------------------- */
 
-    describe('<AboutContents /> - Positive Scenarios', () => {
+    describe('Positive Scenarios', () => {
         it('renders the component with the provided image URL', () => {
-            const { getByAltText } = render(
-                <AboutContents aboutData={mockInitialData.about_data} introImgUrl={mockImageUrl} />
-            );
-            
-            const imageElement = getByAltText('Profile background image') as HTMLImageElement;
+            render( <AboutContents {...defaultProps} /> );
+            const imageElement = screen.getByAltText('Profile background image') as HTMLImageElement;
             expect(imageElement).toBeInTheDocument();
-            expect(imageElement.src).toBe(mockImageUrl);
+            expect(imageElement.src).toBe("https://example.com/img.jpg");
         });
 
         it('renders the ProfileCard and ProfileContentsCard', () => {
-            const { queryByTestId } = render(
-                <AboutContents aboutData={mockInitialData.about_data} introImgUrl={mockImageUrl} />
-            );
+            render( <AboutContents {...defaultProps} /> );
             
             // ProfileCard のトップレベルエレメントに `data-testid="profile-card"` を追加することを想定
-            const profileCard = queryByTestId('profile-card');
+            const profileCard = screen.queryByTestId('profile-card');
             expect(profileCard).toBeInTheDocument();
             
             // ProfileContentsCard のトップレベルエレメントに `data-testid="profile-contents-card"` を追加することを想定
-            const profileContentsCard = queryByTestId('profile-contents-card');
+            const profileContentsCard = screen.queryByTestId('profile-contents-card');
             expect(profileContentsCard).toBeInTheDocument();
+        });
+    });
+
+    describe('Negative Scenarios', () => {
+        it('renders the component with the provided image URL', () => {
+            const errorProps = {
+                aboutData: undefined
+            }
+
+            render( <AboutContents {...errorProps as any} /> );
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

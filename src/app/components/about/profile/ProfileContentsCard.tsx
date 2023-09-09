@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
 import { validateArrays } from '@/app/shared/utils/validateUtilities';
@@ -24,7 +25,8 @@ const ProfileContentsCard: React.FC<ProfileContentsCardProps> = ({
       consoleLog(`[ProfileContentsCard]: ${errors.join(' ')}`);
       return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
   }
-  const className = "text-xs sm:text-sm md:text-base";
+  const textStyles = ["text-xs", "sm:text-sm", "md:text-base"];
+  const className = classNames(textStyles);
 
   return (
     <div className={`p-8 pb-4 ${className}`}

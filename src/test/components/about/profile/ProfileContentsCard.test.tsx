@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import ProfileContentsCard from '@/app/components/about/ProfileContentsCard';
+import ProfileContentsCard from '@/app/components/about/profile/ProfileContentsCard';
 import { mockInitialData } from '@/test/mocks/mockData';
 import { isEnvTest } from '@/app/shared/utils/utilities';
 
@@ -25,6 +25,12 @@ describe('<ProfileContentsCard/>', () => {
                 expect(contentElement).toBeInTheDocument();
             });
         });
+
+        it('has data-testid attribute when isEnvTest returns true', () => {
+            (isEnvTest as jest.Mock).mockReturnValue(true);
+            const { queryByTestId } = render(<ProfileContentsCard profileContents={['sample content']} />);
+            expect(queryByTestId('profile-contents-card')).not.toBeNull();
+        });
     });
 
     /** 異常系 */
@@ -32,7 +38,6 @@ describe('<ProfileContentsCard/>', () => {
     describe('Negative Scenarios', () => {
         it('renders the error component when profileContents is empty', () => {
             render(<ProfileContentsCard profileContents={[]} />);
-            
             const errorElement = screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS);
             expect(errorElement).toBeInTheDocument();
         });

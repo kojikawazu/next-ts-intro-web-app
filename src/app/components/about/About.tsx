@@ -27,12 +27,12 @@ const About = () => {
             ref={refData.aboutRef}>
             
             <div className="flex justify-center items-center pt-32 pb-6">
-                <Title titleName={navbarData.about_name} />
+                <Title 
+                    titleName={navbarData.about_name} />
             </div>
 
             <AboutContents 
-                aboutData={introData.about_data}
-                introImgUrl={aboutData.about_img_url} />
+                aboutData={aboutData} />
         </div>
     );
 };

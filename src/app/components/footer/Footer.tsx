@@ -42,13 +42,13 @@ const Footer = () => {
                     <FooterTitleBtn 
                         className="pl-1 xxs:pl-2 xs:pl-4 ssssm:pl-8 sssm:pl-16 pt-4"
                         onClick={scrollTop}
-                        labelClassName="text-xxs sssm:text-xs ssm:text-sm sm:text-lg"
+                        labelClassName="text-xxs sssm:text-xs ssm:text-sm sm:text-lg hover:text-gray-300"
                         label={navbarData.link_title} />
                 </div>
 
                 <div className="basis-1/3 flex justify-center">
                     <FooterArrowLink 
-                         className="mt-24"
+                         className="mt-24 hover:text-gray-400"
                          onClick={scrollTop} />
                 </div>
                 

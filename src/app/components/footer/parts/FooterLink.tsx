@@ -34,7 +34,7 @@ const FooterLink: React.FC<FooterLinkProps> = ({
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
-    const baseStyles = ["text-white"];
+    const baseStyles = ["text-white", "hover:text-gray-300"];
     const textStyles = ["text-xxs", "sssm:text-xs", "sm:text-base", "md:text-xl"];
     const pmStyles   = ["px-2", "xs:px-3", "ssssm:px-5", "sm:px-8", "mx-1", "sm:mx-2", "my-4", "sm:my-8"]; 
     const conditionalStyles = [isEnd ? "" : "border-r"];

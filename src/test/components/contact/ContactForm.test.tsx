@@ -1,10 +1,22 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import axios from 'axios';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { configureStore, EnhancedStore  } from '@reduxjs/toolkit';
 import { MESSAGES } from '@/app/shared/constants/constants';
+import contactReducer from '@/app/features/contact/contactSlice';
 import ContactForm from '@/app/components/contact/ContactForm';
+
+// Mocks
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+const mockedAxiosPost = mockedAxios.post;
 
 /** ContactFormのテストコード */
 describe('<ContactForm />', () => {
+    // store
+    let store: EnhancedStore;
+
     const mockContactData = {
         contact_name: 'Name',
         contact_email: 'Email',
@@ -19,76 +31,102 @@ describe('<ContactForm />', () => {
     };
 
     const renderContactForm = (propsOverrides = {}) => render(
-        <ContactForm 
-            contactData={mockContactData}
-            contactName=""
-            contactEmail=""
-            contactMessage=""
-            validationErrors={mockValidationErrors}
-            setContactName={() => {}}
-            setContactEmail={() => {}}
-            setContactMessage={() => {}}
-            validate={() => true}
-            {...propsOverrides}
-        />
+        <Provider store={store}>
+            <ContactForm 
+                contactData={mockContactData}
+                {...propsOverrides} />
+        </Provider>
     );
 
     /** 各テストの前準備 */
     beforeEach(() => {
         jest.clearAllMocks();
+        jest.spyOn(console, 'error').mockImplementation(() => {});
+
+        store = configureStore({
+            reducer: {
+                contact: contactReducer
+            }
+        });
+    });
+
+    afterEach(() => {
+        (console.error as jest.Mock).mockRestore();
     });
 
      /** 正常系 */
     /** ----------------------------------------------------------------------------------- */
 
     describe('Positive Scenarios', () => { 
-        it('renders correctly', () => {
+        it('should render the form with correct fields and button', () => {
             const { getByText, getByPlaceholderText } = renderContactForm();
             expect(getByPlaceholderText('Name')).toBeInTheDocument();
             expect(getByPlaceholderText('Email')).toBeInTheDocument();
             expect(getByText('Submit')).toBeInTheDocument();
         });
     
-        it('calls appropriate handler when name input value changes', () => {
-            const handleSetName = jest.fn();
-            const { getByPlaceholderText } = renderContactForm({ setContactName: handleSetName });
-            fireEvent.change(getByPlaceholderText('Name'), { target: { value: 'John' } });
-            expect(handleSetName).toHaveBeenCalledWith('John');
-            expect(handleSetName).toHaveBeenCalledTimes(1);
+        it('should update the name field when value changes', () => {
+            const { getByPlaceholderText } = renderContactForm();
+            const nameInput = getByPlaceholderText('Name') as HTMLInputElement;
+            fireEvent.change(nameInput, { target: { value: 'John' } });
+            expect(nameInput.value).toBe('John');
         });
 
-        it('calls appropriate handler when email input value changes', () => {
-            const handleSetEmail = jest.fn();
-            const { getByPlaceholderText } = renderContactForm({ setContactEmail: handleSetEmail });
-            fireEvent.change(getByPlaceholderText('Email'), { target: { value: 'john@example.com' } });
-            expect(handleSetEmail).toHaveBeenCalledWith('john@example.com');
-            expect(handleSetEmail).toHaveBeenCalledTimes(1);
+        it('should update the email field when value changes', () => {
+            const { getByPlaceholderText } = renderContactForm();
+            const emailInput = getByPlaceholderText('Email') as HTMLInputElement;
+            fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
+            expect(emailInput.value).toBe('john@example.com');
         });
 
-        it('calls appropriate handler when message input value changes', () => {
-            const handleSetMessage = jest.fn();
-            const { getByLabelText } = renderContactForm({ setContactMessage: handleSetMessage });
-
-            fireEvent.change(getByLabelText(/Contents/i), { target: { value: 'OK' } });
-            expect(handleSetMessage).toHaveBeenCalledWith('OK');
-            expect(handleSetMessage).toHaveBeenCalledTimes(1);
+        it('should update the message field when value changes', () => {
+            const { getByLabelText } = renderContactForm();
+            const contentsText = getByLabelText(/Contents/i) as HTMLInputElement;
+            fireEvent.change(contentsText, { target: { value: 'OK' } });
+            expect(contentsText.value).toBe('OK');
         });
     
-        it('displays error if provided', () => {
-            const mockErrors = {
-                name: 'Name is required.',
-                email: '',
-                message: ''
-            };
-            const { getByText } = renderContactForm({ validationErrors: mockErrors });
-            expect(getByText('Name is required.')).toBeInTheDocument();
+        it('should prompt for confirmation when the form is submitted', () => {
+            const mockCallWindow = jest.fn();
+            global.window.confirm = mockCallWindow;
+
+            const { getByText, getByPlaceholderText, getByLabelText } = renderContactForm();
+            const nameInput = getByPlaceholderText('Name') as HTMLInputElement;
+            fireEvent.change(nameInput, { target: { value: 'John' } });
+            const emailInput = getByPlaceholderText('Email') as HTMLInputElement;
+            fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
+            const contentsText = getByLabelText(/Contents/i) as HTMLInputElement;
+            fireEvent.change(contentsText, { target: { value: 'OK' } });
+            const btnName = getByText('Submit');
+            fireEvent.click(btnName);
+
+            expect(mockCallWindow).toHaveBeenCalledWith('メッセージを送信してもよろしいですか？');
         });
-    
-        it('calls validate when the form is submitted', () => {
-            const mockValidate = jest.fn().mockReturnValue(true);
-            const { getByText } = renderContactForm({ validate: mockValidate });
-            fireEvent.click(getByText('Submit'));
-            expect(mockValidate).toHaveBeenCalled();
+
+        it('should reset the form fields after a successful submission', async () => {
+            const mockCallWindow = jest.fn(() => true);
+            global.window.confirm = mockCallWindow;
+            mockedAxiosPost.mockResolvedValueOnce({ status: 200 } as any);
+
+            // input change
+            const { getByText, getByPlaceholderText, getByLabelText } = renderContactForm();
+            const nameInput = getByPlaceholderText('Name') as HTMLInputElement;
+            fireEvent.change(nameInput, { target: { value: 'John' } });
+            const emailInput = getByPlaceholderText('Email') as HTMLInputElement;
+            fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
+            const contentsText = getByLabelText(/Contents/i) as HTMLInputElement;
+            fireEvent.change(contentsText, { target: { value: 'OK' } });
+            
+            // button click
+            const btnName = getByText('Submit');
+            fireEvent.click(btnName);
+
+            // input init
+            await waitFor(() => {
+                expect(nameInput.value).toBe('');
+                expect(emailInput.value).toBe('');
+                expect(contentsText.value).toBe('');
+            });
         });
     });
 
@@ -96,103 +134,140 @@ describe('<ContactForm />', () => {
     /** ----------------------------------------------------------------------------------- */
 
     describe('Negative Scenarios', () => {
-        it('does not proceed with form submission if validation fails', () => {
-            const mockValidate = jest.fn().mockReturnValue(false);
-            const mockSubmit = jest.fn();
-            const { getByText } = renderContactForm({ validate: mockValidate });
-    
-            fireEvent.click(getByText('Submit'));
-            
-            expect(mockValidate).toHaveBeenCalled();
-            expect(mockSubmit).not.toHaveBeenCalled();
-        });
-
-        it('displays an error message when provided with an empty contact_name', () => {
+        it('should display an error message for an empty contact_name', () => {
             const mockErrorContactData = {
                 contact_name: "",
                 contact_email: "contactEmail",
                 contact_contents: "contactContents",
                 contact_btn_name: "contactBtnName"
             }
-            const props = {
-                contactData: mockErrorContactData,
-                contactName: "",
-                contactEmail: "",
-                contactMessage: "",
-                validationErrors: mockValidationErrors,
-                setContactName: jest.fn(),
-                setContactEmail: jest.fn(),
-                setContactMessage: jest.fn(),
-                validate: jest.fn()
-            };
-            render( <ContactForm {...props} /> );
+            const props = {contactData: mockErrorContactData};
+            render( 
+                <Provider store={store}>
+                    <ContactForm {...props} />
+                </Provider> 
+            );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
 
-        it('displays an error message when provided with an empty contact_email', () => {
+        it('should display an error message for an empty contact_email', () => {
             const mockErrorContactData = {
                 contact_name: "contactName",
                 contact_email: "",
                 contact_contents: "contactContents",
                 contact_btn_name: "contactBtnName"
             }
-            const props = {
-                contactData: mockErrorContactData,
-                contactName: "",
-                contactEmail: "",
-                contactMessage: "",
-                validationErrors: mockValidationErrors,
-                setContactName: jest.fn(),
-                setContactEmail: jest.fn(),
-                setContactMessage: jest.fn(),
-                validate: jest.fn()
-            };
-            render( <ContactForm {...props} /> );
+            const props = {contactData: mockErrorContactData};
+            render( 
+                <Provider store={store}>
+                    <ContactForm {...props} />
+                </Provider> 
+            );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
 
-        it('displays an error message when provided with an empty contact_contents', () => {
+        it('should display an error message for an empty contact_contents', () => {
             const mockErrorContactData = {
                 contact_name: "contactName",
                 contact_email: "contactEmail",
                 contact_contents: "",
                 contact_btn_name: "contactBtnName"
             }
-            const props = {
-                contactData: mockErrorContactData,
-                contactName: "",
-                contactEmail: "",
-                contactMessage: "",
-                validationErrors: mockValidationErrors,
-                setContactName: jest.fn(),
-                setContactEmail: jest.fn(),
-                setContactMessage: jest.fn(),
-                validate: jest.fn()
-            };
-            render( <ContactForm {...props} /> );
+            const props = {contactData: mockErrorContactData};
+            render( 
+                <Provider store={store}>
+                    <ContactForm {...props} />
+                </Provider> 
+            );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
 
-        it('displays an error message when provided with an empty contact_btn_name', () => {
+        it('should display an error message for an empty contact_btn_name', () => {
             const mockErrorContactData = {
                 contact_name: "contactName",
                 contact_email: "contactEmail",
                 contact_contents: "contactContents",
                 contact_btn_name: ""
             }
-            const props = {
-                contactData: mockErrorContactData,
-                contactName: "",
-                contactEmail: "",
-                contactMessage: "",
-                validationErrors: mockValidationErrors,
-                setContactName: jest.fn(),
-                setContactEmail: jest.fn(),
-                setContactMessage: jest.fn(),
-                validate: jest.fn()
-            };
-            render( <ContactForm {...props} /> );
+            const props = {contactData: mockErrorContactData};
+            render( 
+                <Provider store={store}>
+                    <ContactForm {...props} />
+                </Provider> 
+            );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        });
+
+        it('should display an error message for missing name input during form submission', () => {
+            const { getByText } = renderContactForm();
+            const btnName = getByText('Submit');
+            fireEvent.click(btnName);
+
+            expect(getByText('名前の入力が正しくありません。再度入力してください。')).toBeInTheDocument();
+        });
+
+        it('should display an error message for missing email input during form submission', () => {
+            const { getByText, getByPlaceholderText  } = renderContactForm();
+            const nameInput = getByPlaceholderText('Name') as HTMLInputElement;
+            fireEvent.change(nameInput, { target: { value: 'John' } });
+            const btnName = getByText('Submit');
+            fireEvent.click(btnName);
+
+            expect(getByText('Eメールアドレスの入力が正しくありません。再度入力してください。')).toBeInTheDocument();
+        });
+
+        it('should display an error message for missing message input during form submission', () => {
+            const { getByText, getByPlaceholderText, getByLabelText } = renderContactForm();
+            const nameInput = getByPlaceholderText('Name') as HTMLInputElement;
+            fireEvent.change(nameInput, { target: { value: 'John' } });
+            const emailInput = getByPlaceholderText('Email') as HTMLInputElement;
+            fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
+            const btnName = getByText('Submit');
+            fireEvent.click(btnName);
+
+            expect(getByText('お問い合わせ内容の入力が正しくありません。再度入力してください。')).toBeInTheDocument();
+        });
+
+        it('should retain form field values if submission is cancelled by user', () => {
+            const mockCallWindow = jest.fn(() => false);
+            global.window.confirm = mockCallWindow;
+
+            const { getByText, getByPlaceholderText, getByLabelText } = renderContactForm();
+            const nameInput = getByPlaceholderText('Name') as HTMLInputElement;
+            fireEvent.change(nameInput, { target: { value: 'John' } });
+            const emailInput = getByPlaceholderText('Email') as HTMLInputElement;
+            fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
+            const contentsText = getByLabelText(/Contents/i) as HTMLInputElement;
+            fireEvent.change(contentsText, { target: { value: 'OK' } });
+            const btnName = getByText('Submit');
+            fireEvent.click(btnName);
+
+            expect(nameInput.value).toBe('John');
+            expect(emailInput.value).toBe('john@example.com');
+            expect(contentsText.value).toBe('OK');
+        });
+
+        it('should log an error and retain form values when form submission fails', async () => {
+            const mockCallWindow = jest.fn(() => true);
+            global.window.confirm = mockCallWindow;
+            mockedAxiosPost.mockRejectedValueOnce(new Error('Bad Request'));
+
+            const { getByText, getByPlaceholderText, getByLabelText } = renderContactForm();
+            const nameInput = getByPlaceholderText('Name') as HTMLInputElement;
+            fireEvent.change(nameInput, { target: { value: 'John' } });
+            const emailInput = getByPlaceholderText('Email') as HTMLInputElement;
+            fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
+            const contentsText = getByLabelText(/Contents/i) as HTMLInputElement;
+            fireEvent.change(contentsText, { target: { value: 'OK' } });
+            const btnName = getByText('Submit');
+            fireEvent.click(btnName);
+
+             await waitFor(() => {
+                expect(console.error).toHaveBeenCalledWith("Error send email:", new Error('Bad Request'));
+                expect(nameInput.value).toBe('John');
+                expect(emailInput.value).toBe('john@example.com');
+                expect(contentsText.value).toBe('OK');
+            });
         });
     });
 });

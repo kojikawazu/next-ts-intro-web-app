@@ -14,15 +14,15 @@ jest.mock('@/app/contexts/introContext', () => ({
 const mockSetName = jest.fn();
     jest.mock('@/app/features/contact/useContactLogic', () => ({
         useContactLogic: () => ({
-            name: "John Doe",
-            email: "john.doe@example.com",
-            message: "Hello, world!",
+            contactName: "John Doe",
+            contactEmail: "john.doe@example.com",
+            contactMessage: "Hello, world!",
             validationErrors: [],
-            setName: mockSetName,
-            setEmail: jest.fn(),
-            setMessage: jest.fn(),
+            setContactName: mockSetName,
+            setContactEmail: jest.fn(),
+            setContactMessage: jest.fn(),
             validate: jest.fn(),
-            reset: jest.fn(),
+            contactReset: jest.fn(),
         })
 }));
 

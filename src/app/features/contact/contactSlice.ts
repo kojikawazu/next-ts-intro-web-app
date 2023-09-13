@@ -2,29 +2,33 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /** 型定義 */
 export type ValidationErrors = {
-    name?: string;
-    email?: string;
-    message?: string;
+    contactName?: string;
+    contactEmail?: string;
+    contactMessage?: string;
 }
 
 /** 問い合わせフォームの状態 */
 interface ContactState {
-    name: string;
-    email: string;
-    message: string;
-    status: 'idle' | 'loading' | 'succeeded' | 'failed';
-    error: string | null;
+    contactName: string;
+    contactEmail: string;
+    contactMessage: string;
+    contactStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
+    contactError: string | null;
     validationErrors: ValidationErrors;
+    isNotificationVisible: boolean;
+    isFadingOut: boolean;
 }
 
 /** 初期状態 */ 
 const initialState: ContactState = {
-    name: '',
-    email: '',
-    message: '',
-    status: 'idle',
-    error: null,
+    contactName: '',
+    contactEmail: '',
+    contactMessage: '',
+    contactStatus: 'idle',
+    contactError: null,
     validationErrors: {},
+    isNotificationVisible: false,
+    isFadingOut: false
 };
 
 /** slice */
@@ -32,32 +36,38 @@ const contactSlice = createSlice({
     name: 'contact',
     initialState,
     reducers: {
-        setName: (state, action: PayloadAction<string>) => {
-            state.name = action.payload;
+        setContactName: (state, action: PayloadAction<string>) => {
+            state.contactName = action.payload;
         },
-        setEmail: (state, action: PayloadAction<string>) => {
-            state.email = action.payload;
+        setContactEmail: (state, action: PayloadAction<string>) => {
+            state.contactEmail = action.payload;
         },
-        setMessage: (state, action: PayloadAction<string>) => {
-            state.message = action.payload;
+        setContactMessage: (state, action: PayloadAction<string>) => {
+            state.contactMessage = action.payload;
+        },
+        setNotificationVisible: (state, action: PayloadAction<boolean>) => {
+            state.isNotificationVisible = action.payload;
+        },
+        setFadingOut: (state, action: PayloadAction<boolean>) => {
+            state.isFadingOut = action.payload;
         },
         sendContactStart: (state) => {
-            state.status = 'loading';
-            state.error = null;
+            state.contactStatus = 'loading';
+            state.contactError  = null;
         },
         sendContactSuccess: (state) => {
-            state.status = 'succeeded';
+            state.contactStatus = 'succeeded';
         },
         sendContactFailed: (state, action: PayloadAction<string>) => {
-            state.status = 'failed';
-            state.error = action.payload;
+            state.contactStatus = 'failed';
+            state.contactError  = action.payload;
         },
         resetContactForm: (state) => {
-            state.name = '';
-            state.email = '';
-            state.message = '';
-            state.status = 'idle';
-            state.error = null;
+            state.contactName      = '';
+            state.contactEmail     = '';
+            state.contactMessage   = '';
+            state.contactStatus    = 'idle';
+            state.contactError     = null;
             state.validationErrors = {};
         },
         setValidationErrors: (state, action: PayloadAction<ContactState['validationErrors']>) => {
@@ -68,9 +78,11 @@ const contactSlice = createSlice({
   
 /** 外部エクスポート */
   export const {
-    setName,
-    setEmail,
-    setMessage,
+    setContactName,
+    setContactEmail,
+    setContactMessage,
+    setNotificationVisible,
+    setFadingOut,
     sendContactStart,
     sendContactSuccess,
     sendContactFailed,

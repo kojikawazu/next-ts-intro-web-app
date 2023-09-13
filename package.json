@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --verbose --coverage"
+    "test": "jest --verbose --coverage",
+    "test_clear": "jest --clearCache"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
@@ -16,7 +17,9 @@
     "@types/react-dom": "18.2.7",
     "@types/react-redux": "^7.1.26",
     "autoprefixer": "10.4.15",
+    "axios": "^1.5.0",
     "classnames": "^2.3.2",
+    "dotenv": "^16.3.1",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
     "next": "13.4.19",

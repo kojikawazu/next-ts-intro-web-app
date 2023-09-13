@@ -1,11 +1,11 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateStringProps, validateFunctionProps } from '@/app/shared/utils/validateUtilities';
+import { validateStringProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
 import { ContactType } from '@/app/types/ContactType';
 import { handleFieldChange } from '@/app/shared/utils/formUtilities';
-import { ValidationErrors } from '@/app/features/contact/contactSlice';
+import { useContactLogic } from '@/app/features/contact/useContactLogic';
 import ContactTextInput from '@/app/components/contact/input/ContactTextInput';
 import ContactInput from '@/app/components/contact/input/ContactInput';
 import ContactFreeTextInput from '@/app/components/contact/input/ContactFreeTextInput';
@@ -14,14 +14,6 @@ import ContactButton from '@/app/components/contact/input/ContactButton';
 /** Propsの型定義 */
 type ContactFormProps = {
     contactData: ContactType;
-    contactName: string;
-    contactEmail: string;
-    contactMessage: string;
-    validationErrors: ValidationErrors;
-    setContactName: (name: string) => void;
-    setContactEmail: (email: string) => void;
-    setContactMessage: (contents: string) => void;
-    validate: () => boolean;
 }
 
 /** 定数 */ 
@@ -34,44 +26,37 @@ const INPUT_STYLE = "w-full sssm:w-11/12 border bg-gray-50 border-gray-300 text-
  */
 const ContactForm: React.FC<ContactFormProps> = ({
     contactData,
-    contactName,
-    contactEmail,
-    contactMessage,
-    validationErrors,
-    setContactName,
-    setContactEmail,
-    setContactMessage,
-    validate
 }) => {
+    // hooks(Redux toolkit)
+    const {
+        contactName, 
+        contactEmail, 
+        contactMessage,
+        validationErrors,
+        setContactName,
+        setContactEmail,
+        setContactMessage,
+        handleSubmit
+     } = useContactLogic();
+
     // Props検証
-    const functionError = validateFunctionProps([
-        setContactName, 
-        setContactEmail, 
-        setContactMessage, 
-        validate], MESSAGES.ERRORS.NOT_FUNCTIONS);
     const stringError   = validateStringProps([
         contactData.contact_name, 
         contactData.contact_email, 
         contactData.contact_contents, 
         contactData.contact_btn_name], MESSAGES.ERRORS.NOT_STRING);
-    const errors = [functionError, stringError].filter(e => e !== null && e !== undefined);
+    const errors = [stringError].filter(e => e !== null && e !== undefined);
     if (errors.length > 0) {
         consoleLog(`[ContactForm]: ${errors.join(' ')}`);
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
-    // actions
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (validate()) {
-          // TODO フォームの送信処理をここに書く
-        }
-    };
-
     return (
         <form 
             className="p-4"
             onSubmit={handleSubmit}>
+            {/**<LoadingSpinner />*/}
+
             <ContactInput
                 inputId="name"
                 labelName={contactData.contact_name}
@@ -85,7 +70,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                         inputStyle={INPUT_STYLE}
                         placeholder={contactData.contact_name}
                         onChange={(e) => handleFieldChange(e, setContactName)}
-                        error={validationErrors.name} />
+                        error={validationErrors.contactName} />
             </ContactInput>
 
             <ContactInput
@@ -101,7 +86,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                         inputStyle={INPUT_STYLE}
                         placeholder={contactData.contact_email}
                         onChange={(e) => handleFieldChange(e, setContactEmail)}
-                        error={validationErrors.email} />
+                        error={validationErrors.contactEmail} />
             </ContactInput>
 
             <ContactInput
@@ -115,7 +100,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                         inputValue={contactMessage}
                         inputStyle={INPUT_STYLE}
                         onChange={(e) => handleFieldChange(e, setContactMessage)}
-                        error={validationErrors.message} />
+                        error={validationErrors.contactMessage} />
             </ContactInput>
             
             <div className="flex justify-center mb-6">

@@ -22,7 +22,6 @@ describe('<ContactFreeTextInput />', () => {
             };
 
             const { getByRole } = render(<ContactFreeTextInput {...props} />);
-            
             const textarea = getByRole('textbox');
 
             expect(textarea).toBeInTheDocument();
@@ -65,7 +64,6 @@ describe('<ContactFreeTextInput />', () => {
             };
 
             const { getByText } = render(<ContactFreeTextInput {...props} />);
-            
             expect(getByText(props.error)).toBeInTheDocument();
         });
 

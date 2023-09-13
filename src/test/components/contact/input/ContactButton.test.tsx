@@ -14,18 +14,15 @@ describe('<ContactButton />', () => {
           const { getByText } = render(
             <ContactButton btnType="button" btnName="Test Button" />
           );
-          expect(getByText('Test Button')).toBeInTheDocument();
-        });
-
-        it('renders with correct button type', () => {
-          const { getByLabelText } = render(<ContactButton btnType="submit" btnName="Test Button" />);
-          const button = getByLabelText('Test Button');
-          expect(button).toHaveAttribute('type', 'submit');
+          
+          const button = getByText('Test Button');
+          expect(button).toBeInTheDocument();
+          expect(button).toHaveAttribute('type', 'button');
         });
 
         it('renders with correct default button type', () => {
-          const { getByLabelText } = render(<ContactButton btnName="Test Button" />);
-          const button = getByLabelText('Test Button');
+          const { getByText } = render(<ContactButton btnName="Test Button" />);
+          const button = getByText('Test Button');
           expect(button).toHaveAttribute('type', 'submit');
         });
       
@@ -52,7 +49,10 @@ describe('<ContactButton />', () => {
       
         it('sets the correct aria-label', () => {
           const { getByLabelText } = render(
-            <ContactButton btnType="button" btnName="Test Button" ariaLabel="Aria Label" />
+            <ContactButton 
+              btnType="button" 
+              btnName="Test Button" 
+              ariaLabel="Aria Label" />
           );
       
           expect(getByLabelText('Aria Label')).toBeInTheDocument();
@@ -74,7 +74,6 @@ describe('<ContactButton />', () => {
           );
       
           fireEvent.click(getByText('Click Me'));
-      
           expect(handleClick).toHaveBeenCalledTimes(1);
         });
     });

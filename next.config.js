@@ -2,7 +2,7 @@
 const nextConfig = {
     images: {
         // 以下ドメインへアクセスすることを許可します。
-        domains: ['images.unsplash.com', 'plus.unsplash.com']
+        domains: ['images.unsplash.com', 'plus.unsplash.com', 'storage.googleapis.com']
     }
 }
 

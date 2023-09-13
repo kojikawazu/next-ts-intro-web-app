@@ -1,7 +1,8 @@
 import React from 'react';
+import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateStringProps, validateFunctionProps } from '@/app/shared/utils/validateUtilities';
+import { validateFunctionProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
 
 /** Propsの型定義 */
@@ -25,13 +26,16 @@ const HamburgerCloseBtn: React.FC<HamburgerCloseBtnProps> = ({
         consoleLog(`[HamburgerCloseBtn]: ${errors.join(' ')}`);
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
+    const commonClass = classNames(["w-10", "h-0.5", "bg-dblue", "transform"]);
+    const leftClass   = classNames(commonClass, ["rotate-45"]);
+    const rightClass  = classNames(commonClass, ["-rotate-45"]);
 
     return (
         <button 
             aria-label={ariaLabel}
             onClick={onClick}>
-            <div className="w-10 h-0.5 bg-dblue transform rotate-45"></div>
-            <div className="w-10 h-0.5 bg-dblue transform -rotate-45"></div>
+            <div className={leftClass}></div>
+            <div className={rightClass}></div>
         </button>
     );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
 import { validateStringProps } from '@/app/shared/utils/validateUtilities';
@@ -29,8 +30,8 @@ const HeroBackground: React.FC<HeroBackgroundProps> = ({
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
-    const className      = "w-full h-[50vh] sssm:h-screen";
-    const imageClassName = "w-full h-[50vh] sssm:h-screen";
+    const className      = classNames(["w-full", "h-[50vh]", "sssm:h-screen"]);
+    const imageClassName = classNames(["w-full", "h-[50vh]", "sssm:h-screen"]);
 
     return (
         <div className={`relative ${className}`}>

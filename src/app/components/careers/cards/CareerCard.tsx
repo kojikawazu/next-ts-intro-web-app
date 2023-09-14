@@ -1,4 +1,9 @@
 import React from 'react';
+import classNames from 'classnames';
+import { MESSAGES } from '@/app/shared/constants/constants';
+import { consoleLog } from '@/app/shared/utils/utilities';
+import { validateNumberProps, validateData } from '@/app/shared/utils/validateUtilities';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
 import { CareerType, CareerTitleType } from '@/app/types/CareerType';
 import { useDialogLogic } from '@/app/features/dialog/useDialogLogic';
 import CareerTitle from '@/app/components/careers/parts/CareerTitle';
@@ -19,24 +24,29 @@ type CareerCardProps = {
 
 /**
  * Careerカードコンポーネント
- * @param currentIndex
- * @param careerTitleData
- * @param careerData
- * @param className
  * @returns JSX
  */
 const CareerCard: React.FC<CareerCardProps> = ({ 
     currentIndex, 
     careerTitleData, 
     careerData, 
-    className 
+    className = ""
 }) => {
-    // tailwindcss
-    let components_height = `h-[350px] xxs:h-[350px] xs:h-[420px] sssm:h-[350px] ssm:h-[330px]`;
-    components_height = `${components_height} sm:h-[350px] md:h-[600px] lg:h-[700px] xl:h-[800px]`;
-
     // hooks
     const { setCurrentIndexOpen } = useDialogLogic();
+
+    // Propsの検証
+    const numberError = validateNumberProps([currentIndex], MESSAGES.ERRORS.NOT_NUMBERS);
+    const dataError   = validateData([careerTitleData, careerData], MESSAGES.ERRORS.NOT_DATA);
+    const errors = [numberError, dataError].filter(e => e !== null && e !== undefined);
+    if (errors.length > 0) {
+        consoleLog(`[CareerCard]: ${errors.join(' ')}`);
+        return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
+    }
+
+    // tailwindcss
+    let components_height = classNames(["h-[350px]", "xxs:h-[350px]", "xs:h-[420px]", "sssm:h-[350px]", "ssm:h-[330px]"]);
+    components_height     = classNames(components_height, ["sm:h-[350px]", "md:h-[600px]", "lg:h-[700px]", "xl:h-[800px]"]);
 
     return (
         <div 

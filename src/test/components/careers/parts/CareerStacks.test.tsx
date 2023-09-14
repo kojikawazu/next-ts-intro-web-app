@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import CareerStacks from '@/app/components/careers/parts/CareerStacks';
 
 // Mocks
@@ -21,15 +22,15 @@ describe('<CareerStacks />', () => {
 
     describe('Positive Scenarios', () => {
         
-        test('renders careerTitle correctly', () => {
+        it('renders careerTitle correctly', () => {
             expect(screen.getByText(mockCareerTitle)).toBeInTheDocument();
         });
     
-        test('renders the colon after the title', () => {
+        it('renders the colon after the title', () => {
             expect(screen.getByText(':')).toBeInTheDocument();
         });
     
-        test('renders each technology stack correctly with StackCard component', () => {
+        it('renders each technology stack correctly with StackCard component', () => {
             mockCareerStacks.forEach(stack => {
                 expect(screen.getByText(stack)).toBeInTheDocument();
                 const cardElement = screen.getByText(stack).closest('[data-testid="stack-card"]');
@@ -37,9 +38,35 @@ describe('<CareerStacks />', () => {
             });
         });
 
-        test('applies the correct className', () => {
+        it('applies the correct className', () => {
             const careerElement = screen.getByText(mockCareerTitle).parentElement?.parentElement;
             expect(careerElement).toHaveClass(mockClassName);
+        });
+
+        it('applies the default className "pb-4" to the div', () => {
+            const defaultProps = {
+                careerTitle: mockCareerTitle,
+                careerStacks: mockCareerStacks
+            }
+
+            const {container} = render(<CareerStacks {...defaultProps} />);
+            const divElement = container.querySelector('div');
+            expect(divElement).toHaveClass("pb-4");
+        });
+    });
+
+    /** 異常系 */
+    /** ----------------------------------------------------------------------------------- */
+
+    describe('Negative Scenarios', () => {
+        it('renders error message for missing props', () => {
+            const defaultProps = {
+                careerTitle: undefined as any,
+                careerStacks: undefined as any
+            }
+
+            render(<CareerStacks {...defaultProps} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

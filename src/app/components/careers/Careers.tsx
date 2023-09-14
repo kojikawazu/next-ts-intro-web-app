@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/consoleLog';
+import { consoleLog } from '@/app/shared/utils/utilities';
 import { useIntroData } from '@/app/contexts/introContext';
 import { useSlideLogic } from '@/app/hooks/useSlideLogic';
 import Title from '@/app/components/common/Title';
@@ -20,7 +20,7 @@ const Careers = () => {
     const careerTitleData        = introData?.career_title_data;
     const careerData             = useMemo(() => introData?.career_data || [], [introData]);
 
-    const componentsHeight = "h-[1300px]";
+    const componentsHeight = "h-[790px] xs:h-[900px] sssm:h-[820px] sm:h-[880px] md:h-[1100px] lg:h-[1200px] xl:h-[1300px]";
     const contentsClass = "h-[420px] xs:h-[520px] sssm:h-[450px] ssm:h-[440px] sm:h-[500px] md:h-[720px] lg:h-[820px] xl:h-[920px]";
     
     // Hooks

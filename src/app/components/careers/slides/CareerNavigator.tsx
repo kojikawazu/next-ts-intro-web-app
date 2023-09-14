@@ -1,20 +1,20 @@
 import React from 'react';
+import { MESSAGES } from '@/app/shared/constants/constants';
+import { consoleLog } from '@/app/shared/utils/utilities';
+import { validateFunctionProps } from '@/app/shared/utils/validateUtilities';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
 import ArrowIcon from '@/app/components/common/icons/ArrowIcon';
 
 /** Propsの型定義 */
 type CareerNavigatorProps = {
     direction: 'prev' | 'next';
-    componentClassName: string;
-    btnclassName: string;
+    componentClassName?: string;
+    btnclassName?: string;
     onClick: () => void;
 }
 
 /**
  * CareerNavigatorコンポーネント
- * @param direction
- * @param componentClassName
- * @param btnclassName
- * @param onClick
  * @returns JSX
  */
 const CareerNavigator: React.FC<CareerNavigatorProps> = ({ 
@@ -23,6 +23,14 @@ const CareerNavigator: React.FC<CareerNavigatorProps> = ({
     btnclassName = "", 
     onClick 
 }) => {
+    // Props検証
+    const functionError = validateFunctionProps([onClick], MESSAGES.ERRORS.NOT_FUNCTIONS);
+    const errors = [functionError].filter(e => e !== null && e !== undefined);
+    if (errors.length > 0) {
+        consoleLog(`[CareerNavigator]: ${errors.join(' ')}`);
+        return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
+    }
+    
     const isPrev = direction === 'prev';
 
     return (

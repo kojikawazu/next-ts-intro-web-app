@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import CareerPhase from '@/app/components/careers/parts/CareerPhase';
 
 // Mocks
@@ -18,6 +19,9 @@ describe('<CareerPhase />', () => {
     beforeEach(() => {
         render(<CareerPhase careerTitle={mockCareerTitle} careerPhases={mockCareerPhases} className={mockClassName} />);
     });
+
+    /** 正常系 */
+    /** ----------------------------------------------------------------------------------- */
 
     describe('Positive Scenarios', () => {
         
@@ -40,6 +44,32 @@ describe('<CareerPhase />', () => {
         test('applies the correct className', () => {
             const careerElement = screen.getByText(mockCareerTitle).parentElement?.parentElement;
             expect(careerElement).toHaveClass(mockClassName);
+        });
+
+        it('applies the default className "flex pb-1" to the div', () => {
+            const defaultProps = {
+                careerTitle: mockCareerTitle,
+                careerPhases: mockCareerPhases
+            }
+
+            const {container} = render(<CareerPhase {...defaultProps} />);
+            const divElement = container.querySelector('div');
+            expect(divElement).toHaveClass("pb-4");
+        });
+    });
+
+    /** 異常系 */
+    /** ----------------------------------------------------------------------------------- */
+
+    describe('Negative Scenarios', () => {
+        it('renders error message for missing props', () => {
+            const defaultProps = {
+                careerTitle: undefined as any,
+                careerPhases: undefined as any
+            }
+
+            render(<CareerPhase {...defaultProps} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

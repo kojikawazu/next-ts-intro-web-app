@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import CareerPeriod from '@/app/components/careers/parts/CareerPeriod';
 
 /** CareerPeriodのテストコード */
@@ -15,30 +16,61 @@ describe('<CareerPeriod />', () => {
         render(<CareerPeriod careerTitle={mockCareerTitle} careerStart={mockCareerStart} careerEnd={mockCareerEnd} className={mockClassName} />);
     });
 
+    /** 正常系 */
+    /** ----------------------------------------------------------------------------------- */
+
     describe('Positive Scenarios', () => {
         
-        test('renders careerTitle correctly', () => {
+        it('renders careerTitle correctly', () => {
             expect(screen.getByText(mockCareerTitle)).toBeInTheDocument();
         });
 
-        test('renders careerStart correctly', () => {
+        it('renders careerStart correctly', () => {
             expect(screen.getByText(mockCareerStart)).toBeInTheDocument();
         });
 
-        test('renders careerEnd correctly', () => {
+        it('renders careerEnd correctly', () => {
             expect(screen.getByText(mockCareerEnd)).toBeInTheDocument();
         });
 
-        test('renders the colon and tilde correctly', () => {
+        it('renders the colon and tilde correctly', () => {
             const colonElement = screen.getByText(':');
             const tildeElement = screen.getByText('~');
             expect(colonElement).toBeInTheDocument();
             expect(tildeElement).toBeInTheDocument();
         });
 
-        test('applies the correct className', () => {
+        it('applies the given className to the parent element', () => {
             const careerElement = screen.getByText(mockCareerTitle).parentElement;
             expect(careerElement).toHaveClass(mockClassName);
+        });
+
+        it('applies the default className "flex pb-1" to the div', () => {
+            const defaultProps = {
+                careerTitle: mockCareerTitle,
+                careerStart: mockCareerStart,
+                careerEnd: mockCareerEnd
+            }
+
+            const {container} = render(<CareerPeriod {...defaultProps} />);
+            const divElement = container.querySelector('div');
+            expect(divElement).toHaveClass("flex pb-1");
+        });
+    });
+
+    /** 異常系 */
+    /** ----------------------------------------------------------------------------------- */
+
+    describe('Negative Scenarios', () => {
+        it('renders error message for missing props', () => {
+            const defaultProps = {
+                careerTitle: undefined as any,
+                careerStart: undefined as any,
+                careerEnd: undefined as any
+            }
+
+            render(<CareerPeriod {...defaultProps} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

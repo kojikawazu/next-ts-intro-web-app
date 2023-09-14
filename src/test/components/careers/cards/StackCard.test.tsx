@@ -24,5 +24,12 @@ describe('<StackCard />', () => {
             expect(element).toHaveClass('my-1');
             expect(element).toHaveClass('rounded-2xl');
         });
+
+        test('Testing of default props', () => {
+            render(<StackCard />);
+
+            const element = screen.getByText("default stack");
+            expect(element).toBeInTheDocument();
+        });
     });
 });

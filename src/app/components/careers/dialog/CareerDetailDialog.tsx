@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/consoleLog';
+import { consoleLog } from '@/app/shared/utils/utilities';
 import { useIntroData } from '@/app/contexts/introContext';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
 import CareerTitle from '@/app/components/careers/parts/CareerTitle';

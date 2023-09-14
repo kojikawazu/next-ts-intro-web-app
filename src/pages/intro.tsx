@@ -2,10 +2,12 @@ import React, { useRef } from 'react';
 import { GetStaticProps } from 'next';
 import path from 'path';
 import { promises as fsPromises } from 'fs';
+import { Provider } from 'react-redux';
 
 import { IntroDataType } from '@/app/types/IntroType';
 import { IntroRefType } from '@/app/types/IntroRefType';
 import { IntroDataProvider } from '@/app/contexts/introContext';
+import { store } from '@/app/features/store';
 import IntroLayout from './layout';
 import NavBar from '@/app/components/navbar/NavBar';
 import Hero from '@/app/components/hero/Hero';
@@ -14,8 +16,10 @@ import Careers from '@/app/components/careers/Careers';
 import Skills from '@/app/components/skills/Skills';
 import Contact from '@/app/components/contact/Contact';
 import Footer from '@/app/components/footer/Footer';
+import FrontArea from '@/app/components/front/FrontArea';
 
 // ISG(Incremental Static Generation)
+// ローカルからJSON取得する場合
 export const getStaticProps: GetStaticProps = async () => {
     const filePath = path.resolve('./resources/json/navbar_intro.json');
 
@@ -31,6 +35,41 @@ export const getStaticProps: GetStaticProps = async () => {
     }
 };
 
+// SSG
+// クラウドからJSON取得する場合
+// export const getStaticProps: GetStaticProps = async () => {
+//   const endpoint = 'https://asia-northeast1-cobalt-list-386722.cloudfunctions.net/nodejs-intro-backend-app/api_introduction_all';
+
+//   try {
+//       const response = await fetch(endpoint, {
+//           method: 'GET',
+//           headers: {
+//               'Content-Type': 'application/json',
+//           },
+//       });
+
+//       if (!response.ok) {
+//           throw new Error('Failed to fetch data');
+//       }
+
+//       const parsedData: IntroDataType = await response.json();
+
+//       return {
+//           props: {
+//               data: parsedData,
+//           },
+//           revalidate: 10,
+//       };
+//   } catch (error) {
+//       console.error('Error fetching data from Cloud Functions:', error);
+//       return {
+//           props: {
+//               data: {},  // エラーの場合のデフォルトのデータを設定するか、またはエラーハンドリングを追加
+//           }
+//       };
+//   }
+// };
+
 // Propsの型
 interface Props {
   data: IntroDataType;
@@ -43,34 +82,44 @@ interface Props {
  */
 const IntroHomePage: React.FC<Props> = ({ data }) => {
   // ref
-  const aboutRef = useRef<HTMLDivElement>(null);
-  const careerRef = useRef<HTMLDivElement>(null);
-  const skillsRef = useRef<HTMLDivElement>(null);
+  const aboutRef   = useRef<HTMLDivElement>(null);
+  const careerRef  = useRef<HTMLDivElement>(null);
+  const skillsRef  = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
-  const refData = { aboutRef, careerRef, skillsRef, contactRef } as IntroRefType;
+  const refData    = { aboutRef, careerRef, skillsRef, contactRef } as IntroRefType;
 
   return (
-    <IntroDataProvider 
-      initialData={ data } 
-      initialRefData={ refData }>
-      <IntroLayout>
-        <NavBar />
-        <Hero />
-        <About />
-        <Careers />
-        <Skills />
-        <Contact />
-        <Footer />
-        {/**
-         * <NavBar />
-         * <Hero />
-           <About />
-           <Careers />
-           <Skills />
-           <Contact />
-           <Footer /> */}
-      </IntroLayout>
-    </IntroDataProvider>
+    <Provider 
+      store={store}>
+      <IntroDataProvider 
+        initialData={ data } 
+        initialRefData={ refData }>
+        <IntroLayout>
+          <NavBar />
+          <Hero />
+          <About />
+          <Careers />
+          <Skills />
+          <Contact />
+          <Footer />
+          <FrontArea />
+
+          
+          
+          {/**
+           * 
+            <NavBar />  TODO
+            <Hero />
+            <About /> 
+            <Careers /> TODO
+            <Skills />  TODO
+            <Contact />
+            <Footer />
+            <FrontArea /> */
+          }
+        </IntroLayout>
+      </IntroDataProvider>
+    </Provider>
   );
 };
 

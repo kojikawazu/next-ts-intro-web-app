@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-
+import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
 import { useIntroData } from '@/app/contexts/introContext';
@@ -37,7 +37,7 @@ const CareerDetailDialog: React.FC<CareerDetailDialogProps> = ({
     }
 
     const currentCareerData  = careerData[currentIndex];
-    const responsiveFontSize = `text-xxxxs xxs:text-xxxs xs:text-xxs sssm:text-xs sm:text-sm md:text-base`; 
+    const responsiveFontSize = classNames(["text-xxxxs", "xxs:text-xxxs", "xs:text-xxs", "sssm:text-xs", "sm:text-sm", "md:text-base"]); 
 
     return (
         <div>

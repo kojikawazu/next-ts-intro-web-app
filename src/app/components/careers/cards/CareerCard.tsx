@@ -45,12 +45,13 @@ const CareerCard: React.FC<CareerCardProps> = ({
     }
 
     // tailwindcss
-    let components_height = classNames(["h-[350px]", "xxs:h-[350px]", "xs:h-[420px]", "sssm:h-[350px]", "ssm:h-[330px]"]);
-    components_height     = classNames(components_height, ["sm:h-[350px]", "md:h-[600px]", "lg:h-[700px]", "xl:h-[800px]"]);
+    let componentsHeight  = classNames(["h-[350px]", "xxs:h-[350px]", "xs:h-[420px]", "sssm:h-[350px]", "ssm:h-[330px]"]);
+    componentsHeight      = classNames(componentsHeight, ["sm:h-[350px]", "md:h-[600px]", "lg:h-[700px]", "xl:h-[800px]"]);
+    let componentsBgColor = classNames(["bg-white", "hover:bg-yellow-50", "md:hover:bg-white"]);
+    const componentsClass = classNames(componentsHeight, componentsBgColor, className, ["w-full", "mx-auto", "my-16", "rounded-3xl"]); 
 
     return (
-        <div 
-            className={`w-full ${components_height} mx-auto my-16 rounded-3xl bg-white ${className}`}>
+        <div className={componentsClass}>
             <button 
                 className="px-10 p-8"
                 onClick={() => setCurrentIndexOpen(currentIndex)}
@@ -78,17 +79,17 @@ const CareerCard: React.FC<CareerCardProps> = ({
                 <CareerStacks 
                     careerTitle={careerTitleData.career_title_stack}
                     careerStacks={careerData.career_skill_stack}
-                    className="hidden md:inline-block" />
+                    className="hidden md:flex md:flex-col md:justify-start" />
 
                 <CareerPhase
                     careerTitle={careerTitleData.career_title_phase}
                     careerPhases={careerData.career_skill_phase}
-                    className="hidden lg:inline-block" />
+                    className="hidden md:flex md:flex-col md:justify-start" />
                 
                 <CareerRole 
                     careerTitle={careerTitleData.career_title_role}
                     careerRole={careerData.career_role}
-                    className="hidden lg:inline-block" />
+                    className="hidden md:flex md:flex-col md:justify-start" />
             </button>
         </div>
     );

@@ -34,7 +34,7 @@ const CareerContents: React.FC<CareerContentsProps> = ({
                 <div className="">{careerTitle}</div>
                 <div className="px-1">:</div>
             </div>
-            <div className="">{careerDescription}</div>
+            <div className="text-left">{careerDescription}</div>
         </div>
     );
 };

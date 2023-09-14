@@ -11,8 +11,11 @@ type CareerDialogLayoutProps = {
  * キャリアダイアログレイアウトコンポーネント
  * @returns JSX
  */
-const CareerDialogLayout = (props: CareerDialogLayoutProps) => {
-    const { show, onClose, children } = props;
+const CareerDialogLayout: React.FC<CareerDialogLayoutProps> = ({
+    show,
+    onClose,
+    children
+}) => {
     if (!show) return null;
 
     const preventPropagation = (e: React.MouseEvent) => {
@@ -21,12 +24,14 @@ const CareerDialogLayout = (props: CareerDialogLayoutProps) => {
 
     return (
         <div 
-            className="fixed inset-0 flex items-center justify-center z-50 m-4"
+            className="fixed inset-0 z-50 flex items-center justify-center w-full h-full"
             onClick={onClose}>
-            <div 
-                className="bg-blue-300 p-5 rounded-lg shadow-md"
-                onClick={preventPropagation}>
-                {children}
+            <div className="flex items-center justify-center mx-12 my-4">
+                <div 
+                    className="bg-white px-7 py-8 rounded-3xl shadow-2xl"
+                    onClick={preventPropagation}>
+                    {children}
+                </div>
             </div>
         </div>
     );

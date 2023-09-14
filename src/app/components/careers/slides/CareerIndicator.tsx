@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
 import { validateFunctionProps, validateNumberProps } from '@/app/shared/utils/validateUtilities';
@@ -29,7 +30,7 @@ const CareerIndicator: React.FC<CareerIndicatorProps> = ({
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
-    const buttonBaseClass = "mx-2 p-0.5 xs:p-1 sssm:p-2 rounded-full cursor-pointer";
+    const buttonBaseClass = classNames(["mx-2", "p-0.5", "xs:p-1", "sssm:p-2", "rounded-full", "cursor-pointer"]);
 
     return (
         <div className="flex z-10">
@@ -38,15 +39,14 @@ const CareerIndicator: React.FC<CareerIndicatorProps> = ({
                     const activeClass = index === currentIndex 
                         ? 'bg-black text-black hover:bg-gray-700 hover:text-gray-700' 
                         : 'bg-gray-300 text-gray-300 hover:bg-gray-400 hover:text-gray-400';
-                    const className = `${buttonBaseClass} ${activeClass}`;
+                    const className = classNames(buttonBaseClass, activeClass);
                     
                     return (
                         <button 
                             key={index} 
                             onClick={() => jumpToCard(index)}
                             className={className}
-                            aria-label={`Move to career ${index + 1}`}
-                        >
+                            aria-label={`Move to career ${index + 1}`}>
                             &bull;
                         </button> 
                     );

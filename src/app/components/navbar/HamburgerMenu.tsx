@@ -54,20 +54,20 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
                         onClick={toggleMenu} />
                 </div>
                 <ul role="menu">
-                        {menuList.map((menu) => (
-                            <HamburgerLink
-                                key={menu.label}
-                                label={menu.label}
-                                onClick={() => {
-                                    menu.action();
-                                    toggleMenu();
-                                }}
-                                iconComponent={
-                                    <ArrowIcon  
-                                        angleCSS="rotate-90"
-                                        iconSize={6} />
-                                } />
-                        ))}
+                    {menuList.map((menu) => (
+                        <HamburgerLink
+                            key={menu.label}
+                            label={menu.label}
+                            onClick={() => {
+                                menu.action();
+                                toggleMenu();
+                            }}
+                            iconComponent={
+                                <ArrowIcon  
+                                    angleCSS="rotate-90"
+                                    iconSize={24} />
+                            } />
+                    ))}
                 </ul>
             </nav>
 

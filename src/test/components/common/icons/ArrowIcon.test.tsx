@@ -14,8 +14,6 @@ describe('<ArrowIcon />', () => {
             const { getByLabelText } = render(<ArrowIcon />);
             const icon = getByLabelText('arrow icon');
             expect(icon).toBeInTheDocument();
-            expect(icon).toHaveClass('w-5');
-            expect(icon).toHaveClass('h-5');
             expect(icon).toHaveClass('rotate-0');
         });
 
@@ -23,19 +21,23 @@ describe('<ArrowIcon />', () => {
             const { getByLabelText } = render(<ArrowIcon angleCSS="rotate-90" />);
             const icon = getByLabelText('arrow icon');
             expect(icon).toHaveClass('rotate-90');
+            const parent = icon.parentElement;
+            expect(parent).toHaveStyle({width: "18px"});
+            expect(parent).toHaveStyle({height: "18px"});
         });
 
         it('renders the arrow icon with custom size', () => {
             const { getByLabelText } = render(<ArrowIcon iconSize={8} />);
             const icon = getByLabelText('arrow icon');
-            expect(icon).toHaveClass('w-8');
-            expect(icon).toHaveClass('h-8');
         });
 
         it('renders the arrow icon with custom aria label', () => {
             const { getByLabelText } = render(<ArrowIcon ariaLabel="custom label" />);
             const icon = getByLabelText('custom label');
             expect(icon).toBeInTheDocument();
+            const parent = icon.parentElement;
+            expect(parent).toHaveStyle({width: "18px"});
+            expect(parent).toHaveStyle({height: "18px"});
         });
     });
 });

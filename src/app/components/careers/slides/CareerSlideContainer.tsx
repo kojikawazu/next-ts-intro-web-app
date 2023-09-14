@@ -1,4 +1,9 @@
 import React from 'react';
+import classNames from 'classnames';
+import { MESSAGES } from '@/app/shared/constants/constants';
+import { consoleLog } from '@/app/shared/utils/utilities';
+import { validateArrays, validateNumberProps, validateData } from '@/app/shared/utils/validateUtilities';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
 import { CareerTitleType, CareerType } from '@/app/types/CareerType';
 import CareerCard from '@/app/components/careers/cards/CareerCard';
 
@@ -12,10 +17,6 @@ type CareerSlideContainerProps = {
 
 /**
  * CareerSlideContainerコンポーネント
- * @param currentIndex
- * @param animationDuration
- * @param careerTitleData
- * @param careerData
  * @returns JSX
  */
 const CareerSlideContainer: React.FC<CareerSlideContainerProps> = ({ 
@@ -24,9 +25,19 @@ const CareerSlideContainer: React.FC<CareerSlideContainerProps> = ({
     careerTitleData, 
     careerData 
 }) => {
-    let cardAppendClass = `w-11/12 xl:w-5/6`;
-    cardAppendClass = `${cardAppendClass} h-[600px] md:h-[900px]`;
-    cardAppendClass = `${cardAppendClass} mx-4 sm:mx-8 md:mx-10 xl:mx-24`;
+    // Props検証
+    const arrayError    = validateArrays([careerData], MESSAGES.ERRORS.NOT_ARRAYS);
+    const numberError   = validateNumberProps([currentIndex, animationDuration], MESSAGES.ERRORS.NOT_NUMBERS);
+    const dataError     = validateData([careerTitleData], MESSAGES.ERRORS.NOT_DATA);
+    const errors = [arrayError, numberError, dataError].filter(e => e !== null && e !== undefined);
+    if (errors.length > 0) {
+        consoleLog(`[CareerSlideContainer]: ${errors.join(' ')}`);
+        return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
+    }
+
+    let cardAppendClass = classNames(["w-11/12", "xl:w-5/6"]);
+    cardAppendClass     = classNames(cardAppendClass, ["h-[600px]", "md:h-[900px]"]);
+    cardAppendClass     = classNames(cardAppendClass, ["mx-4", "sm:mx-8", "md:mx-10", "xl:mx-24"]);
 
     return (
         <div className="basis-full xl:basis-8/12">

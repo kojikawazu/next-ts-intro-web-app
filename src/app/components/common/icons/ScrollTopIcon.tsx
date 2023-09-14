@@ -1,8 +1,9 @@
 import React from 'react';
+import classNames from 'classnames';
 
 /** Propsの型定義 */
 type ScrollTopIconProps = {
-    className?: string;
+    iconSize?: number;
     ariaLabel?: string;
 }
 
@@ -11,9 +12,13 @@ type ScrollTopIconProps = {
  * @returns JSX
  */
 const ScrollTopIcon: React.FC<ScrollTopIconProps> = ({
-    className = "w-8 h-8",
+    iconSize = 8,
     ariaLabel = "scroll-top-icon"
 }) => {
+    const width  = `w-${iconSize}`;
+    const height = `h-${iconSize}`;
+    const size   = classNames([width, height]);
+
     return (
         <svg 
             role="img"
@@ -23,7 +28,7 @@ const ScrollTopIcon: React.FC<ScrollTopIconProps> = ({
             viewBox="0 0 24 24" 
             strokeWidth="1.5" 
             stroke="currentColor" 
-            className={className}>
+            className={size}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
         </svg>
     );

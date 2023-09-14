@@ -8,28 +8,12 @@ import ErrorComponent from '@/app/components/common/ErrorComponent';
 import HamburgerOpenBtn from '@/app/components/navbar/hamburger/HamburgerOpenBtn';
 import HamburgerCloseBtn from '@/app/components/navbar/hamburger/HamburgerCloseBtn';
 import HamburgerLink from '@/app/components/navbar/hamburger/HamburgerLink';
+import ArrowIcon from '../common/icons/ArrowIcon';
 
 /** Propsの型定義 */
 type HamburgerMenuProps = {
     menuList: Array<NavBarMenuType>;
 }
-
-/**
- * 矢印サブコンポーネント
- * @returns JSX
- */
-const ArrowIcon = () => (
-    <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        fill="none" 
-        viewBox="0 0 24 24" 
-        strokeWidth="1.5" 
-        stroke="currentColor" 
-        className="w-6 h-6" 
-        aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-    </svg>
-);
 
 /**
  * ハンバーガーメニューコンポーネント
@@ -78,7 +62,11 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
                                     menu.action();
                                     toggleMenu();
                                 }}
-                                iconComponent={<ArrowIcon />} />
+                                iconComponent={
+                                    <ArrowIcon  
+                                        angleCSS="rotate-90"
+                                        iconSize={6} />
+                                } />
                         ))}
                 </ul>
             </nav>

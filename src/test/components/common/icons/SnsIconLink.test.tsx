@@ -5,6 +5,9 @@ import SnsIconLink from '@/app/components/common/icons/SnsIconLink';
 /** SnsIconLinkのテストコード */
 describe('<SnsIconLink />', () => {
 
+    /** 正常系 */
+    /** ----------------------------------------------------------------------------------- */
+    
     describe('Positive Scenarios', () => {
         
         it('renders the image correctly with provided alt text', () => {
@@ -46,5 +49,18 @@ describe('<SnsIconLink />', () => {
             const image = getByAltText('SNS icon');
             expect(image).toHaveClass('custom-class');
         });
+    });
+
+    /** 異常系 */
+    /** ----------------------------------------------------------------------------------- */
+    
+    describe('Negative Scenarios', () => {
+      it('applies the custom size to the image', () => {
+        const { getByRole } = render(
+          <SnsIconLink url="https://example.com" imageSrc="/path/to/sns-icon.jpg" imageSize={-1} />
+        );
+        const linkWrapper = getByRole('link');
+        expect(linkWrapper.firstChild).toHaveStyle({ width: '48px', height: '48px' });
+      });
     });
 });

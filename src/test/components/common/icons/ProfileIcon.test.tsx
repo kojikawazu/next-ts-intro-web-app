@@ -24,6 +24,12 @@ describe('<ProfileIcon />', () => {
             const div = container.firstChild;
             expect(div).toHaveStyle({ width: '96px', height: '96px' });
         });
+
+        it('renders the image correctly', () => {
+            const { getByAltText } = render(<ProfileIcon src="/path/to/image.jpg" alt="Test Image" className='TestClass'/>);
+            const image = getByAltText('Test Image');
+            expect(image).toHaveClass('TestClass');
+        });
     });
 
     describe('Negative Scenarios', () => {

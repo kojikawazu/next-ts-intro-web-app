@@ -15,7 +15,7 @@ const ContactSendNotification = () => {
         setOffNotificationVisible
     } = useContactLogic();
     const bgColor = contactStatusStr === 'failed' ? 'bg-red-500' : 'bg-green-500';
-    const notice  = (contactStatusStr === 'failed' ? process.env.NEXT_PUBLIC_NOTICE_FAILED : process.env.NEXT_PUBLIC_NOTICE_SUCCESSED) || "notice";
+    const notice  = ((contactStatusStr === 'failed' ? process.env.NEXT_PUBLIC_NOTICE_FAILED : process.env.NEXT_PUBLIC_NOTICE_SUCCESSED) || "notice") as string;
 
     return (
         <Notification

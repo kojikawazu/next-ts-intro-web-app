@@ -1,27 +1,35 @@
 import React from 'react';
+import classNames from 'classnames';
 
 /** Propsの型定義 */
 type ArrowIconProps = {
-    angleCSS: string;
+    angleCSS?: string;
+    iconSize?: number;
+    ariaLabel?: string;
 }
 
 /**
  * ArrowIconコンポーネント
- * @param props angleCSS = 'rotate-0'
  * @returns JSX
  */
-const ArrowIcon = (props: ArrowIconProps) => {
-    const { angleCSS = 'rotate-0' } = props;
+const ArrowIcon: React.FC<ArrowIconProps> = ({
+    angleCSS  = 'rotate-0',
+    iconSize  = 5,
+    ariaLabel = 'arrow icon' 
+}) => {
+    const width  = `w-${iconSize}`;
+    const height = `h-${iconSize}`;
+    const size   = classNames([width, height]);
 
     return (
         <svg 
-            aria-label="scroll-up-icon"
+            aria-label={ariaLabel}
             xmlns="http://www.w3.org/2000/svg" 
             fill="none" 
             viewBox="0 0 24 24" 
             strokeWidth="1.5" 
             stroke="currentColor" 
-            className={`w-5 h-5 ${angleCSS}`}>
+            className={`${size} ${angleCSS}`}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
         </svg>
     );

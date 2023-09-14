@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { useContactLogic } from '@/app/features/contact/useContactLogic';
 import ContactActionSpinner from '@/app/components/contact/spinner/ContactActionSpinner';
 

@@ -9,11 +9,12 @@ import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import HamburgerOpenBtn from '@/app/components/navbar/hamburger/HamburgerOpenBtn';
 import HamburgerCloseBtn from '@/app/components/navbar/hamburger/HamburgerCloseBtn';
 import HamburgerLink from '@/app/components/navbar/hamburger/HamburgerLink';
-import ArrowIcon from '../common/icons/ArrowIcon';
+import ArrowIcon from '@/app/components/common/icons/ArrowIcon';
 
 /** Propsの型定義 */
 type HamburgerMenuProps = {
     menuList: Array<NavBarMenuType>;
+    navbarTitle: React.ReactNode
 }
 
 /**
@@ -21,7 +22,8 @@ type HamburgerMenuProps = {
  * @returns JSX
  */
 const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
-    menuList
+    menuList,
+    navbarTitle
 }) => {
     componentStart(HamburgerMenu);
 
@@ -45,7 +47,7 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
     // CSS
     const baseClass      = ['z-40', 'top-0', 'left-0', 'fixed', 'w-full', 'h-screen', 'pt-24', 'px-3', { 'top-[-100%]': !isOpen }];
     const textClass      = ['text-left'];
-    const colorClass     = ['bg-lblue'];
+    const colorClass     = ['bg-lblue-opacity-09'];
     const animationClass = ['ease-linear', 'duration-300'];
     const flexClass      = ['flex', 'flex-col', 'justify-start'];
     const navClass       = classNames(baseClass, textClass, colorClass, animationClass, flexClass);
@@ -55,6 +57,9 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
         <>
             {/* nav */}
             <nav className={navClass}>
+                <div className="absolute top-8 left-0 w-30 h-5">
+                    {navbarTitle}
+                </div>
                 <div className="absolute top-10 right-10 w-10 h-10">
                     <HamburgerCloseBtn
                         onClick={toggleMenu} />

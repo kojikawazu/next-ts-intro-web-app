@@ -16,8 +16,11 @@ const config: Config = {
         ssm:   '500px',
       },
       colors: {
-        'lblue':           'rgba(157, 237, 255, 0.70)',
-        'lblue-btn-hover': 'rgba(137, 217, 235, 0.70)',
+        'lblue':            'rgba(157, 237, 255, 1.00)',
+        'lblue-opacity-09': 'rgba(157, 237, 255, 0.90)',
+        'lblue-opacity-08': 'rgba(157, 237, 255, 0.80)',
+        'lblue-opacity-07': 'rgba(157, 237, 255, 0.70)',
+        'lblue-btn-hover':  'rgba(137, 217, 235, 0.70)',
         'dblue':       'rgba(0, 121, 148, 1)',
         'hoverdblue':  'rgba(0, 221, 248, 0.1)',
         'hero':        'rgba(173, 216, 230, 0.51)',

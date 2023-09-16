@@ -5,6 +5,7 @@ import { useIntroData } from '@/app/contexts/introContext';
 import { useScrollToRef } from '@/app/hooks/useScroll';
 import { mockInitialData, mockRefData } from '@/test/mocks/mockData';
 import { NavBarMenuType } from '@/app/types/NavBarMenuType';
+import NavBarTitle from '@/app/components/navbar/title/NavBarTitle';
 import HamburgerMenu from '@/app/components/navbar/HamburgerMenu';
 
 // Mocks
@@ -19,6 +20,14 @@ describe('<HamburgerMenu />', () => {
     let mockSkillsScroll: jest.Mock;
     let mockContactScroll: jest.Mock;
     let menuList: NavBarMenuType[] = [];
+
+    const tempComponent = (
+        <NavBarTitle 
+            ariaLabel="Scroll to top"
+            btnClass=""
+            onClick={() => {}}
+            label="" />
+    );
 
     /** 各テストの前準備 */
     beforeEach(() => {
@@ -57,7 +66,7 @@ describe('<HamburgerMenu />', () => {
     describe('<HamburgerMenu /> - Positive Scenarios', () => {
 
         it('displays the menu items with the correct data', () => {
-            render(<HamburgerMenu menuList={menuList} />);
+            render(<HamburgerMenu menuList={menuList} navbarTitle={tempComponent} />);
             
             expect(screen.getByText('About')).toBeInTheDocument();
             expect(screen.getByText('Career')).toBeInTheDocument();
@@ -66,7 +75,7 @@ describe('<HamburgerMenu />', () => {
         });
 
         it('toggles the menu when hamburger button is clicked', async () => {
-            render(<HamburgerMenu menuList={menuList} />);
+            render(<HamburgerMenu menuList={menuList} navbarTitle={tempComponent} />);
 
             /// メニューが閉じているか確認
             const closedMenu = screen.getByRole('navigation', { hidden: true });
@@ -91,7 +100,7 @@ describe('<HamburgerMenu />', () => {
         });
 
         it('calls the appropriate scroll function when each menu item is clicked', async () => {
-            render(<HamburgerMenu menuList={menuList} />);
+            render(<HamburgerMenu menuList={menuList} navbarTitle={tempComponent} />);
 
             const openingButton = screen.getByRole('button', { name: "メニューを開く" });
             fireEvent.click(openingButton);
@@ -119,7 +128,7 @@ describe('<HamburgerMenu />', () => {
         it('displays error component when data is missing', () => {
             const originalError = console.error;
             console.error = () => {};
-            render(<HamburgerMenu menuList={[]} />);
+            render(<HamburgerMenu menuList={[]} navbarTitle={tempComponent} />);
             
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
             console.error = originalError;

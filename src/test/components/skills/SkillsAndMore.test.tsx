@@ -5,13 +5,6 @@ import { consoleLog } from '@/app/shared/utils/utilities';
 import { validateFunctionProps } from '@/app/shared/utils/validateUtilities';
 import SkillsAndMore from '@/app/components/skills/SkillsAndMore';
 
-// Mocks
-jest.mock('@/app/shared/utils/validateUtilities');
-jest.mock('@/app/shared/utils/utilities', () => ({
-    ...jest.requireActual('@/app/shared/utils/utilities'),
-    consoleLog: jest.fn(),
-}));
-
 /** SkillsAndMoreコンポーネントのテスト */
 describe('<SkillsAndMore />', () => {
     const mockFn    = jest.fn();
@@ -63,17 +56,25 @@ describe('<SkillsAndMore />', () => {
     /** ----------------------------------------------------------------------------------- */
 
     describe('Negative Scenarios', () => {
-        it('logs an error when validateFunctionProps indicates a missing function', () => {
-            (validateFunctionProps as jest.Mock).mockReturnValueOnce(MESSAGES.ERRORS.NOT_FUNCTIONS);
-            render(<SkillsAndMore updateCardDisplayLimit={mockFn} currentIndex={0} cardAdditionCount={6} cardTotal={10} buttonLabel={LOAD_MORE} />);
-            expect(consoleLog).toHaveBeenCalledWith(expect.stringContaining(`[SkillsAndMore]: ${MESSAGES.ERRORS.NOT_FUNCTIONS}`));
-        });
-        
         it('does not invoke the updateCardDisplayLimit function when the button is disabled', () => {
             render(<SkillsAndMore updateCardDisplayLimit={mockFn} currentIndex={10} cardAdditionCount={6} cardTotal={10} buttonLabel={LOAD_MORE} />);
             const button = screen.getByRole('button', { name: new RegExp(LOAD_MORE, 'i') });
             fireEvent.click(button);
             expect(mockFn).not.toHaveBeenCalled();
+        });
+        
+        
+        it('does not invoke the updateCardDisplayLimit function when the button is disabled', () => {
+            const errorProps = {
+                updateCardDisplayLimit: undefined as any,
+                currentIndex: undefined as any,
+                cardAdditionCount: undefined as any,
+                cardTotal: undefined as any,
+                buttonLabel: undefined as any
+            }
+
+            render(<SkillsAndMore {...errorProps} />);
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     });
 });

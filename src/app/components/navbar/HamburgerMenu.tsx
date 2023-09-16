@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
 import { NavBarMenuType } from '@/app/types/NavBarMenuType';
-import { validateArrays } from '@/app/shared/utils/validateUtilities';
+import { validatePropsFilter, validateArraysProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import HamburgerOpenBtn from '@/app/components/navbar/hamburger/HamburgerOpenBtn';
 import HamburgerCloseBtn from '@/app/components/navbar/hamburger/HamburgerCloseBtn';
 import HamburgerLink from '@/app/components/navbar/hamburger/HamburgerLink';
@@ -22,6 +23,8 @@ type HamburgerMenuProps = {
 const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
     menuList
 }) => {
+    componentStart(HamburgerMenu);
+
     // state
     const [isOpen, setIsOpen] = useState(false);
     // handle
@@ -30,10 +33,12 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
     };
 
     // Props検証
-    const arrayError  = validateArrays([menuList], MESSAGES.ERRORS.NOT_ARRAYS)
-    const errors = [arrayError].filter(e => e !== null && e !== undefined);
+    const arrayError  = validateArraysProps([menuList], MESSAGES.ERRORS.NOT_ARRAYS)
+    const errors      = validatePropsFilter([arrayError]);
     if (errors.length > 0) {
-        consoleLog(`[HamburgerMenu]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(HamburgerMenu, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
@@ -43,8 +48,9 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
     const colorClass     = ['bg-lblue'];
     const animationClass = ['ease-linear', 'duration-300'];
     const flexClass      = ['flex', 'flex-col', 'justify-start'];
-    const navClass = classNames(baseClass, textClass, colorClass, animationClass, flexClass);
+    const navClass       = classNames(baseClass, textClass, colorClass, animationClass, flexClass);
 
+    componentJSX(HamburgerMenu);
     return (
         <>
             {/* nav */}
@@ -53,6 +59,7 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
                     <HamburgerCloseBtn
                         onClick={toggleMenu} />
                 </div>
+                
                 <ul role="menu">
                     {menuList.map((menu) => (
                         <HamburgerLink

@@ -1,8 +1,9 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateStringProps, validateFunctionProps } from '@/app/shared/utils/validateUtilities';
+import { validatePropsFilter, validateStringProps, validateFunctionProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 
 /** Propsの型定義 */
 type NavBarTitleProps = {
@@ -22,15 +23,20 @@ const NavBarTitle: React.FC<NavBarTitleProps> = ({
     onClick,
     label
 }) => {
+    componentStart(NavBarTitle);
+
     // Props検証
     const functionError = validateFunctionProps([onClick], MESSAGES.ERRORS.NOT_FUNCTIONS);
     const stringError   = validateStringProps([ariaLabel, label], MESSAGES.ERRORS.NOT_STRING);
-    const errors = [functionError, stringError].filter(e => e !== null && e !== undefined);
+    const errors        = validatePropsFilter([functionError, stringError]);
     if (errors.length > 0) {
-        consoleLog(`[NavBarTitle]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(NavBarTitle, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
+    componentJSX(NavBarTitle);
     return (
         <button 
             aria-label={ariaLabel}

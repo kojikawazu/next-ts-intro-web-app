@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import AboutContents from '@/app/components/about/AboutContents';
 import { mockInitialData } from '@/test/mocks/mockData';
+import { isEnvTest } from '@/app/shared/utils/utilities';
 
 // Types
 type MockedImageProps = {
@@ -17,6 +18,10 @@ jest.mock('next/image', () => {
         return <img src={src} alt={alt} {...rest} />;
     };
 });
+jest.mock('@/app/shared/utils/utilities', () => ({
+    ...jest.requireActual('@/app/shared/utils/utilities'),
+    isEnvTest: jest.fn()
+}));
 
 /** AboutContentsコンポーネントテスト */
 describe('<AboutContents />', () => {
@@ -36,10 +41,11 @@ describe('<AboutContents />', () => {
         });
 
         it('renders the ProfileCard and ProfileContentsCard', () => {
+            (isEnvTest as jest.Mock).mockReturnValue(true);
             render( <AboutContents {...defaultProps} /> );
             
             // ProfileCard のトップレベルエレメントに `data-testid="profile-card"` を追加することを想定
-            const profileCard = screen.queryByTestId('profile-card');
+            const profileCard = screen.queryByTestId('profile-standard-card');
             expect(profileCard).toBeInTheDocument();
             
             // ProfileContentsCard のトップレベルエレメントに `data-testid="profile-contents-card"` を追加することを想定

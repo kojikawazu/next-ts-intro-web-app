@@ -2,9 +2,10 @@ import React from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateStringProps } from '@/app/shared/utils/validateUtilities';
+import { validatePropsFilter, validateStringProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 
 /** Propsの型定義 */
 type HeroBackgroundProps = {
@@ -22,17 +23,22 @@ const HeroBackground: React.FC<HeroBackgroundProps> = ({
     alt = "hero background",
     coverBackgroundColor
 }) => {
+    componentStart(HeroBackground);
+
     // Propsの検証
     const stringError = validateStringProps([url, coverBackgroundColor], MESSAGES.ERRORS.NOT_STRING);
-    const errors = [stringError].filter(e => e !== null && e !== undefined);
+    const errors      = validatePropsFilter([stringError]);
     if (errors.length > 0) {
-        consoleLog(`[HeroBackground]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(HeroBackground, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
     const className      = classNames(["w-full", "h-[50vh]", "sssm:h-screen"]);
     const imageClassName = classNames(["w-full", "h-[50vh]", "sssm:h-screen"]);
 
+    componentJSX(HeroBackground);
     return (
         <div className={`relative ${className}`}>
             <Image 

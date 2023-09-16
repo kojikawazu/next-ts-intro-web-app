@@ -1,10 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
 import { useIntroData } from '@/app/contexts/introContext';
 import { useScrollTop, useScrollToRef } from '@/app/hooks/useScroll';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import NavBarTitle from '@/app/components/navbar/title/NavBarTitle';
 import HamburgerMenu from '@/app/components/navbar/HamburgerMenu';
 import NormalMenu from '@/app/components/navbar/NormalMenu';
@@ -14,6 +15,8 @@ import NormalMenu from '@/app/components/navbar/NormalMenu';
  * @returns JSX
  */
 const NavBar = () => {
+    componentStart(NavBar);
+
     // Context
     const { introData, refData } = useIntroData();
     // Functions
@@ -26,7 +29,9 @@ const NavBar = () => {
     
     // エラーハンドリング
     if (!introData || !introData.navbar_data || !refData) {
-        consoleLog("[NavBar]: " + MESSAGES.ERRORS.DATA_ERROR);
+        const errorJoin = MESSAGES.ERRORS.DATA_ERROR;
+        customLog(NavBar, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
     }
 
@@ -49,6 +54,7 @@ const NavBar = () => {
     const navBarTitleBackgroundClass = ["hover:text-gray-600"];
     const navBarTitleClass = classNames(navBarBaseClass, navBarTitleUnderLineClass, navBarTitleTextClass, navBarTitleBackgroundClass);
 
+    componentJSX(NavBar);
     return (
         <div className={`${className}`}>
             <NavBarTitle 
@@ -62,6 +68,7 @@ const NavBar = () => {
                 <div className="hidden md:inline-block">
                     <NormalMenu menuList={menuList} />
                 </div>
+                
                 <div className="inline-block md:hidden">
                     <HamburgerMenu menuList={menuList} />
                 </div>

@@ -1,8 +1,9 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateStringProps } from '@/app/shared/utils/validateUtilities';
+import { validatePropsFilter, validateStringProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 
 /** Propsの型定義 */
 type ContactInputProps = {
@@ -26,14 +27,19 @@ const ContactInput: React.FC<ContactInputProps> = ({
     isRequired = false,
     children
 }) => {
+    componentStart(ContactInput);
+
     // Props検証
     const stringError   = validateStringProps([inputId, labelName, labelStyle], MESSAGES.ERRORS.NOT_STRING);
-    const errors = [stringError].filter(Boolean);
+    const errors        = validatePropsFilter([stringError]);
     if (errors.length > 0) {
-        consoleLog(`[ContactInput]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(ContactInput, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
+    componentJSX(ContactInput);
     return (
         <div className="flex justify-center w-full">
             <div className="sssm:flex sssm:justify-center w-full mx-10 mb-6">

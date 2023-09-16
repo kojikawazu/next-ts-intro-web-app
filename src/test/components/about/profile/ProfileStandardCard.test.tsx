@@ -65,6 +65,12 @@ describe('<ProfileStandardCard />', () => {
             const xLinkElement = screen.getByRole('link', { name: /sample01_image/ }).firstChild;
             expect(xLinkElement).toHaveStyle({ width: '56px', height: '56px' });
         });
+
+        it('does not have data-testid attribute when isEnvTest returns false', () => {
+            (isEnvTest as jest.Mock).mockReturnValue(true);
+            const { queryByTestId } = render(<ProfileStandardCard profileData={mockInitialData.about_data} />);
+            expect(queryByTestId('profile-standard-card')).not.toBeNull();
+        });
     });
 
     /** 異常系 */
@@ -100,7 +106,7 @@ describe('<ProfileStandardCard />', () => {
         it('does not have data-testid attribute when isEnvTest returns false', () => {
             (isEnvTest as jest.Mock).mockReturnValue(false);
             const { queryByTestId } = render(<ProfileStandardCard profileData={mockNegativeProfileData} />);
-            expect(queryByTestId('profile-contents-card')).toBeNull();
+            expect(queryByTestId('profile-standard-card')).toBeNull();
         });
     });
 });

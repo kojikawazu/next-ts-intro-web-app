@@ -1,8 +1,9 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
 import { useIntroData } from '@/app/contexts/introContext';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import Title from '@/app/components/common/Title';
 import AboutContents from '@/app/components/about/AboutContents';
 
@@ -11,16 +12,22 @@ import AboutContents from '@/app/components/about/AboutContents';
  * @returns JSX
  */
 const About = () => {
+    componentStart(About);
+
     // Context
     const { introData, refData } = useIntroData();
 
     // エラーハンドリング
     if (!introData || !introData.about_data || !refData) {
-        consoleLog("[About]: " + MESSAGES.ERRORS.DATA_ERROR);
+        const errorJoin = MESSAGES.ERRORS.DATA_ERROR;
+        customLog(About, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
     }
+
     const { navbar_data: navbarData, about_data: aboutData } = introData;
 
+    componentJSX(About);
     return (
         <div 
             className="w-full" 

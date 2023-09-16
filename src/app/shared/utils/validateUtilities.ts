@@ -76,12 +76,12 @@ export const validateFunctionProps = (props: Array<((...args: any[]) => any) | u
 };
 
 /**
- * データ検証
+ * props検証(データ)
  * @param args 
  * @param errorMessage
  * @returns エラーメッセージ or null
  */
-export const validateData = (args: any[], errorMessage: string): string | null => {
+export const validateDataProps = (args: any[], errorMessage: string): string | null => {
   for (const arg of args) {
       if (!arg) {
         return errorMessage;
@@ -91,12 +91,12 @@ export const validateData = (args: any[], errorMessage: string): string | null =
 };
 
 /**
- * 配列検証
+ * props検証(配列)
  * @param list 
  * @param errorMessage 
  * @returns エラーメッセージ or null
  */
-export const validateArrays = (list: (Array<any> | undefined)[], errorMessage: string): string | null => {
+export const validateArraysProps = (list: (Array<any> | undefined)[], errorMessage: string): string | null => {
   for (const arg of list) {
       if (!Array.isArray(arg) || arg.length === 0) {
         return errorMessage;
@@ -106,7 +106,7 @@ export const validateArrays = (list: (Array<any> | undefined)[], errorMessage: s
 };
 
 /**
- * ref検証
+ * props検証(ref)
  * @param refList 
  * @param errorMessage 
  * @returns エラーメッセージ or null
@@ -119,3 +119,13 @@ export const validateRefProps = (refList: (React.RefObject<HTMLDivElement> | und
   }
   return null;
 };
+
+/**
+ * props検証のフィルター
+ * @param errorList 
+ * @returns エラーメッセージリスト
+ */
+export const validatePropsFilter = (errorList: Array<string | null>): Array<string | null> => {
+  const filteredErrors = errorList.filter(e => e !== null && e !== undefined) as Array<string>;
+  return filteredErrors !== null && filteredErrors.length > 0 ? filteredErrors : [];
+}

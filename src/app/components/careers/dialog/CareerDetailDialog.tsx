@@ -4,6 +4,8 @@ import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
 import { useIntroData } from '@/app/contexts/introContext';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import CareerTitle from '@/app/components/careers/parts/CareerTitle';
 import CareerPeriod from '@/app/components/careers/parts/CareerPeriod';
 import CareerMember from '@/app/components/careers/parts/CareerMember';
@@ -25,6 +27,8 @@ type CareerDetailDialogProps = {
 const CareerDetailDialog: React.FC<CareerDetailDialogProps> = ({ 
     currentIndex 
 }) => {
+    componentStart(CareerDetailDialog);
+
     // Context
     const { introData }     = useIntroData();
     const careerTitleData   = introData?.career_title_data;
@@ -32,13 +36,16 @@ const CareerDetailDialog: React.FC<CareerDetailDialogProps> = ({
 
     // エラーハンドリング
     if (!careerTitleData || !careerData) {
-        consoleLog("Careerコンポーネントのデータが不足しています");
+        const errorJoin = MESSAGES.ERRORS.DATA_LOADING;
+        customLog(CareerDetailDialog, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
     }
 
     const currentCareerData  = careerData[currentIndex];
     const responsiveFontSize = classNames(["text-xxxxs", "xxs:text-xxxs", "xs:text-xxs", "sssm:text-xs", "sm:text-sm", "md:text-base"]); 
 
+    componentJSX(CareerDetailDialog);
     return (
         <div>
             <div>

@@ -1,10 +1,12 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
+import { NavBarType } from '@/app/types/NavbarType';
+import { SkillsType } from '@/app/types/SkillsType';
 import { consoleLog } from '@/app/shared/utils/utilities';
 import { useIntroData } from '@/app/contexts/introContext';
 import { useLoadLimitLogic } from '@/app/features/loadlimit/useLoadLimit';
-import { NavBarType } from '@/app/types/NavbarType';
-import { SkillsType } from '@/app/types/SkillsType';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import Title from '@/app/components/common/Title';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
 import SkillCard from '@/app/components/skills/SkillCard';
@@ -18,6 +20,8 @@ const CARD_ADDITION_COUNT = 6;
  * @returns JSX
  */
 const Skills = () => {
+  componentStart(Skills);
+
   // Context
   const { introData, refData } = useIntroData();
   // hook
@@ -25,13 +29,16 @@ const Skills = () => {
 
   // エラーハンドリング
   if (!introData?.navbar_data || !introData?.skills_data || !refData) {
-    consoleLog("[Skills]: " + MESSAGES.ERRORS.DATA_ERROR);
+    const errorJoin = MESSAGES.ERRORS.DATA_LOADING;
+    customLog(Skills, 'error', errorJoin);
+    sendLogsToGCF([errorJoin], 'ERROR');
     return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
   }
 
   const navbarData: NavBarType = introData.navbar_data;
   const skillsData: SkillsType = introData.skills_data;
 
+  componentJSX(Skills);
   return (
     <section 
       className="w-full h-full bg-skills" 

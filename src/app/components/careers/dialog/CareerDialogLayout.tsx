@@ -1,4 +1,5 @@
 import React from 'react';
+import { componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 
 /** Propsの型定義 */
 type CareerDialogLayoutProps = {
@@ -16,12 +17,14 @@ const CareerDialogLayout: React.FC<CareerDialogLayoutProps> = ({
     onClose,
     children
 }) => {
+    componentStart(CareerDialogLayout);
     if (!show) return null;
 
     const preventPropagation = (e: React.MouseEvent) => {
         e.stopPropagation();
     }
 
+    componentJSX(CareerDialogLayout);
     return (
         <div 
             className="fixed inset-0 z-50 flex items-center justify-center w-full h-full"

@@ -1,10 +1,12 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { useIntroData } from '@/app/contexts/introContext';
 import { NavBarType } from '@/app/types/NavbarType';
 import { FooterType } from '@/app/types/FooterType';
+import { useIntroData } from '@/app/contexts/introContext';
 import { useScrollTop } from '@/app/hooks/useScroll';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import FooterArrowLink from '@/app/components/footer/parts/FooterArrowLink';
 import FooterLink from '@/app/components/footer/parts/FooterLink';
 import FooterCopyRight from '@/app/components/footer/parts/FooterCopyRight';
@@ -15,6 +17,8 @@ import FooterTitleBtn from '@/app/components/footer/parts/FooterTitleBtn';
  * @returns JSX
  */
 const Footer = () => {
+    componentStart(Footer);
+
     // Context
     const { introData, refData } = useIntroData();
     // hooks
@@ -22,12 +26,16 @@ const Footer = () => {
 
     // エラーハンドリング
     if (!introData || !introData.navbar_data) {
+        const errorJoin = MESSAGES.ERRORS.DATA_LOADING;
+        customLog(Footer, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
     }
 
     const navbarData: NavBarType = introData.navbar_data;
     const footerData: FooterType = introData.footer_data;
 
+    componentJSX(Footer);
     return (
         <footer className="w-full h-[190px] sm:h-[240px] bg-footer text-white">
             <div className="flex justify-center">

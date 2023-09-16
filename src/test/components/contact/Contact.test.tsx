@@ -132,7 +132,7 @@ describe('<Contact />', () => {
                     <Contact />
                 </Provider>
             );
-            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
         });
 
         it('renders error component if given data is incomplete or invalid', () => {
@@ -156,7 +156,7 @@ describe('<Contact />', () => {
                     <Contact />
                 </Provider>
             );
-            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
         });
 
         it('renders error component if introData is missing', () => {

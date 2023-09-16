@@ -12,5 +12,5 @@ export const consoleLog = (log: string) => {
  * @returns true テスト環境 false テスト環境ではない
  */
 export const isEnvTest = () => {
-    return (process.env.NODE_ENV === 'test');
+    return (process.env.NODE_ENV === 'development');
 }

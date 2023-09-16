@@ -1,8 +1,10 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateFunctionProps, validateStringProps } from '@/app/shared/utils/validateUtilities';
+import { validatePropsFilter, validateFunctionProps, validateStringProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 
 /** Propsの型定義 */
 type FooterTitleBtnProps = {
@@ -24,15 +26,20 @@ const FooterTitleBtn: React.FC<FooterTitleBtnProps> = ({
     labelClassName = "",
     label
 }) => {
+    componentStart(FooterTitleBtn);
+
     // Props検証
     const functionError = validateFunctionProps([onClick], MESSAGES.ERRORS.NOT_FUNCTIONS);
     const stringError   = validateStringProps([label], MESSAGES.ERRORS.NOT_STRING); 
-    const errors = [functionError, stringError].filter(e => e !== null && e !== undefined);
+    const errors        = validatePropsFilter([functionError, stringError]);
     if (errors.length > 0) {
-        consoleLog(`[FooterTitleBtn]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(FooterTitleBtn, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
+    componentJSX(FooterTitleBtn);
     return (
         <button 
             className={className}

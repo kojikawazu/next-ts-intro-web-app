@@ -1,11 +1,12 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateStringProps } from '@/app/shared/utils/validateUtilities';
-import ErrorComponent from '@/app/components/common/ErrorComponent';
 import { ContactType } from '@/app/types/ContactType';
+import { validatePropsFilter, validateStringProps } from '@/app/shared/utils/validateUtilities';
 import { handleFieldChange } from '@/app/shared/utils/formUtilities';
 import { useContactLogic } from '@/app/features/contact/useContactLogic';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import ContactTextInput from '@/app/components/contact/input/ContactTextInput';
 import ContactInput from '@/app/components/contact/input/ContactInput';
 import ContactFreeTextInput from '@/app/components/contact/input/ContactFreeTextInput';
@@ -27,6 +28,8 @@ const INPUT_STYLE = "w-full sssm:w-11/12 border bg-gray-50 border-gray-300 text-
 const ContactForm: React.FC<ContactFormProps> = ({
     contactData,
 }) => {
+    componentStart(ContactForm);
+
     // hooks(Redux toolkit)
     const {
         contactName, 
@@ -45,12 +48,15 @@ const ContactForm: React.FC<ContactFormProps> = ({
         contactData.contact_email, 
         contactData.contact_contents, 
         contactData.contact_btn_name], MESSAGES.ERRORS.NOT_STRING);
-    const errors = [stringError].filter(e => e !== null && e !== undefined);
+    const errors = validatePropsFilter([stringError]);
     if (errors.length > 0) {
-        consoleLog(`[ContactForm]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(ContactForm, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
+    componentJSX(ContactForm);
     return (
         <form 
             className="p-4"

@@ -1,9 +1,10 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateFunctionProps } from '@/app/shared/utils/validateUtilities';
+import { validatePropsFilter, validateFunctionProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
 import ScrollTopIcon from '@/app/components/common/icons/ScrollTopIcon';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 
 /** Propsの型定義 */
 type FooterArrowLinkProps = {
@@ -23,14 +24,19 @@ const FooterArrowLink: React.FC<FooterArrowLinkProps> = ({
     onClick,
     icon = <ScrollTopIcon />
 }) => {
+    componentStart(FooterArrowLink);
+
     // Props検証
     const functionError = validateFunctionProps([onClick], MESSAGES.ERRORS.NOT_FUNCTIONS);
-    const errors = [functionError].filter(e => e !== null && e !== undefined);
+    const errors        = validatePropsFilter([functionError]);
     if (errors.length > 0) {
-        consoleLog(`[FooterArrowLink]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(FooterArrowLink, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
+    componentJSX(FooterArrowLink);
     return (
         <button 
             className={className}

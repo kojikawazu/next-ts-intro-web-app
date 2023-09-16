@@ -1,8 +1,9 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateStringProps } from '@/app/shared/utils/validateUtilities';
+import { validatePropsFilter, validateStringProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 
 /** Propsの型定義 */
 type CareerPeriodProps = {
@@ -22,14 +23,19 @@ const CareerPeriod: React.FC<CareerPeriodProps> = ({
     careerEnd, 
     className = "" 
 }) => {
+    componentStart(CareerPeriod);
+
     // Props検証
     const stringError = validateStringProps([careerTitle, careerStart, careerEnd], MESSAGES.ERRORS.NOT_STRING);
-    const errors = [stringError].filter(e => e !== null && e !== undefined);
+    const errors      = validatePropsFilter([stringError]);
     if (errors.length > 0) {
-        consoleLog(`[CareerPeriod]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(CareerPeriod, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
     
+    componentJSX(CareerPeriod);
     return (
         <div className={`flex ${className} pb-1`}>
             <div className="">{careerTitle}</div>

@@ -1,10 +1,12 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateStringProps, validateFunctionProps, validateData } from '@/app/shared/utils/validateUtilities';
+import { validatePropsFilter, validateStringProps, validateDataProps } from '@/app/shared/utils/validateUtilities';
 import { useIntroData } from '@/app/contexts/introContext';
-import Title from '@/app/components/common/Title';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
+import Title from '@/app/components/common/Title';
 import ContactForm from '@/app/components/contact/ContactForm';
 
 /**
@@ -12,14 +14,19 @@ import ContactForm from '@/app/components/contact/ContactForm';
  * @returns JSX
  */
 const Contact = () => {
+    componentStart(Contact);
+
     // Context
     const { introData, refData } = useIntroData();
 
      // Props検証
      if (!introData || !refData) {
+        const errorJoin = MESSAGES.ERRORS.DATA_LOADING;
+        customLog(Contact, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />;
     }
-    const dataError = validateData([
+    const dataError = validateDataProps([
         introData.navbar_data,
         introData.contact_data,
     ], MESSAGES.ERRORS.NOT_DATA);
@@ -28,13 +35,16 @@ const Contact = () => {
         introData.contact_data.contact_email ?? "", 
         introData.contact_data.contact_contents ?? "", 
         introData.contact_data.contact_btn_name ?? ""], MESSAGES.ERRORS.NOT_STRING);
-    const errors = [dataError, stringError].filter(e => e !== null && e !== undefined);
+    const errors = validatePropsFilter([dataError, stringError]);
     if (errors.length > 0) {
-        consoleLog(`[Contact]: ${errors.join(' ')}`);
-        return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
+        const errorJoin = MESSAGES.ERRORS.DATA_LOADING;
+        customLog(Contact, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
+        return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} /> ;
     }
     
     const {navbar_data: navbarData, contact_data: contactData} = introData;
+    componentJSX(Contact);
     return (
         <div 
             className="w-full bg-white" 

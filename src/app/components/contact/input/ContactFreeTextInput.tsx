@@ -1,8 +1,9 @@
 import React, { ChangeEvent } from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateStringProps, validateFunctionProps } from '@/app/shared/utils/validateUtilities';
+import { validatePropsFilter, validateStringProps, validateFunctionProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 
 /** Propsの型定義 */
 type ContactFreeTextInputProps = {
@@ -30,15 +31,20 @@ const ContactFreeTextInput: React.FC<ContactFreeTextInputProps> = ({
     onChange,
     error
 }) => {
+    componentStart(ContactFreeTextInput);
+
     // Props検証
     const functionError = validateFunctionProps([onChange], MESSAGES.ERRORS.NOT_FUNCTIONS);
     const stringError   = validateStringProps([inputId, inputName, inputStyle], MESSAGES.ERRORS.NOT_STRING);
-    const errors = [functionError, stringError].filter(e => e !== null && e !== undefined);
+    const errors        = validatePropsFilter([functionError, stringError]);
     if (errors.length > 0) {
-        consoleLog(`[ContactFreeTextInput]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(ContactFreeTextInput, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
+    componentJSX(ContactFreeTextInput);
     return (
         <>
             <textarea 

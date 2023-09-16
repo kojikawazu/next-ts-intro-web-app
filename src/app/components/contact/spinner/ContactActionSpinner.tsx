@@ -1,5 +1,7 @@
 import React from 'react';
 import { useContactLogic } from '@/app/features/contact/useContactLogic';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import LoadingSpinner from '@/app/components/common/spinner/LoadingSpinner';
 
 /**
@@ -7,12 +9,15 @@ import LoadingSpinner from '@/app/components/common/spinner/LoadingSpinner';
  * @returns JSX
  */
 const ContactActionSpinner = () => {
+    componentStart(ContactActionSpinner);
+
     // hooks(Redux toolkit)
     const {
         contactStatusStr
     } = useContactLogic();
     const isVisible = contactStatusStr === 'loading';
 
+    componentJSX(ContactActionSpinner);
     return (
         <LoadingSpinner isVisible={isVisible} />
     );

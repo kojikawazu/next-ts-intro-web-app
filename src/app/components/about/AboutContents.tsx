@@ -2,10 +2,11 @@ import React from 'react'
 import Image from 'next/image';
 import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
 import { AboutType } from '@/app/types/AboutType';
-import { validateData } from '@/app/shared/utils/validateUtilities';
+import { validatePropsFilter, validateDataProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import ProfileCard from '@/app/components/about/profile/ProfileCard';
 
 /** Propsの型定義 */
@@ -20,11 +21,15 @@ type AboutContentsProps = {
 const AboutContents: React.FC<AboutContentsProps> = ({
     aboutData
 }) => {
+    componentStart(AboutContents);
+
     // Propsの検証
-    const dataError = validateData([aboutData], MESSAGES.ERRORS.NOT_DATA);
-    const errors = [dataError].filter(e => e !== null && e !== undefined);
+    const dataError = validateDataProps([aboutData], MESSAGES.ERRORS.NOT_DATA);
+    const errors    = validatePropsFilter([dataError]);
     if (errors.length > 0) {
-        consoleLog(`[AboutContents]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(AboutContents, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
@@ -32,6 +37,7 @@ const AboutContents: React.FC<AboutContentsProps> = ({
     const childClassName = classNames(["w-full", "h-[400px]"]);
     const innerClassname = classNames(["w-full", "lg:w-[60%]", "h-[500px]"]);
 
+    componentJSX(AboutContents);
     return (
         <div className={className}>
             <div className={`relative ${childClassName}`}>

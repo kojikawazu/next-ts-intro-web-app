@@ -1,9 +1,10 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
 import { AboutType } from '@/app/types/AboutType';
-import { validateData } from '@/app/shared/utils/validateUtilities';
+import { validatePropsFilter, validateDataProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import ProfileStandardCard from '@/app/components/about/profile/ProfileStandardCard';
 import ProfileContentsCard from '@/app/components/about/profile/ProfileContentsCard';
 
@@ -19,14 +20,19 @@ type ProfileCardProps = {
 const ProfileCard: React.FC<ProfileCardProps> = ({
     profileData
 }) => {
+    componentStart(ProfileCard);
+
     // Propsの検証
-    const dataError = validateData([profileData], MESSAGES.ERRORS.NOT_DATA);
-    const errors = [dataError].filter(e => e !== null && e !== undefined);
+    const dataError = validateDataProps([profileData], MESSAGES.ERRORS.NOT_DATA);
+    const errors    = validatePropsFilter([dataError]);
     if (errors.length > 0) {
-        consoleLog(`[ProfileCard]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(ProfileCard, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
+    componentJSX(ProfileCard);
     return (
         <div className="lg:flex">
             <div className="lg:basis-1/3 w-full">

@@ -2,9 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
-import ErrorComponent from '@/app/components/common/ErrorComponent';
 import { SkillsCardType } from '@/app/types/SkillsType';
+import { validatePropsFilter, validateDataProps, validateStringProps } from '@/app/shared/utils/validateUtilities';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 
 /** 定数 */
 const SKILL_CARD_IMAGE_DEFAULT_SIZE  = 50;
@@ -29,10 +31,17 @@ const SkillCard: React.FC<SkillCardProps> = ({
     imageSize  = SKILL_CARD_IMAGE_DEFAULT_SIZE,
     imageScale = SKILL_CARD_IMAGE_DEFAULT_SCALE
 }) => {
+    componentStart(SkillCard);
+
     // エラーハンドリング
-    if (!skill || !skill.skills_card_icon || !skill.skills_card_name || !skill.skills_card_contents) {
-        consoleLog("[SkillCard]: " + MESSAGES.ERRORS.DATA_ERROR);
-        return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
+    const dataError   = validateDataProps([skill], MESSAGES.ERRORS.NOT_DATA);
+    const stringError = validateStringProps([skill.skills_card_icon, skill.skills_card_name, skill.skills_card_contents], MESSAGES.ERRORS.NOT_STRING);
+    const errors      = validatePropsFilter([dataError,stringError]);
+    if (errors.length > 0) {
+        const errorJoin = errors.join(' ');
+        customLog(SkillCard, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
+        return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
     // css
@@ -45,6 +54,7 @@ const SkillCard: React.FC<SkillCardProps> = ({
     const imageSizeValue   = (imageSize <= 0 ? SKILL_CARD_IMAGE_DEFAULT_SIZE : imageSize);
     const imageScaleValue  = (IMAGE_SCALE_REGEX.test(imageScale) ? imageScale : SKILL_CARD_IMAGE_DEFAULT_SCALE);
 
+    componentJSX(SkillCard);
     return (
         <div className={`${className}`}>
             <div className="basis-1/3">

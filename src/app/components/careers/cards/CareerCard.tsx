@@ -2,10 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateNumberProps, validateData } from '@/app/shared/utils/validateUtilities';
-import ErrorComponent from '@/app/components/common/ErrorComponent';
 import { CareerType, CareerTitleType } from '@/app/types/CareerType';
 import { useDialogLogic } from '@/app/features/dialog/useDialogLogic';
+import { validatePropsFilter, validateNumberProps, validateDataProps } from '@/app/shared/utils/validateUtilities';
+import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import CareerTitle from '@/app/components/careers/parts/CareerTitle';
 import CareerPeriod from '@/app/components/careers/parts/CareerPeriod';
 import CareerMember from '@/app/components/careers/parts/CareerMember';
@@ -32,15 +34,19 @@ const CareerCard: React.FC<CareerCardProps> = ({
     careerData, 
     className = ""
 }) => {
+    componentStart(CareerCard);
+
     // hooks
     const { setCurrentIndexOpen } = useDialogLogic();
 
     // Propsの検証
     const numberError = validateNumberProps([currentIndex], MESSAGES.ERRORS.NOT_NUMBERS);
-    const dataError   = validateData([careerTitleData, careerData], MESSAGES.ERRORS.NOT_DATA);
-    const errors = [numberError, dataError].filter(e => e !== null && e !== undefined);
+    const dataError   = validateDataProps([careerTitleData, careerData], MESSAGES.ERRORS.NOT_DATA);
+    const errors      = validatePropsFilter([numberError, dataError]);
     if (errors.length > 0) {
-        consoleLog(`[CareerCard]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(CareerCard, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
@@ -50,6 +56,7 @@ const CareerCard: React.FC<CareerCardProps> = ({
     let componentsBgColor = classNames(["bg-white", "hover:bg-yellow-50", "md:hover:bg-white"]);
     const componentsClass = classNames(componentsHeight, componentsBgColor, className, ["w-full", "mx-auto", "my-16", "rounded-3xl"]); 
 
+    componentJSX(CareerCard);
     return (
         <div className={componentsClass}>
             <button 

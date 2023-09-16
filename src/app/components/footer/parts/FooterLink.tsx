@@ -2,9 +2,11 @@ import React from 'react';
 import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateStringProps, validateRefProps } from '@/app/shared/utils/validateUtilities';
+import { validatePropsFilter, validateStringProps, validateRefProps } from '@/app/shared/utils/validateUtilities';
 import { useScrollToRef } from '@/app/hooks/useScroll';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 
 /** Propsの型定義 */
 type FooterLinkProps = {
@@ -22,15 +24,18 @@ const FooterLink: React.FC<FooterLinkProps> = ({
     isEnd, 
     refData 
 }) => {
+    componentStart(FooterLink);
     // hooks
     const scrollToRef = useScrollToRef(refData);
 
     // Props検証
     const stringError = validateStringProps([linkTitle], MESSAGES.ERRORS.NOT_STRING);
     const refError    = validateRefProps([refData], MESSAGES.ERRORS.NOT_REF);
-    const errors = [ stringError, refError ].filter(e => e !== null && e !== undefined);
+    const errors      = validatePropsFilter([stringError, refError]);
     if (errors.length > 0) {
-        consoleLog(`[FooterLink]: ${errors.join(' ')}`);
+        const errorJoin = errors.join(' ');
+        customLog(FooterLink, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
@@ -40,6 +45,7 @@ const FooterLink: React.FC<FooterLinkProps> = ({
     const conditionalStyles = [isEnd ? "" : "border-r"];
     const styles = classNames(baseStyles, textStyles, pmStyles, conditionalStyles);
     
+    componentJSX(FooterLink);
     return (
         <div>
             <button 

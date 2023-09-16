@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
 import { useIntroData } from '@/app/contexts/introContext';
 import { useSlideLogic } from '@/app/hooks/useSlideLogic';
-import Title from '@/app/components/common/Title';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
+import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
+import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
+import Title from '@/app/components/common/Title';
 import CareerNavigator from '@/app/components/careers/slides/CareerNavigator';
 import CareerSlideContainer from '@/app/components/careers/slides/CareerSlideContainer';
 import CareerIndicator from '@/app/components/careers/slides/CareerIndicator';
@@ -14,14 +15,13 @@ import CareerIndicator from '@/app/components/careers/slides/CareerIndicator';
  * @returns JSX
  */
 const Careers = () => {
+    componentStart(Careers);
+
     // Context
     const { introData, refData } = useIntroData();
     const navbarData             = introData?.navbar_data;
     const careerTitleData        = introData?.career_title_data;
     const careerData             = useMemo(() => introData?.career_data || [], [introData]);
-
-    const componentsHeight = "h-[790px] xs:h-[900px] sssm:h-[820px] sm:h-[880px] md:h-[1100px] lg:h-[1200px] xl:h-[1300px]";
-    const contentsClass = "h-[420px] xs:h-[520px] sssm:h-[450px] ssm:h-[440px] sm:h-[500px] md:h-[720px] lg:h-[820px] xl:h-[920px]";
     
     // Hooks
     const { 
@@ -45,10 +45,16 @@ const Careers = () => {
 
     // エラーハンドリング
     if (!navbarData || !careerTitleData || !careerData || !refData) {
-        consoleLog("Careerコンポーネントのデータが不足しています");
+        const errorJoin = MESSAGES.ERRORS.DATA_LOADING;
+        customLog(Careers, 'error', errorJoin);
+        sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
     }
 
+    const componentsHeight = "h-[790px] xs:h-[900px] sssm:h-[820px] sm:h-[880px] md:h-[1100px] lg:h-[1200px] xl:h-[1300px]";
+    const contentsClass    = "h-[420px] xs:h-[520px] sssm:h-[450px] ssm:h-[440px] sm:h-[500px] md:h-[720px] lg:h-[820px] xl:h-[920px]";
+
+    componentJSX(Careers);
     return (
         <section 
             className={`w-full ${componentsHeight} bg-lblue`} 

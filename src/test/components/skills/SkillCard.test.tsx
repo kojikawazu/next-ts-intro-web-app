@@ -105,7 +105,7 @@ describe('<SkillCard />', () => {
                 skills_card_contents: 'This is a test skill description'
             };
             render(<SkillCard skill={defaultSkill} />);
-            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
 
         it('renders error when skills_card_name attribute is empty', () => {
@@ -115,7 +115,7 @@ describe('<SkillCard />', () => {
                 skills_card_contents: 'This is a test skill description'
             };
             render(<SkillCard skill={defaultSkill} />);
-            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
 
         it('renders error when skills_card_contents attribute is empty', () => {
@@ -125,7 +125,7 @@ describe('<SkillCard />', () => {
                 skills_card_contents: ''
             };
             render(<SkillCard skill={defaultSkill} />);
-            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
 
         it('renders error when all skill attributes are empty', () => {
@@ -135,7 +135,7 @@ describe('<SkillCard />', () => {
                 skills_card_contents: ""
             };
             render(<SkillCard skill={defaultSkill} />);
-            expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
         });
     }); 
 });

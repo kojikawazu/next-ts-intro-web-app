@@ -51,8 +51,8 @@ const Careers = () => {
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />
     }
 
-    const componentsHeight = "h-[790px] xs:h-[900px] sssm:h-[820px] sm:h-[880px] md:h-[1100px] lg:h-[1200px] xl:h-[1300px]";
-    const contentsClass    = "h-[420px] xs:h-[520px] sssm:h-[450px] ssm:h-[440px] sm:h-[500px] md:h-[720px] lg:h-[820px] xl:h-[920px]";
+    const componentsHeight = "h-[850px] xs:h-[900px] sssm:h-[820px] sm:h-[830px] md:h-[1300px] lg:h-[1200px] xl:h-[1300px]";
+    const contentsClass    = "h-[480px] xs:h-[520px] sssm:h-[450px] ssm:h-[440px] sm:h-[450px] md:h-[920px] lg:h-[820px] xl:h-[920px]";
 
     componentJSX(Careers);
     return (

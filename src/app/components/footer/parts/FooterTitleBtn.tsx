@@ -1,6 +1,5 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
 import { validatePropsFilter, validateFunctionProps, validateStringProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/ErrorComponent';
 import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';

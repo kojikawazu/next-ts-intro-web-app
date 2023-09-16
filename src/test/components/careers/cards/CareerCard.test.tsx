@@ -77,7 +77,6 @@ describe('<CareerCard />', () => {
         });
 
         it('renders CareerStacks correctly with appropriate props', () => {
-            console.log(screen.getByTestId('career-stacks').outerHTML);
             expect(screen.getByTestId('career-stacks')).toHaveTextContent(mockCareerTitleData.career_title_stack[0]);
         });
 

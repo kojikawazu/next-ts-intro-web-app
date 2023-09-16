@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
 import { validatePropsFilter, validateStringProps, validateRefProps } from '@/app/shared/utils/validateUtilities';
 import { useScrollToRef } from '@/app/hooks/useScroll';
 import ErrorComponent from '@/app/components/common/ErrorComponent';

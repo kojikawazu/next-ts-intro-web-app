@@ -117,9 +117,12 @@ describe('<HamburgerMenu />', () => {
 
     describe('<HamburgerMenu /> - Negative Scenarios', () => {
         it('displays error component when data is missing', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(<HamburgerMenu menuList={[]} />);
             
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

@@ -46,8 +46,10 @@ describe('<About />', () => {
     /** 異常系 */
     /** ----------------------------------------------------------------------------------- */
 
-    describe('<About /> - Negative Scenarios', () => {
+    describe('Negative Scenarios', () => {
         it('renders the ErrorComponent when data is missing', () => {
+            const originalError = console.error;
+            console.error = () => {};
             require('@/app/contexts/introContext').useIntroData.mockReturnValueOnce({
                 introData: null,
                 refData: null 
@@ -55,6 +57,7 @@ describe('<About />', () => {
 
             render(<About />);
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

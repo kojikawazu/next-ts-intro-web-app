@@ -33,9 +33,6 @@ export const customLog = (component: React.ComponentType<any>, kind: 'info' | 'e
     const componentName = getComponentName(component);
     const consoleKind = (kind == 'error' ? 'error' : 'log');
 
-    console.log(`component: ${component}`);
-    console.log(`consoleKind: ${consoleKind}`);
-    console.log(`message: ${message}`);
     if (consoleKind == 'error') {
         console.error(`[${componentName}]: ${consoleKind} : `, message, ...optionalParams);
     } else {

@@ -60,6 +60,8 @@ describe('<CareerStacks />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders error message for missing props', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const defaultProps = {
                 careerTitle: undefined as any,
                 careerStacks: undefined as any
@@ -67,6 +69,7 @@ describe('<CareerStacks />', () => {
 
             render(<CareerStacks {...defaultProps} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

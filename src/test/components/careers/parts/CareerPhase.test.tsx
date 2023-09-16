@@ -63,6 +63,8 @@ describe('<CareerPhase />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders error message for missing props', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const defaultProps = {
                 careerTitle: undefined as any,
                 careerPhases: undefined as any
@@ -70,6 +72,7 @@ describe('<CareerPhase />', () => {
 
             render(<CareerPhase {...defaultProps} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

@@ -34,8 +34,11 @@ const SnsIconLink: React.FC<SnsIconLinkProps> = ({
                     className={`m-auto ${imageClassName}`}
                     src={imageSrc}
                     alt={imageAlt}
-                    layout="fill"
-                    objectFit="cover" />
+                    fill
+                    style={{
+                        objectFit: 'cover'
+                    }} 
+                />
             </div>
         </Link>
     );

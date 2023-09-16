@@ -62,39 +62,57 @@ describe('<Skills />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders ErrorComponent if data is insufficient', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useIntroData as jest.Mock).mockReturnValueOnce({ introData: undefined, refData: mockRefData });
             render(<Skills />);
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders ErrorComponent if data is insufficient', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useIntroData as jest.Mock).mockReturnValueOnce({ introData: mockIntroData, refData: undefined });
             render(<Skills />);
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders ErrorComponent if data is insufficient', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useIntroData as jest.Mock).mockReturnValueOnce({ introData: {}, refData: mockRefData });
             render(<Skills />);
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders ErrorComponent if navbar_data is missing', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useIntroData as jest.Mock).mockReturnValueOnce({ introData: { ...mockIntroData, navbar_data: null }, refData: mockRefData });
             render(<Skills />);
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
         
         it('renders ErrorComponent if skills_data is missing', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useIntroData as jest.Mock).mockReturnValueOnce({ introData: { ...mockIntroData, skills_data: null }, refData: mockRefData });
             render(<Skills />);
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders ErrorComponent if skills_cards is not an array', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useIntroData as jest.Mock).mockReturnValueOnce({ introData: { ...mockIntroData, skills_data: { ...mockIntroData.skills_data, skills_cards: {} } }, refData: mockRefData });
             render(<Skills />);
             expect(screen.getByText('Test Skills')).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

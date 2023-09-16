@@ -49,9 +49,12 @@ describe('<HamburgerLink />', () => {
 
     describe('Negative Scenarios', () => {
         it('displays an error message when provided with an empty label', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const mockOnClick = jest.fn();
             render(<HamburgerLink onClick={mockOnClick} label="" iconComponent={<ArrowIcon />} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

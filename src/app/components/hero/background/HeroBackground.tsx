@@ -40,7 +40,7 @@ const HeroBackground: React.FC<HeroBackgroundProps> = ({
 
     componentJSX(HeroBackground);
     return (
-        <div className={`relative ${className}`}>
+        <div className={`relative ${className}`} >
             <Image 
                 src={url} 
                 alt={alt}

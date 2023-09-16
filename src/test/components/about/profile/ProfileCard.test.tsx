@@ -23,8 +23,11 @@ describe('<ProfileCard/>', () => {
 
     describe('Negative Scenarios', () => {
         it('displays an error message when about_data is undefined', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(<ProfileCard profileData={undefined as any} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

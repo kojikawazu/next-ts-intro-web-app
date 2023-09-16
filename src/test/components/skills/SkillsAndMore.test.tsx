@@ -55,16 +55,21 @@ describe('<SkillsAndMore />', () => {
     /** 異常系 */
     /** ----------------------------------------------------------------------------------- */
 
-    describe('Negative Scenarios', () => {
+    describe('Negative Scenarios', () => {    
         it('does not invoke the updateCardDisplayLimit function when the button is disabled', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(<SkillsAndMore updateCardDisplayLimit={mockFn} currentIndex={10} cardAdditionCount={6} cardTotal={10} buttonLabel={LOAD_MORE} />);
             const button = screen.getByRole('button', { name: new RegExp(LOAD_MORE, 'i') });
             fireEvent.click(button);
             expect(mockFn).not.toHaveBeenCalled();
+            console.error = originalError;
         });
         
         
         it('does not invoke the updateCardDisplayLimit function when the button is disabled', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const errorProps = {
                 updateCardDisplayLimit: undefined as any,
                 currentIndex: undefined as any,
@@ -75,6 +80,7 @@ describe('<SkillsAndMore />', () => {
 
             render(<SkillsAndMore {...errorProps} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

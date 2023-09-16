@@ -37,15 +37,21 @@ describe('<ProfileContentsCard/>', () => {
     /** ----------------------------------------------------------------------------------- */
     describe('Negative Scenarios', () => {
         it('renders the error component when profileContents is empty', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(<ProfileContentsCard profileContents={[]} />);
             const errorElement = screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS);
             expect(errorElement).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('does not have data-testid attribute when isEnvTest returns false', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (isEnvTest as jest.Mock).mockReturnValue(false);
             const { queryByTestId } = render(<ProfileContentsCard profileContents={['sample content']} />);
             expect(queryByTestId('profile-contents-card')).toBeNull();
+            console.error = originalError;
         });
     });
 });

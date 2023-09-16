@@ -58,6 +58,8 @@ describe('<FooterLink />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders error message when linkTitle is an empty string', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const innerProps = {
                 linkTitle: "",
                 isEnd: false,
@@ -66,9 +68,12 @@ describe('<FooterLink />', () => {
 
             render( <FooterLink {...innerProps} /> );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders error message when refData is undefined', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const innerProps = {
                 linkTitle: "About",
                 isEnd: false,
@@ -77,6 +82,7 @@ describe('<FooterLink />', () => {
 
             render( <FooterLink {...innerProps} /> );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

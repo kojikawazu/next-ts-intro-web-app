@@ -101,6 +101,8 @@ describe('<Contact />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders error component if given introData is incomplete or invalid', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const useIntroDataMock = require('@/app/contexts/introContext').useIntroData;
             useIntroDataMock.mockReturnValue({
                 introData: {
@@ -133,9 +135,12 @@ describe('<Contact />', () => {
                 </Provider>
             );
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders error component if given data is incomplete or invalid', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const useIntroDataMock = require('@/app/contexts/introContext').useIntroData;
             useIntroDataMock.mockReturnValue({
                 introData: {
@@ -157,9 +162,12 @@ describe('<Contact />', () => {
                 </Provider>
             );
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders error component if introData is missing', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const useIntroDataMock = require('@/app/contexts/introContext').useIntroData;
             useIntroDataMock.mockReturnValue({
                 introData: null,
@@ -173,9 +181,12 @@ describe('<Contact />', () => {
             );
     
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders error component if refData is missing', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const useIntroDataMock = require('@/app/contexts/introContext').useIntroData;
             useIntroDataMock.mockReturnValue({
                 introData: {},
@@ -188,6 +199,7 @@ describe('<Contact />', () => {
                 </Provider>
             );
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

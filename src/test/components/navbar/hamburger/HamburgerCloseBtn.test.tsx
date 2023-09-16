@@ -37,8 +37,11 @@ describe('<HamburgerCloseBtn />', () => {
 
     describe('Negative Scenarios', () => {
         test('renders the HamburgerCloseBtn component', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(<HamburgerCloseBtn onClick={undefined as any} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

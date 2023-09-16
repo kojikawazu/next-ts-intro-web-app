@@ -83,8 +83,11 @@ describe('<ContactButton />', () => {
 
     describe('Negative Scenarios', () => {
       it('renders an error message when given an empty button name', () => {
+        const originalError = console.error;
+        console.error = () => {};
         render( <ContactButton btnType="button" btnName="" />);
         expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+        console.error = originalError;
       });
     });
 });

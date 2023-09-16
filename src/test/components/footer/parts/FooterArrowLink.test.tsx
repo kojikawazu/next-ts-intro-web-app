@@ -61,12 +61,15 @@ describe('<FooterArrowLink />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders error message when onClick is undefined', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const innerProps = {
                 onClick: undefined,
             }
 
             render( <FooterArrowLink {...innerProps as any} /> );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

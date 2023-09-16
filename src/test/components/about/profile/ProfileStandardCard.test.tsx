@@ -78,11 +78,16 @@ describe('<ProfileStandardCard />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders the error component when sns_list data is provided', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(<ProfileStandardCard profileData={mockNegativeProfileData} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders the error component when about_name data is provided', () => {
+            const originalError = console.error;
+            console.error = () => {};
             /** Mockデータ */
             const mockNegativeProfileData = {
                 about_name: "",
@@ -101,12 +106,16 @@ describe('<ProfileStandardCard />', () => {
             render(<ProfileStandardCard profileData={mockNegativeProfileData} />);
             const nameElement = screen.getByText("unknown name");
             expect(nameElement).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('does not have data-testid attribute when isEnvTest returns false', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (isEnvTest as jest.Mock).mockReturnValue(false);
             const { queryByTestId } = render(<ProfileStandardCard profileData={mockNegativeProfileData} />);
             expect(queryByTestId('profile-standard-card')).toBeNull();
+            console.error = originalError;
         });
     });
 });

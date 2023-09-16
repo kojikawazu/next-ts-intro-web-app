@@ -75,6 +75,8 @@ describe('<FooterTitleBtn />', () => {
 
     describe('Negative Scenarios', () => {
         it('displays an error when label prop is empty', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const errorProps = {
                 className: "sample class",
                 ariaLabel: "aria label",
@@ -85,6 +87,7 @@ describe('<FooterTitleBtn />', () => {
 
             render( <FooterTitleBtn {...errorProps} /> );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

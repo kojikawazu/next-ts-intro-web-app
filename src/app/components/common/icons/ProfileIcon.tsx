@@ -30,8 +30,11 @@ const ProfileIcon: React.FC<ProfileIconProps> = ({
                 className={`rounded-full ${className}`}
                 src={src} 
                 alt={alt}
-                layout="fill"
-                objectFit="cover"
+                fill
+                sizes={`${imageSize}, ${imageSize}`}
+                style={{
+                    objectFit: 'cover'
+                }}
             />
         </div>
     );

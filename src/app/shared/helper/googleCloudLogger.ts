@@ -26,7 +26,6 @@ export const sendLogsToGCF = async (logs: string[], logLevel: 'ERROR' | 'INFO' |
         body: JSON.stringify(payload),
       });
   
-      console.debug(response.status);
       if (response.status === 200) {
         console.log("Successfully to send error to GCF");
       } else {

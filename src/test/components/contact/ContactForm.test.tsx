@@ -135,6 +135,8 @@ describe('<ContactForm />', () => {
 
     describe('Negative Scenarios', () => {
         it('should display an error message for an empty contact_name', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const mockErrorContactData = {
                 contact_name: "",
                 contact_email: "contactEmail",
@@ -148,9 +150,12 @@ describe('<ContactForm />', () => {
                 </Provider> 
             );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('should display an error message for an empty contact_email', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const mockErrorContactData = {
                 contact_name: "contactName",
                 contact_email: "",
@@ -164,9 +169,12 @@ describe('<ContactForm />', () => {
                 </Provider> 
             );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('should display an error message for an empty contact_contents', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const mockErrorContactData = {
                 contact_name: "contactName",
                 contact_email: "contactEmail",
@@ -180,9 +188,12 @@ describe('<ContactForm />', () => {
                 </Provider> 
             );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('should display an error message for an empty contact_btn_name', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const mockErrorContactData = {
                 contact_name: "contactName",
                 contact_email: "contactEmail",
@@ -196,17 +207,23 @@ describe('<ContactForm />', () => {
                 </Provider> 
             );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('should display an error message for missing name input during form submission', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const { getByText } = renderContactForm();
             const btnName = getByText('Submit');
             fireEvent.click(btnName);
 
             expect(getByText('名前の入力が正しくありません。再度入力してください。')).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('should display an error message for missing email input during form submission', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const { getByText, getByPlaceholderText  } = renderContactForm();
             const nameInput = getByPlaceholderText('Name') as HTMLInputElement;
             fireEvent.change(nameInput, { target: { value: 'John' } });
@@ -214,9 +231,12 @@ describe('<ContactForm />', () => {
             fireEvent.click(btnName);
 
             expect(getByText('Eメールアドレスの入力が正しくありません。再度入力してください。')).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('should display an error message for missing message input during form submission', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const { getByText, getByPlaceholderText, getByLabelText } = renderContactForm();
             const nameInput = getByPlaceholderText('Name') as HTMLInputElement;
             fireEvent.change(nameInput, { target: { value: 'John' } });
@@ -226,9 +246,12 @@ describe('<ContactForm />', () => {
             fireEvent.click(btnName);
 
             expect(getByText('お問い合わせ内容の入力が正しくありません。再度入力してください。')).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('should retain form field values if submission is cancelled by user', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const mockCallWindow = jest.fn(() => false);
             global.window.confirm = mockCallWindow;
 
@@ -245,6 +268,7 @@ describe('<ContactForm />', () => {
             expect(nameInput.value).toBe('John');
             expect(emailInput.value).toBe('john@example.com');
             expect(contentsText.value).toBe('OK');
+            console.error = originalError;
         });
 
         it('should log an error and retain form values when form submission fails', async () => {

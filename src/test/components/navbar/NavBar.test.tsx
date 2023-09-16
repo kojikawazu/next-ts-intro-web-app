@@ -86,12 +86,15 @@ describe('<NavBar />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders the ErrorComponent when navbar_data is missing', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useIntroData as jest.Mock).mockReturnValueOnce({
                 introData: null
             });
 
             const { getByText } = render(<NavBar />);
             expect(getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

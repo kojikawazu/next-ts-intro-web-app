@@ -91,15 +91,20 @@ describe('<Footer />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders an error message when introData properties are missing', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useIntroData as jest.Mock).mockReturnValue({
                 introData: {},
             });
 
             render(<Footer />);
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders an error message when introData is empty', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useIntroData as jest.Mock).mockReturnValue({
                 introData: {
                     navbar_data: {
@@ -126,9 +131,12 @@ describe('<Footer />', () => {
             expect(screen.getByText('Career')).toBeInTheDocument();
             expect(screen.getByText('Skills')).toBeInTheDocument();
             expect(screen.getByText('Contact')).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders error message when refData is undefined', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useIntroData as jest.Mock).mockReturnValue({
                 introData: {
                     navbar_data: {
@@ -148,6 +156,7 @@ describe('<Footer />', () => {
             render(<Footer />);
             const allInvalidPropsElements = screen.getAllByText('Invalid props');
             expect(allInvalidPropsElements.length).toBe(4);
+            console.error = originalError;
         });
     });
 });

@@ -86,19 +86,27 @@ describe('<SkillCard />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders default size when given a negative image size', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(<SkillCard skill={testSkill} imageSize={-24} />);
             const image = screen.getByAltText('skill_icon');
             expect(image).toHaveAttribute('width', '50');
             expect(image).toHaveAttribute('height', '50');
+            console.error = originalError;
         });
 
         it('renders default scale when given a negative image scale', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(<SkillCard skill={testSkill} imageScale="-50%" />);
             const image = screen.getByAltText('skill_icon');
             expect(image).toHaveAttribute('sizes', '10%');
+            console.error = originalError;
         });
 
         it('renders error when skills_card_icon attribute is empty', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const defaultSkill = {
                 skills_card_icon: '',
                 skills_card_name: 'Test Skill',
@@ -106,9 +114,12 @@ describe('<SkillCard />', () => {
             };
             render(<SkillCard skill={defaultSkill} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders error when skills_card_name attribute is empty', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const defaultSkill = {
                 skills_card_icon: '/path-to-test-image.jpg',
                 skills_card_name: '',
@@ -116,9 +127,12 @@ describe('<SkillCard />', () => {
             };
             render(<SkillCard skill={defaultSkill} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders error when skills_card_contents attribute is empty', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const defaultSkill = {
                 skills_card_icon: '/path-to-test-image.jpg',
                 skills_card_name: 'Test Skill',
@@ -126,9 +140,12 @@ describe('<SkillCard />', () => {
             };
             render(<SkillCard skill={defaultSkill} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders error when all skill attributes are empty', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const defaultSkill = {
                 skills_card_icon: "",
                 skills_card_name: "",
@@ -136,6 +153,7 @@ describe('<SkillCard />', () => {
             };
             render(<SkillCard skill={defaultSkill} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     }); 
 });

@@ -90,6 +90,8 @@ describe('<ContactTextInput />', () => {
 
     describe('Negative Scenarios', () => {
         it('displays an error message when provided with an empty inputId', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const props = {
                 inputId: "",
                 inputName: "testName",
@@ -102,9 +104,12 @@ describe('<ContactTextInput />', () => {
             };
             render( <ContactTextInput {...props} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('displays an error message when provided with an empty inputName', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const props = {
                 inputId: "testId",
                 inputName: "",
@@ -117,9 +122,12 @@ describe('<ContactTextInput />', () => {
             };
             render( <ContactTextInput {...props} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('displays an error message when provided with an empty inputType', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const props = {
                 inputId: "testId",
                 inputName: "testName",
@@ -132,9 +140,12 @@ describe('<ContactTextInput />', () => {
             };
             render( <ContactTextInput {...props} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('displays an error message when provided with an empty inputStyle', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const props = {
                 inputId: "testId",
                 inputName: "testName",
@@ -147,9 +158,12 @@ describe('<ContactTextInput />', () => {
             };
             render( <ContactTextInput {...props} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('displays an error message when provided with an empty placeholder', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const props = {
                 inputId: "testId",
                 inputName: "testName",
@@ -162,6 +176,7 @@ describe('<ContactTextInput />', () => {
             };
             render( <ContactTextInput {...props} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

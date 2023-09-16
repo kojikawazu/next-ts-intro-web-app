@@ -83,6 +83,8 @@ describe('<CareerNavigator />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders error message for missing props', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const defaultProps = {
                 direction: 'prev' as 'prev' | 'next',
                 onClick: undefined as any
@@ -90,6 +92,7 @@ describe('<CareerNavigator />', () => {
 
             render(<CareerNavigator {...defaultProps} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

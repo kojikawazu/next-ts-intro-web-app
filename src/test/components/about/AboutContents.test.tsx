@@ -56,12 +56,15 @@ describe('<AboutContents />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders the component with the provided image URL', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const errorProps = {
                 aboutData: undefined
             }
 
             render( <AboutContents {...errorProps as any} /> );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

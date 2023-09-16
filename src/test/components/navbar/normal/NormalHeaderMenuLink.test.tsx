@@ -46,6 +46,8 @@ describe('<NormalHeaderMenuLink />', () => {
 
     describe('Negative Scenarios', () => {
         it('displays an error message when provided with an empty menuClass', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const mockOnClick = jest.fn();
             render(<NormalHeaderMenuLink 
                 ariaLabel="テストメニュー"
@@ -54,9 +56,12 @@ describe('<NormalHeaderMenuLink />', () => {
                 btnLabel="テストボタン"
              />);
             expect(screen.getByText("テストボタン")).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('displays an error message when provided with an empty ariaLabel', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const mockOnClick = jest.fn();
             render(<NormalHeaderMenuLink 
                 menuClass="testMenuClass"
@@ -66,9 +71,12 @@ describe('<NormalHeaderMenuLink />', () => {
                 btnLabel="テストボタン"
              />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('displays an error message when provided with an empty btnClass', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const mockOnClick = jest.fn();
             render(<NormalHeaderMenuLink 
                 menuClass="testMenuClass"
@@ -77,9 +85,12 @@ describe('<NormalHeaderMenuLink />', () => {
                 btnLabel="テストボタン"
              />);
             expect(screen.getByText("テストボタン")).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('displays an error message when provided with an empty btnLabel', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const mockOnClick = jest.fn();
             render(<NormalHeaderMenuLink 
                 menuClass="testMenuClass"
@@ -89,6 +100,7 @@ describe('<NormalHeaderMenuLink />', () => {
                 btnLabel=""
              />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

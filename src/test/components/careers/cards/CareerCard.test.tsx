@@ -113,6 +113,8 @@ describe('<CareerCard />', () => {
 
     describe('Positive Scenarios', () => {
         it('should call setCurrentIndexOpen with correct value when clicked', () => {
+            const originalError = console.error;
+            console.error = () => {};
             const errorProps = {
                 currentIndex: undefined as any,
                 careerTitleData: undefined as any,
@@ -121,6 +123,7 @@ describe('<CareerCard />', () => {
 
             render(<CareerCard {...errorProps} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

@@ -53,6 +53,8 @@ describe('<SendNotification />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders failure notification with correct props', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useContactLogic as jest.Mock).mockReturnValue({
                 isNotificationVisible: true,
                 isFadingOut: false,
@@ -67,9 +69,12 @@ describe('<SendNotification />', () => {
             expect(notificationComponent).toHaveClass('visible');
             expect(notificationComponent).toHaveClass('opacity-100');
             expect(notificationComponent).toHaveClass('bg-red-500');
+            console.error = originalError;
         });
 
         it('renders default notification when failure message env variable is missing', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useContactLogic as jest.Mock).mockReturnValue({
                 isNotificationVisible: true,
                 isFadingOut: false,
@@ -85,6 +90,7 @@ describe('<SendNotification />', () => {
             expect(notificationComponent).toHaveClass('visible');
             expect(notificationComponent).toHaveClass('opacity-100');
             expect(notificationComponent).toHaveClass('bg-red-500');
+            console.error = originalError;
         });
     });
 });

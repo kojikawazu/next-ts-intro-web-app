@@ -79,30 +79,39 @@ describe('<ContactInput />', () => {
 
     describe('Negative Scenarios', () => {
         it('displays an error message when provided with an empty inputId', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(
                 <ContactInput inputId="" labelName="Test Label" labelStyle="testStyle" isRequired={false}>
                     <span>Child component</span>
                 </ContactInput>
             );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('displays an error message when provided with an empty labelName', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(
                 <ContactInput inputId="testId" labelName="" labelStyle="testStyle" isRequired={false}>
                     <span>Child component</span>
                 </ContactInput>
             );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('displays an error message when provided with an empty labelStyle', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(
                 <ContactInput inputId="testId" labelName="Test Label" labelStyle="" isRequired={false}>
                     <span>Child component</span>
                 </ContactInput>
             );
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

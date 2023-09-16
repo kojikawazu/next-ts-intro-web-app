@@ -43,13 +43,19 @@ describe('<HeroBackground />', () => {
 
     describe('Negative Scenarios', () => {
         it('displays an error message when provided with an empty url', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(<HeroBackground url="" coverBackgroundColor="bg-red-500" />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('displays an error message when provided with an empty coverBackgroundColor', () => {
+            const originalError = console.error;
+            console.error = () => {};
             render(<HeroBackground url="/path/to/image.jpg" coverBackgroundColor="" />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

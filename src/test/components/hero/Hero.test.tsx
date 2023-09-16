@@ -33,21 +33,27 @@ describe('<Hero />', () => {
 
     describe('Negative Scenarios', () => {
         it('renders ErrorComponent when introData is missing', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useIntroData as jest.Mock).mockReturnValue({
                 introData: null,
             });
 
             render(<Hero />);
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
 
         it('renders ErrorComponent when hero_data is missing', () => {
+            const originalError = console.error;
+            console.error = () => {};
             (useIntroData as jest.Mock).mockReturnValue({
                 introData: { someOtherData: {} },
             });
         
             render(<Hero />);
             expect(screen.getByText(MESSAGES.ERRORS.DATA_LOADING)).toBeInTheDocument();
+            console.error = originalError;
         });
     });
 });

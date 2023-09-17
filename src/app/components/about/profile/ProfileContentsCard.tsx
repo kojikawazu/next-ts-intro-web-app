@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { validatePropsFilter, validateArraysProps } from '@/app/shared/utils/validateUtilities';
-import ErrorComponent from '@/app/components/common/ErrorComponent';
+import ErrorComponent from '@/app/components/common/error/ErrorComponent';
 import { isEnvTest } from '@/app/shared/utils/utilities';
 import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';

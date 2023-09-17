@@ -2,18 +2,17 @@ import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { NavBarType } from '@/app/types/NavbarType';
 import { SkillsType } from '@/app/types/SkillsType';
-import { consoleLog } from '@/app/shared/utils/utilities';
 import { useIntroData } from '@/app/contexts/introContext';
 import { useLoadLimitLogic } from '@/app/features/loadlimit/useLoadLimit';
 import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
-import Title from '@/app/components/common/Title';
-import ErrorComponent from '@/app/components/common/ErrorComponent';
+import Title from '@/app/components/common/title/Title';
+import ErrorComponent from '@/app/components/common/error/ErrorComponent';
 import SkillCard from '@/app/components/skills/SkillCard';
 import SkillsAndMore from '@/app/components/skills/SkillsAndMore';
 
 /** ロード数 */
-const CARD_ADDITION_COUNT = 6;
+const CARD_ADDITION_COUNT = Number(process.env.NEXT_PUBLIC_SKILLS_CARD_LOAD_COUNT || 6);
 
 /**
  * スキルコンポーネント

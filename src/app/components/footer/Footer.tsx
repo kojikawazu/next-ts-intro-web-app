@@ -4,7 +4,7 @@ import { NavBarType } from '@/app/types/NavbarType';
 import { FooterType } from '@/app/types/FooterType';
 import { useIntroData } from '@/app/contexts/introContext';
 import { useScrollTop } from '@/app/hooks/useScroll';
-import ErrorComponent from '@/app/components/common/ErrorComponent';
+import ErrorComponent from '@/app/components/common/error/ErrorComponent';
 import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import FooterArrowLink from '@/app/components/footer/parts/FooterArrowLink';

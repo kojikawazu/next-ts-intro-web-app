@@ -4,7 +4,7 @@ import { MESSAGES } from '@/app/shared/constants/constants';
 import { AboutType } from '@/app/types/AboutType';
 import { isEnvTest } from '@/app/shared/utils/utilities';
 import { validatePropsFilter, validateStringProps, validateArraysProps } from '@/app/shared/utils/validateUtilities';
-import ErrorComponent from '@/app/components/common/ErrorComponent';
+import ErrorComponent from '@/app/components/common/error/ErrorComponent';
 import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import SnsIconLink from '@/app/components/common/icons/SnsIconLink';

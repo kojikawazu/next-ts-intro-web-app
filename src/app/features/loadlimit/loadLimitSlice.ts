@@ -7,7 +7,7 @@ export interface LoadLimitState {
 
 /** 初期化 */
 const initialState: LoadLimitState = {
-    currentLoadSum: 9,
+    currentLoadSum: Number(process.env.NEXT_PUBLIC_SKILLS_CARD_FIRST_SHOW_SUM || 9),
 };
 
 /** slice */

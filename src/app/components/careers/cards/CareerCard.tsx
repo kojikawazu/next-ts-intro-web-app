@@ -1,11 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
 import { CareerType, CareerTitleType } from '@/app/types/CareerType';
 import { useDialogLogic } from '@/app/features/dialog/useDialogLogic';
 import { validatePropsFilter, validateNumberProps, validateDataProps } from '@/app/shared/utils/validateUtilities';
-import ErrorComponent from '@/app/components/common/ErrorComponent';
+import ErrorComponent from '@/app/components/common/error/ErrorComponent';
 import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import CareerTitle from '@/app/components/careers/parts/CareerTitle';

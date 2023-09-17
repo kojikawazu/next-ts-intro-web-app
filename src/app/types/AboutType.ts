@@ -7,6 +7,7 @@ export interface AboutType {
     about_contents: Array<string>;
 }
 
+/** SNSのリスト型定義 */
 export interface SnsLinkType {
     sns_name: string;
     sns_url: string;

@@ -4,7 +4,7 @@ import { ContactType } from '@/app/types/ContactType';
 import { validatePropsFilter, validateStringProps } from '@/app/shared/utils/validateUtilities';
 import { handleFieldChange } from '@/app/shared/utils/formUtilities';
 import { useContactLogic } from '@/app/features/contact/useContactLogic';
-import ErrorComponent from '@/app/components/common/ErrorComponent';
+import ErrorComponent from '@/app/components/common/error/ErrorComponent';
 import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import ContactTextInput from '@/app/components/contact/input/ContactTextInput';

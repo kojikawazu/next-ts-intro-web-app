@@ -1,10 +1,10 @@
 import React from 'react';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { useIntroData } from '@/app/contexts/introContext';
-import ErrorComponent from '@/app/components/common/ErrorComponent';
+import ErrorComponent from '@/app/components/common/error/ErrorComponent';
 import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
-import Title from '@/app/components/common/Title';
+import Title from '@/app/components/common/title/Title';
 import AboutContents from '@/app/components/about/AboutContents';
 
 /**

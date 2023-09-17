@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { validatePropsFilter, validateStringProps, validateRefProps } from '@/app/shared/utils/validateUtilities';
 import { useScrollToRef } from '@/app/hooks/useScroll';
-import ErrorComponent from '@/app/components/common/ErrorComponent';
+import ErrorComponent from '@/app/components/common/error/ErrorComponent';
 import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 

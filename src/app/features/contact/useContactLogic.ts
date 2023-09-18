@@ -17,11 +17,13 @@ import {
 import { RootState } from '@/app/features/store';
 
 // Constants
-const ERROR_NAME      = process.env.NEXT_PUBLIC_CONTACT_ERROR_NAME;
-const ERROR_EMAIL     = process.env.NEXT_PUBLIC_CONTACT_ERROR_EMAIL;
-const ERROR_MESSAGE   = process.env.NEXT_PUBLIC_CONTACT_ERROR_MESSAGE;
-const CONFIRM_DATA    = process.env.NEXT_PUBLIC_CONTACT_CONFIRM;
-const TITLE_PREFIX    = process.env.NEXT_PUBLIC_MAIN_TITLE_PREFIX;
+const ERROR_NAME      = process.env.NEXT_PUBLIC_CONTACT_ERROR_NAME    || "再度入力してください";
+const ERROR_EMAIL     = process.env.NEXT_PUBLIC_CONTACT_ERROR_EMAIL   || "再度入力してください";
+const ERROR_MESSAGE   = process.env.NEXT_PUBLIC_CONTACT_ERROR_MESSAGE || "再度入力してください";
+const CONFIRM_DATA    = process.env.NEXT_PUBLIC_CONTACT_CONFIRM       || "メッセージ送信してもよろしいでしょうか？";
+const TITLE_PREFIX    = process.env.NEXT_PUBLIC_MAIN_TITLE_PREFIX     || "からのお問い合わせ";
+const IS_ENV          = process.env.NODE_ENV                          || "production";
+const SEND_MAIL_URL   = process.env.NEXT_PUBLIC_SEND_MAIL_URL_PROD    || "";
 
 const VISIBLE_COUNT = 4500;
 const TOTAL_COUNT   = 5000;
@@ -92,11 +94,11 @@ export const useContactLogic = () => {
             // 確認ダイアログの表示
             if (window.confirm(CONFIRM_DATA)) {
                 // 開発環境の時は送付しない
-                if (process.env.NODE_ENV === 'development') {
+                if (IS_ENV === 'development') {
                     return ;
                 }
                 // 環境変数(メール送付API)なければ送信不可
-                if (!process.env.NEXT_PUBLIC_SEND_MAIL_URL_PROD) {
+                if (!SEND_MAIL_URL) {
                     dispatch(sendContactFailed("error"));
                     handleSendNotice();
                     return ;
@@ -106,7 +108,7 @@ export const useContactLogic = () => {
                 dispatch(sendContactStart());
 
                 // APIエンドポイントとパラメータを設定
-                const API_ENDPOINT = process.env.NEXT_PUBLIC_SEND_MAIL_URL_PROD;
+                const API_ENDPOINT = SEND_MAIL_URL;
                 const emailData = {
                     from: contactEmail,
                     subjects: contactName + TITLE_PREFIX,
@@ -115,7 +117,11 @@ export const useContactLogic = () => {
 
                 try {
                     console.log(API_ENDPOINT);
-                    const response = await axios.post(API_ENDPOINT, emailData);
+                    const response = await axios.post(API_ENDPOINT, emailData, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
                     if (response.status === 200) {
                         dispatch(sendContactSuccess());
                         handleSendNotice();

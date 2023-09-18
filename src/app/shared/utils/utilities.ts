@@ -4,5 +4,6 @@
  * @returns true テスト環境 false テスト環境ではない
  */
 export const isEnvTest = () => {
-    return (process.env.NODE_ENV === 'development');
+    const ENV = process.env.NODE_ENV || "production";
+    return (ENV === 'development');
 }

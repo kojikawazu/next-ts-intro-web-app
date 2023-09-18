@@ -1,7 +1,6 @@
 import React from 'react';
 import { useContactLogic } from '@/app/features/contact/useContactLogic';
-import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
-import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
+import { componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 import LoadingSpinner from '@/app/components/common/spinner/LoadingSpinner';
 
 /**

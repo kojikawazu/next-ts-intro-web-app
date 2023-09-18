@@ -1,3 +1,4 @@
+import { customLog } from '@/app/shared/utils/logUtilities';
 
 /**
  * Cloud Functionsへログ送信
@@ -19,7 +20,7 @@ export const sendLogsToGCF = async (logs: string[], logLevel: 'ERROR' | 'INFO' |
   }
   // 環境変数(エラーログAPI)なければ送信不可
   if (!SEND_ERROR_LOG) {
-    console.error("Failed to send error to GCF(No environment variables)");
+    customLog('str', 'error', "Failed to send error to GCF(No environment variables)");
     return;
   }
 
@@ -33,11 +34,11 @@ export const sendLogsToGCF = async (logs: string[], logLevel: 'ERROR' | 'INFO' |
     });
 
     if (response.status === 200) {
-      console.log("Successfully to send error to GCF");
+      customLog('str', 'info', "Successfully to send error to GCF");
     } else {
-      console.error("Failed to send error to GCF");
+      customLog('str', 'error', "Failed to send error to GCF");
     }
   } catch (error) {
-    console.error("Failed to send error to GCF:", error);
+    customLog('str', 'error', "Failed to send error to GCF:", error);
   }
 }

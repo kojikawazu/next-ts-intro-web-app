@@ -30,9 +30,9 @@ export const customDebug = (component: React.ComponentType<any>, message: string
  * @param message 
  * @param optionalParams 可変ログ文字列 
  */
-export const customLog = (component: React.ComponentType<any>, kind: 'info' | 'error', message: string, ...optionalParams: any[]) => {
-    const componentName = getComponentName(component);
-    const consoleKind = (kind == 'error' ? 'error' : 'log');
+export const customLog = (component: React.ComponentType<any> | 'str', kind: 'info' | 'error', message: string, ...optionalParams: any[]) => {
+    const componentName = (typeof component === 'function' ? getComponentName(component) : "");
+    const consoleKind   = (kind == 'error' ? 'error' : 'log');
 
     if (consoleKind == 'error') {
         console.error(`[${componentName}]: ${consoleKind} : `, message, ...optionalParams);

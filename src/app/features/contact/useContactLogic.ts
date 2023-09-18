@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { customLog } from '@/app/shared/utils/logUtilities';
 import { isValidLength, isValidEmail, isValidSpecialCharacters } from '@/app/shared/utils/validateUtilities';
 import {
   setContactName,
@@ -116,7 +117,6 @@ export const useContactLogic = () => {
                 };
 
                 try {
-                    console.log(API_ENDPOINT);
                     const response = await axios.post(API_ENDPOINT, emailData, {
                         headers: {
                             'Content-Type': 'application/json'
@@ -129,12 +129,12 @@ export const useContactLogic = () => {
                     } else {
                         dispatch(sendContactFailed("error"));
                         handleSendNotice();
-                        console.error("Email send failed:", response.data);
+                        customLog('str', 'error', "Email send failed:", response.data);
                     }
                 } catch (error) {
                     dispatch(sendContactFailed("error"));
                     handleSendNotice();
-                    console.error("Error send email:", error);
+                    customLog('str', 'error', "Error send email:", error);
                 }
             }
         }

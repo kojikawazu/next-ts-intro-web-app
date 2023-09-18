@@ -7,7 +7,6 @@ type Props = {
 
 /**
  * タイトルコンポーネント
- * @param props タイトル名
  * @returns JSX
  */
 const Title = (props: Props) => {

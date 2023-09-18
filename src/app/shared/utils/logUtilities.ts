@@ -1,4 +1,4 @@
-
+import { isEnvDev } from '@/app/shared/utils//utilities';
 
 /**
  * コンポート名の取得
@@ -16,8 +16,7 @@ export const getComponentName = (component: React.ComponentType<any>): String =>
  * @param optionalParams 可変ログ文字列
  */
 export const customDebug = (component: React.ComponentType<any>, message: string, ...optionalParams: any[]) => {
-    const ENV = process.env.NODE_ENV || "production";
-    if (ENV === 'development') {
+    if (isEnvDev()) {
         const componentName = getComponentName(component);
         console.debug(`[${componentName}]: debug : `, message, ...optionalParams);
     }

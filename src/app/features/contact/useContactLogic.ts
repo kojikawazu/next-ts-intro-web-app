@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { isEnvProd, isEnvDev } from '@/app/shared/utils//utilities';
 import { customLog } from '@/app/shared/utils/logUtilities';
 import { isValidLength, isValidEmail, isValidSpecialCharacters } from '@/app/shared/utils/validateUtilities';
 import {
@@ -23,8 +24,7 @@ const ERROR_EMAIL     = process.env.NEXT_PUBLIC_CONTACT_ERROR_EMAIL   || "再度
 const ERROR_MESSAGE   = process.env.NEXT_PUBLIC_CONTACT_ERROR_MESSAGE || "再度入力してください";
 const CONFIRM_DATA    = process.env.NEXT_PUBLIC_CONTACT_CONFIRM       || "メッセージ送信してもよろしいでしょうか？";
 const TITLE_PREFIX    = process.env.NEXT_PUBLIC_MAIN_TITLE_PREFIX     || "からのお問い合わせ";
-const IS_ENV          = process.env.NODE_ENV                          || "production";
-const SEND_MAIL_URL   = process.env.NEXT_PUBLIC_SEND_MAIL_URL_PROD    || "";
+const SEND_MAIL_URL   = (isEnvProd() ? process.env.NEXT_PUBLIC_SEND_MAIL_URL_PROD : process.env.NEXT_PUBLIC_SEND_MAIL_URL) || "";
 
 const VISIBLE_COUNT = 4500;
 const TOTAL_COUNT   = 5000;
@@ -95,7 +95,7 @@ export const useContactLogic = () => {
             // 確認ダイアログの表示
             if (window.confirm(CONFIRM_DATA)) {
                 // 開発環境の時は送付しない
-                if (IS_ENV === 'development') {
+                if (isEnvDev()) {
                     return ;
                 }
                 // 環境変数(メール送付API)なければ送信不可

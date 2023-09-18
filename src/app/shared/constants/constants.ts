@@ -17,5 +17,11 @@ export const MESSAGES = {
     },
     INVALIDS: {
         INVALID_PROPS: "Invalid props"
+    },
+    ENV: {
+        PROD: "production",
+        STAG: "staging",
+        DEV:  "development",
+        TEST: "test"
     }
 };

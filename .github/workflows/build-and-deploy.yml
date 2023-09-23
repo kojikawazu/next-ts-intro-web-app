@@ -32,6 +32,7 @@ jobs:
         echo "NEXT_PUBLIC_GET_INTRO_JSON=${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON }}" >> .env
         echo "NEXT_PUBLIC_SEND_MAIL_URL_PROD=${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL_PROD }}" >> .env
         echo "NEXT_PUBLIC_SEND_MAIL_URL=${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL }}" >> .env
+        echo "NEXT_PUBLIC_SEND_ERROR_LOG_PROD=${{ secrets.NEXT_PUBLIC_SEND_ERROR_LOG_PROD }}" >> .env
         echo "NEXT_PUBLIC_SEND_ERROR_LOG=${{ secrets.NEXT_PUBLIC_SEND_ERROR_LOG }}" >> .env
         echo "NEXT_PUBLIC_CONTACT_ERROR_NAME=${{ secrets.NEXT_PUBLIC_CONTACT_ERROR_NAME }}" >> .env
         echo "NEXT_PUBLIC_CONTACT_ERROR_EMAIL=${{ secrets.NEXT_PUBLIC_CONTACT_ERROR_EMAIL }}" >> .env

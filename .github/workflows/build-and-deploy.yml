@@ -28,6 +28,7 @@ jobs:
 
     - name: Setup .env file
       run: |
+        echo "NEXT_PUBLIC_GET_INTRO_JSON_PROD=${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON_PROD }}" >> .env
         echo "NEXT_PUBLIC_GET_INTRO_JSON=${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON }}" >> .env
         echo "NEXT_PUBLIC_SEND_MAIL_URL_PROD=${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL_PROD }}" >> .env
         echo "NEXT_PUBLIC_SEND_MAIL_URL=${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL }}" >> .env

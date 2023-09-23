@@ -4,6 +4,7 @@ import path from 'path';
 import { promises as fsPromises } from 'fs';
 import { Provider } from 'react-redux';
 
+import { isEnvProd } from '@/app/shared/utils//utilities';
 import { IntroDataType } from '@/app/types/IntroType';
 import { IntroRefType } from '@/app/types/IntroRefType';
 import { IntroDataProvider } from '@/app/contexts/introContext';
@@ -38,7 +39,7 @@ import FrontArea from '@/app/components/front/FrontArea';
 // SSG
 // クラウドからJSON取得する場合
 export const getStaticProps: GetStaticProps = async () => {
-  const endpoint = process.env.NEXT_PUBLIC_GET_INTRO_JSON || ""; 
+  const endpoint  = (isEnvProd() ? process.env.NEXT_PUBLIC_GET_INTRO_JSON_PROD : process.env.NEXT_PUBLIC_GET_INTRO_JSON) || ""; 
 
   try {
       const response = await fetch(endpoint, {

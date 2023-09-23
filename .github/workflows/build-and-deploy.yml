@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  PROJECT_ID: ${{ secrets.PROJECT_PRI_NAME }}
+  PROJECT_ID: cobalt-list-386722
   IMAGE_NAME: next-ts-intro-web-app-image
 
 jobs:

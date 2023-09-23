@@ -7,7 +7,7 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.PROJECT_PRI_NAME }}
-  IMAGE_NAME: next-ts-intro-web-app-image
+  IMAGE_NAME: next-ts-intro-web-app
 
 jobs:
   build-and-deploy:
@@ -18,7 +18,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      uses: docker/setup-buildx-action@v3
 
     - name: Setup Google Cloud Authentication
       uses: google-github-actions/auth@v1
@@ -43,7 +43,7 @@ jobs:
 
         # ...他の環境変数を追加...
     - name: Build and push Docker image
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v5
       with:
         context: .
         file: docker/Dockerfile

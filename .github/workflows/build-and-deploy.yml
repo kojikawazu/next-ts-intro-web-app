@@ -8,6 +8,9 @@ on:
 env:
   PROJECT_ID: ${{ secrets.PROJECT_PRI_NAME }}
   IMAGE_NAME: next-ts-intro-web-app-image
+  # Artifact Registry
+  REPO_NAME: registory-intro-web-app
+  LOCATION: asia-northeast1
 
 jobs:
   build-and-deploy:
@@ -47,4 +50,4 @@ jobs:
         context: .
         file: docker/Dockerfile
         push: true
-        tags: gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        tags: ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}

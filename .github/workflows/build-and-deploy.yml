@@ -42,9 +42,10 @@ jobs:
         echo "NEXT_PUBLIC_SKILLS_CARD_LOAD_COUNT=${{ secrets.NEXT_PUBLIC_SKILLS_CARD_LOAD_COUNT }}" >> .env
 
     - name: Build and push Docker image
-      uses: docker/build-push-action@v3
+      uses: docker/build-push-action@v5
       with:
         context: .
+        provenance: false
         file: docker/Dockerfile
         push: true
         tags: gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest

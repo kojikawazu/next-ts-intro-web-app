@@ -1,9 +1,11 @@
+import React, { Suspense } from 'react';
+import ErrorBoundary from '@/app/components/common/error/ErrorBoundary';
 import '@/app/globals.css';
+
 
 /**
  * Introレイアウトコンポーネント
- * @param param0 
- * @returns 
+ * @returns JSX
  */
 export default function IntroLayout({
   children,
@@ -12,8 +14,10 @@ export default function IntroLayout({
 }) {
 
   return (
-    <>
-      {children}
-    </>
+    <ErrorBoundary>
+      <Suspense fallback={<div>ローディング中...</div>}>
+        {children}
+      </Suspense>
+    </ErrorBoundary>
   );
 };

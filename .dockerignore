@@ -1,0 +1,6 @@
+.git
+.dockerignore
+.vscode
+.gcloudignore
+*.md
+node_modules

@@ -20,55 +20,55 @@ import FrontArea from '@/app/components/front/FrontArea';
 
 // ISG(Incremental Static Generation)
 // ローカルからJSON取得する場合
-export const getStaticProps: GetStaticProps = async () => {
-    const filePath = path.resolve('./resources/json/navbar_intro.json');
+// export const getStaticProps: GetStaticProps = async () => {
+//     const filePath = path.resolve('./resources/json/navbar_intro.json');
 
-    // jsonデータ読み取り
-    const tempData = await fsPromises.readFile(filePath, 'utf-8');
-    const parsedData: IntroDataType = JSON.parse(tempData);
+//     // jsonデータ読み取り
+//     const tempData = await fsPromises.readFile(filePath, 'utf-8');
+//     const parsedData: IntroDataType = JSON.parse(tempData);
 
-    return {
-        props: {
-          data: parsedData,
-        },
-        revalidate: 10,
-    }
-};
+//     return {
+//         props: {
+//           data: parsedData,
+//         },
+//         revalidate: 10,
+//     }
+// };
 
 // SSG
 // クラウドからJSON取得する場合
-// export const getStaticProps: GetStaticProps = async () => {
-//   const endpoint = 'https://asia-northeast1-cobalt-list-386722.cloudfunctions.net/nodejs-intro-backend-app/api_introduction_all';
+export const getStaticProps: GetStaticProps = async () => {
+  const endpoint = process.env.NEXT_PUBLIC_GET_INTRO_JSON || ""; 
 
-//   try {
-//       const response = await fetch(endpoint, {
-//           method: 'GET',
-//           headers: {
-//               'Content-Type': 'application/json',
-//           },
-//       });
+  try {
+      const response = await fetch(endpoint, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
 
-//       if (!response.ok) {
-//           throw new Error('Failed to fetch data');
-//       }
+      if (!response.ok) {
+          throw new Error('Failed to fetch data');
+      }
 
-//       const parsedData: IntroDataType = await response.json();
+      const parsedData: IntroDataType = await response.json();
 
-//       return {
-//           props: {
-//               data: parsedData,
-//           },
-//           revalidate: 10,
-//       };
-//   } catch (error) {
-//       console.error('Error fetching data from Cloud Functions:', error);
-//       return {
-//           props: {
-//               data: {},  // エラーの場合のデフォルトのデータを設定するか、またはエラーハンドリングを追加
-//           }
-//       };
-//   }
-// };
+      return {
+          props: {
+              data: parsedData,
+          },
+          revalidate: 10,
+      };
+  } catch (error) {
+      console.error('Error fetching data from Cloud Functions:', error);
+      return {
+          props: {
+              data: {},  // エラーの場合のデフォルトのデータを設定するか、またはエラーハンドリングを追加
+          }
+      };
+  }
+};
 
 // Propsの型
 interface Props {

@@ -47,4 +47,4 @@ jobs:
         context: .
         file: docker/Dockerfile
         push: true
-        tags: gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
+        tags: gcr.io/cobalt-list-386722/next-ts-intro-web-app-image:latest

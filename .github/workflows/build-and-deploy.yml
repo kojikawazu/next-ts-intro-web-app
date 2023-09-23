@@ -7,7 +7,7 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.PROJECT_PRI_NAME }}
-  IMAGE_NAME: next-ts-intro-web-app
+  IMAGE_NAME: next-ts-intro-web-app-image
 
 jobs:
   build-and-deploy:

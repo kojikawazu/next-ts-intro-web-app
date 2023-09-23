@@ -43,7 +43,7 @@ jobs:
         echo "NEXT_PUBLIC_SKILLS_CARD_LOAD_COUNT=${{ secrets.NEXT_PUBLIC_SKILLS_CARD_LOAD_COUNT }}" >> .env
 
     - name: Configure Docker
-      run: gcloud auth configure-docker
+      run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5

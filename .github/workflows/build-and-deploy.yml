@@ -84,9 +84,9 @@ jobs:
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "mkdir -p /home/runner/projects" || exit 1
         gcloud compute scp nginx.env ${{ env.GCE_INSTANCE }}:/home/runner/projects/. --zone ${{ env.GCE_ZONE }} || exit 1
         gcloud compute scp ./etc/nginx/conf.d/default_template.conf ${{ env.GCE_INSTANCE }}:/home/runner/projects/. --zone ${{ env.GCE_ZONE }} || exit 1
-        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "sudo mkdir -p ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d" || exit 1
-        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "cd /home/runner/projects && touch /home/runner/projects/default.conf && env $(cat nginx.env) envsubst < /home/runner/projects/default_template.conf" > /home/runner/projects/default.conf || exit 1
+        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "cd /home/runner/projects && touch default.conf && env $(cat nginx.env) envsubst < default_template.conf" > default.conf || exit 1
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "ls -l /home/runner/projects && ls -l /home/runner/"
+        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "sudo mkdir -p ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d" || exit 1
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "sudo cp -fp /home/runner/projects/default.conf ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d/default.conf" || exit 1
 
     - name: Deploy files to GCE

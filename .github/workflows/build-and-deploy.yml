@@ -118,4 +118,4 @@ jobs:
           ls -l ${{ env.GCE_PROJECTS }}" || exit 1
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
           cd ${{ env.GCE_PROJECTS }}
-          docker-compose --env-file docker-compose.env up -d" || exit 1
+          sudo -u k_kawa_lin_315 docker-compose --env-file docker-compose.env up -d" || exit 1

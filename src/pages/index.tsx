@@ -65,7 +65,7 @@ export const getStaticProps: GetStaticProps = async () => {
       console.error('Error fetching data from Cloud Functions:', error);
       return {
           props: {
-              data: {},  // エラーの場合のデフォルトのデータを設定するか、またはエラーハンドリングを追加
+              data: {},
           }
       };
   }

@@ -8,12 +8,16 @@ on:
 env:
   PROJECT_ID: ${{ secrets.PROJECT_PRI_NAME }}
   # Web App Image
-  IMAGE_NAME: next-ts-intro-web-app-image
+  IMAGE_NAME: ${{ secrets.WEB_CONTAINER_IMAGE }}
   # Artifact Registry
-  REPO_NAME: registory-intro-web-app
-  LOCATION: asia-northeast1
+  REPO_NAME: ${{ secrets.ARTIFACT_REGISTORY_WEB_APP }}
+  LOCATION: ${{ secrets.GCP_LOCATION }}
   # GCE
   GCE_INSTANCE: ${{ secrets.GCE_INSTANCE }}
+  # GCE projects
+  GCE_PROJECTS: ${{ secrets.GCE_PROJECTS }}
+  # GCE zone
+  GCE_ZONE: ${{ secrets.GCE_ZONE }}
 
 jobs:
   build-and-deploy:
@@ -77,14 +81,14 @@ jobs:
         echo "NGINX_HTTPS_PORT=${{ secrets.NGINX_HTTPS_PORT }}" >> nginx.env
         echo "CHAIN_PEM=${{ secrets.CHAIN_PEM }}" >> nginx.env
         echo "PRI_PEM=${{ secrets.PRI_PEM }}" >> nginx.env
-        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone asia-northeast1-b -- "mkdir -p /home/k_kawa_lin_315/projects/etc/nginx/conf.d" || exit 1
-        gcloud compute scp nginx.env ${{ env.GCE_INSTANCE }}:/home/k_kawa_lin_315/projects/. --zone asia-northeast1-b || exit 1
-        gcloud compute scp ./etc/nginx/conf.d/default_template.conf ${{ env.GCE_INSTANCE }}:/home/k_kawa_lin_315/projects/etc/nginx/conf.d/. --zone asia-northeast1-b || exit 1
-        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone asia-northeast1-b -- "cd /home/k_kawa_lin_315/projects && env $(cat nginx.env) envsubst < /home/k_kawa_lin_315/projects/etc/nginx/conf.d/default_template.conf > /home/k_kawa_lin_315/projects/etc/nginx/conf.d/default.conf" || exit 1
+        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "mkdir -p ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d" || exit 1
+        gcloud compute scp nginx.env ${{ env.GCE_INSTANCE }}:${{ env.GCE_PROJECTS }}/. --zone ${{ env.GCE_ZONE }} || exit 1
+        gcloud compute scp ./etc/nginx/conf.d/default_template.conf ${{ env.GCE_INSTANCE }}:${{ env.GCE_PROJECTS }}/etc/nginx/conf.d/. --zone ${{ env.GCE_ZONE }} || exit 1
+        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "cd ${{ env.GCE_PROJECTS }} && env $(cat nginx.env) envsubst < ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d/default.conf" || exit 1
 
     - name: Deploy files to GCE
       run: |
         # ... deployment commands ...
-        gcloud compute scp docker-compose.env ${{ env.GCE_INSTANCE }}:/home/k_kawa_lin_315/projects/. --zone asia-northeast1-b || exit 1
-        gcloud compute scp ./docker/docker-compose.yml ${{ env.GCE_INSTANCE }}:/home/k_kawa_lin_315/projects/. --zone asia-northeast1-b || exit 1
-        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone asia-northeast1-b -- "cd /home/k_kawa_lin_315/projects && docker-compose --env-file docker-compose.env up -d" || exit 1
+        gcloud compute scp docker-compose.env ${{ env.GCE_INSTANCE }}:${{ env.GCE_PROJECTS }}/. --zone ${{ env.GCE_ZONE }} || exit 1
+        gcloud compute scp ./docker/docker-compose.yml ${{ env.GCE_INSTANCE }}:${{ env.GCE_PROJECTS }}/. --zone ${{ env.GCE_ZONE }} || exit 1
+        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "cd ${{ env.GCE_PROJECTS }} && docker-compose --env-file docker-compose.env up -d" || exit 1

@@ -103,11 +103,11 @@ jobs:
           touch default.conf
           sudo chmod 666 default.conf
           envsubst  < default_template.conf > default.conf
-          sed -e 's/URI_VALUE/\$uri/g' default.conf > default.conf
-          sed -e 's/HOST_VALUE/\$host/g' default.conf > default.conf
-          sed -e 's/REMOTE_ADDR_VALUE/\$remote_addr/g' default.conf > default.conf
-          sed -e 's/PROXY_X_FORWARDED_FOR/\$proxy_add_x_forwarded_for/g' default.conf > default.conf
-          sed -e 's/SCHEME_VALUE/\$scheme/g' default.conf > default.conf
+          sed -i -e 's/URI_VALUE/\$uri/g' default.conf
+          sed -i -e 's/HOST_VALUE/\$host/g' default.conf
+          sed -i -e 's/REMOTE_ADDR_VALUE/\$remote_addr/g' default.conf
+          sed -i -e 's/PROXY_X_FORWARDED_FOR/\$proxy_add_x_forwarded_for/g' default.conf
+          sed -i -e 's/SCHEME_VALUE/\$scheme/g' default.conf
           " || exit 1
         # GCE Copy
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "

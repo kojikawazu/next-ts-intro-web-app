@@ -42,3 +42,6 @@ next-env.d.ts
 
 # resources
 resources/json/
+
+docker/docker-compose_development.yml
+etc/nginx/conf.d/default.conf

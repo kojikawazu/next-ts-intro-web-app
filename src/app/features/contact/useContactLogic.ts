@@ -65,7 +65,7 @@ export const useContactLogic = () => {
     };
 
     /**
-     * 送信処理
+     * 送信通知処理
      */
     const handleSendNotice = () => {
         // メール送信のロジック
@@ -84,11 +84,11 @@ export const useContactLogic = () => {
         }, TOTAL_COUNT);
     };
 
-    /**
+     /**
      * 問い合わせ実行
      * @param e フォームイベント 
      */
-    const handleSubmit = async (e: React.FormEvent) => {
+     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (validate()) {
@@ -111,9 +111,10 @@ export const useContactLogic = () => {
                 // APIエンドポイントとパラメータを設定
                 const API_ENDPOINT = SEND_MAIL_URL;
                 const emailData = {
+                    name: contactName,
                     from: contactEmail,
                     subjects: contactName + TITLE_PREFIX,
-                    message: contactMessage
+                    messages: contactMessage
                 };
 
                 try {

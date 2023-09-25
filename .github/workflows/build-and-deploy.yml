@@ -99,10 +99,15 @@ jobs:
           export NGINX_HTTPS_PORT=\${NGINX_HTTPS_PORT}
           export CHAIN_PEM=\${CHAIN_PEM}
           export PRI_PEM=\${PRI_PEM}
+          export URI_VALUE=\$uri
+          export HOST_VALUE=\$host
+          export REMOTE_ADDR_VALUE=\$remote_addr
+          export PROXY_X_FORWARDED_FOR=\$proxy_add_x_forwarded_for
+          export SCHEME_VALUE=\$scheme
           cd /home/runner/projects
           touch default.conf
           sudo chmod 666 default.conf
-          envsubst '${NGINX_HTTP_PORT},${NGINX_DOMAIN},${LOCAL_WEB_URL},${NGINX_HTTPS_PORT},${CHAIN_PEM},${PRI_PEM}' < default_template.conf > default.conf
+          envsubst  < default_template.conf > default.conf
           " || exit 1
         # GCE Copy
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "

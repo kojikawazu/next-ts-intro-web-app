@@ -102,7 +102,7 @@ jobs:
           cd /home/runner/projects
           touch default.conf
           sudo chmod 666 default.conf
-          envsubst < default_template.conf > default.conf
+          envsubst '${NGINX_HTTP_PORT},${NGINX_DOMAIN},${LOCAL_WEB_URL},${NGINX_HTTPS_PORT},${CHAIN_PEM},${PRI_PEM}' < default_template.conf > default.conf
           " || exit 1
         # GCE Copy
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "

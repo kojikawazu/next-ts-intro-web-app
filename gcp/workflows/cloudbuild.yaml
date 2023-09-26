@@ -25,10 +25,10 @@ steps:
     chmod 600 /root/.ssh/id_github
     echo 'github.com ssh-rsa [公開キー]' >> /root/.ssh/known_hosts
 
-options:
-  volumes:
-  - name: 'ssh'
-    path: '/root/.ssh'
+  options:
+    volumes:
+    - name: 'ssh'
+      path: '/root/.ssh'
 
 # ステップ 3: Docker を設定
 - name: 'gcr.io/cloud-builders/docker'

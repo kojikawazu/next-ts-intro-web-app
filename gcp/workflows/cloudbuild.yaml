@@ -82,5 +82,5 @@ steps:
   - '-c'
   - |
     docker build -t $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE ./next-ts-intro-web-app,
-    docker push $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE
+    docker push $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE:latest
   secretEnv: ['WEP_APP_IMAGE', 'REPO_WEB_APP', 'LOCATION']

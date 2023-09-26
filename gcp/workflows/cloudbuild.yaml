@@ -10,7 +10,7 @@ options:
       path: '/root/.ssh'
 
 steps:
-# ステップ 1: SSHキーとknown_hostsファイルをセットアップ
+# SSHキーとknown_hostsファイルをセットアップ
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
@@ -20,7 +20,7 @@ steps:
     chmod 600 /root/.ssh/id_github
     ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
 
-# ステップ 2: GitHubからclone
+# GitHubからclone
 - name: 'gcr.io/cloud-builders/git'
   args:
   - '-c'
@@ -28,17 +28,30 @@ steps:
   - 'clone'
   - 'git@github.com:kojikawazu/next-ts-intro-web-app.git'
 
-# ステップ 3: Docker を設定
+# Docker を設定
 - name: 'gcr.io/cloud-builders/docker'
   args: ['login', 'asia-northeast1-docker.pkg.dev']
 
-# ステップ 4: 環境変数の設定
+# 環境変数の設定
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
   - '-c'
   - |
     set -e
+
+    # Get secrets from Secret Manager and export them as environment variables
+    export PROJECT_ID=$(gcloud secrets versions access latest --secret=project-id --format='get(payload.data)' | base64 --decode)
+    export WEP_APP_IMAGE=$(gcloud secrets versions access latest --secret=web-app-image --format='get(payload.data)' | base64 --decode)
+    export REPO_WEB_APP=$(gcloud secrets versions access latest --secret=repo-web-app --format='get(payload.data)' | base64 --decode)
+    export LOCATION=$(gcloud secrets versions access latest --secret=location --format='get(payload.data)' | base64 --decode)
+
+    # Print the variables to the log (optional, for debugging purposes)
+    echo "PROJECT_ID: $PROJECT_ID"
+    echo "WEP_APP_IMAGE: $WEP_APP_IMAGE"
+    echo "REPO_WEB_APP: $REPO_WEB_APP"
+    echo "LOCATION: $LOCATION"
+
     cd next-ts-intro-web-app
     gcloud secrets versions access latest --secret=node-env > temp.txt
     echo "NODE_ENV=$(cat temp.txt)" > .env
@@ -58,31 +71,16 @@ steps:
     echo "NEXT_PUBLIC_SEND_ERROR_LOG=$(cat temp.txt)" >> .env
     rm temp.txt
 
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    echo "Location: ${_LOCATION}"
-    echo "Project ID: ${_PROJECT_ID}"
-    echo "Repo Name: ${_REPO_NAME}"
-    echo "Image Name: ${_IMAGE_NAME}"
-    docker pull ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest || true
-    if [ $? -eq 0 ]; then
-      docker tag ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup
-      docker push ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup
-    fi
-
 # ステップ 5: 最新のイメージをバックアップ
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
   args:
   - '-c'
   - |
-    docker pull ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest || true
+    docker pull ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_WEB_APP}/${WEP_APP_IMAGE}:latest || true
     if [ $? -eq 0 ]; then
-      docker tag ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup
-      docker push ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup
+      docker tag ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_WEB_APP}/${WEP_APP_IMAGE}:latest ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_WEB_APP}/${WEP_APP_IMAGE}:backup
+      docker push ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_WEB_APP}/${WEP_APP_IMAGE}:backup
     fi
 
 # ステップ 6: Docker イメージをビルドしてプッシュ
@@ -91,5 +89,5 @@ steps:
   args:
   - '-c'
   - |
-    docker build -t ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME} ./next-ts-intro-web-app,
-    docker push ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}
+    docker build -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_WEB_APP}/${WEP_APP_IMAGE} ./next-ts-intro-web-app,
+    docker push ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_WEB_APP}/${WEP_APP_IMAGE}

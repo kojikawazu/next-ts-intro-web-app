@@ -40,11 +40,11 @@ steps:
 
 # ステップ 4: 最新のイメージをバックアップ
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['pull', '${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:latest || true',
-         '&&', 'docker', 'tag', '${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:latest', '${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:backup',
-         '&&', 'docker', 'push', '${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:backup']
+  args: ['pull', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest || true',
+         '&&', 'docker', 'tag', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup',
+         '&&', 'docker', 'push', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup']
 
 # ステップ 5: Docker イメージをビルドしてプッシュ
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', '${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}', './next-ts-intro-web-app',
-         '&&', 'docker', 'push', '${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}']
+  args: ['build', '-t', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}', './next-ts-intro-web-app',
+         '&&', 'docker', 'push', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}']

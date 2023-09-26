@@ -5,11 +5,11 @@ options:
 
 availableSecrets:
   secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/web-app-image/versions/latest
+    - versionName: projects/$PROJECT_ID/secrets/web-app-image/versions/1
       env: 'WEP_APP_IMAGE'
-    - versionName: projects/$PROJECT_ID/secrets/repo-web-app/versions/latest
+    - versionName: projects/$PROJECT_ID/secrets/repo-web-app/versions/1
       env: 'REPO_WEB_APP'
-    - versionName: projects/$PROJECT_ID/location/repo-web-app/versions/latest
+    - versionName: projects/$PROJECT_ID/location/repo-web-app/versions/1
       env: 'LOCATION'
   
 steps:

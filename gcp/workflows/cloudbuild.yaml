@@ -4,15 +4,22 @@ substitutions:
   _REPO_NAME: ${REPO_NAME}
   _LOCATION: ${LOCATION}
 steps:
-# ステップ 1: コードをチェックアウト
+# ステップ 1：Secret Manager からデプロイキーをダウンロードする
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: bash
+  args:
+  - -c
+  - gcloud secrets versions access --secret=github_deploy_key latest > /root/.ssh/id_rsa
+
+# ステップ 2: コードをチェックアウト
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone', 'https://github.com/kojikawazu/next-ts-intro-web-app.git']
 
-# ステップ 2: Docker を設定
+# ステップ 3: Docker を設定
 - name: 'gcr.io/cloud-builders/docker'
   args: ['login', 'asia-northeast1-docker.pkg.dev']
 
-# ステップ 3: 環境変数の設定
+# ステップ 4: 環境変数の設定
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
@@ -38,13 +45,13 @@ steps:
     echo "NEXT_PUBLIC_SEND_ERROR_LOG=$(cat temp.txt)" >> .env
     rm temp.txt
 
-# ステップ 4: 最新のイメージをバックアップ
+# ステップ 5: 最新のイメージをバックアップ
 - name: 'gcr.io/cloud-builders/docker'
   args: ['pull', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest || true',
          '&&', 'docker', 'tag', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup',
          '&&', 'docker', 'push', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup']
 
-# ステップ 5: Docker イメージをビルドしてプッシュ
+# ステップ 6: Docker イメージをビルドしてプッシュ
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}', './next-ts-intro-web-app',
          '&&', 'docker', 'push', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}']

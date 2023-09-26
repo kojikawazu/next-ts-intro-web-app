@@ -4,16 +4,9 @@ substitutions:
   _REPO_NAME: ${REPO_NAME}
   _LOCATION: ${LOCATION}
 steps:
-# ステップ 1：Secret Manager からデプロイキーをダウンロードする
-- name: gcr.io/cloud-builders/gcloud
-  entrypoint: bash
-  args:
-  - -c
-  - gcloud secrets versions access --secret=github_deploy_key latest > /root/.ssh/id_rsa
-
 # ステップ 2: コードをチェックアウト
 - name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'https://github.com/kojikawazu/next-ts-intro-web-app.git']
+  args: ['clone', 'git@github.com:kojikawazu/next-ts-intro-web-app.git']
 
 # ステップ 3: Docker を設定
 - name: 'gcr.io/cloud-builders/docker'

@@ -10,15 +10,7 @@ options:
       path: '/root/.ssh'
 
 steps:
-# ステップ 1: 
-- name: 'gcr.io/cloud-builders/git'
-  args:
-  - '-c'
-  - 'core.sshCommand=ssh -i /root/.ssh/id_github -o UserKnownHostsFile=/root/.ssh/known_hosts'
-  - 'clone'
-  - 'git@github.com:kojikawazu/next-ts-intro-web-app.git'
-
-# ステップ 2: SSHキーとknown_hostsファイルをセットアップ
+# ステップ 1: SSHキーとknown_hostsファイルをセットアップ
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
@@ -27,6 +19,14 @@ steps:
     gcloud secrets versions access latest --secret=secret-name > /root/.ssh/id_github
     chmod 600 /root/.ssh/id_github
     echo 'github.com ssh-rsa [公開キー]' >> /root/.ssh/known_hosts
+
+# ステップ 2:
+- name: 'gcr.io/cloud-builders/git'
+  args:
+  - '-c'
+  - 'core.sshCommand=ssh -i /root/.ssh/id_github -o UserKnownHostsFile=/root/.ssh/known_hosts'
+  - 'clone'
+  - 'git@github.com:kojikawazu/next-ts-intro-web-app.git'
 
 # ステップ 3: Docker を設定
 - name: 'gcr.io/cloud-builders/docker'

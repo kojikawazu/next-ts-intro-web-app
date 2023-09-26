@@ -3,6 +3,7 @@ substitutions:
   _IMAGE_NAME: ${IMAGE_NAME}
   _REPO_NAME: ${REPO_NAME}
   _LOCATION: ${LOCATION}
+
 steps:
 - name: 'gcr.io/cloud-builders/git'
   args:

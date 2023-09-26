@@ -58,6 +58,21 @@ steps:
     echo "NEXT_PUBLIC_SEND_ERROR_LOG=$(cat temp.txt)" >> .env
     rm temp.txt
 
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    echo "Location: ${_LOCATION}"
+    echo "Project ID: ${_PROJECT_ID}"
+    echo "Repo Name: ${_REPO_NAME}"
+    echo "Image Name: ${_IMAGE_NAME}"
+    docker pull ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest || true
+    if [ $? -eq 0 ]; then
+      docker tag ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup
+      docker push ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup
+    fi
+
 # ステップ 5: 最新のイメージをバックアップ
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'

@@ -9,29 +9,29 @@ steps:
 
 # ステップ 3: 環境変数の設定
 - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        set -e
-        cd next-ts-intro-web-app
-        gcloud secrets versions access latest --secret=node-env > temp.txt
-        echo "NODE_ENV=$(cat temp.txt)" > .env
-        gcloud secrets versions access latest --secret=app-env > temp.txt
-        echo "APP_ENV=$(cat temp.txt)" >> .env
-        gcloud secrets versions access latest --secret=next-public-get-intro-json-prod > temp.txt
-        echo "NEXT_PUBLIC_GET_INTRO_JSON_PROD=$(cat temp.txt)" >> .env
-        gcloud secrets versions access latest --secret=next-public-get-intro-json > temp.txt
-        echo "NEXT_PUBLIC_GET_INTRO_JSON=$(cat temp.txt)" >> .env
-        gcloud secrets versions access latest --secret=next-public-send-mail-url-prod > temp.txt
-        echo "NEXT_PUBLIC_SEND_MAIL_URL_PROD=$(cat temp.txt)" >> .env
-        gcloud secrets versions access latest --secret=next-public-send-mail-url > temp.txt
-        echo "NEXT_PUBLIC_SEND_MAIL_URL=$(cat temp.txt)" >> .env
-        gcloud secrets versions access latest --secret=next-public-send-error-log-prod > temp.txt
-        echo "NEXT_PUBLIC_SEND_ERROR_LOG_PROD=$(cat temp.txt)" >> .env
-        gcloud secrets versions access latest --secret=next-public-send-error-log > temp.txt
-        echo "NEXT_PUBLIC_SEND_ERROR_LOG=$(cat temp.txt)" >> .env
-        rm temp.txt
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    set -e
+    cd next-ts-intro-web-app
+    gcloud secrets versions access latest --secret=node-env > temp.txt
+    echo "NODE_ENV=$(cat temp.txt)" > .env
+    gcloud secrets versions access latest --secret=app-env > temp.txt
+    echo "APP_ENV=$(cat temp.txt)" >> .env
+    gcloud secrets versions access latest --secret=next-public-get-intro-json-prod > temp.txt
+    echo "NEXT_PUBLIC_GET_INTRO_JSON_PROD=$(cat temp.txt)" >> .env
+    gcloud secrets versions access latest --secret=next-public-get-intro-json > temp.txt
+    echo "NEXT_PUBLIC_GET_INTRO_JSON=$(cat temp.txt)" >> .env
+    gcloud secrets versions access latest --secret=next-public-send-mail-url-prod > temp.txt
+    echo "NEXT_PUBLIC_SEND_MAIL_URL_PROD=$(cat temp.txt)" >> .env
+    gcloud secrets versions access latest --secret=next-public-send-mail-url > temp.txt
+    echo "NEXT_PUBLIC_SEND_MAIL_URL=$(cat temp.txt)" >> .env
+    gcloud secrets versions access latest --secret=next-public-send-error-log-prod > temp.txt
+    echo "NEXT_PUBLIC_SEND_ERROR_LOG_PROD=$(cat temp.txt)" >> .env
+    gcloud secrets versions access latest --secret=next-public-send-error-log > temp.txt
+    echo "NEXT_PUBLIC_SEND_ERROR_LOG=$(cat temp.txt)" >> .env
+    rm temp.txt
 
 # ステップ 4: 最新のイメージをバックアップ
 - name: 'gcr.io/cloud-builders/docker'

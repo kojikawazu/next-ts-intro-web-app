@@ -4,7 +4,13 @@ substitutions:
   _REPO_NAME: ${REPO_NAME}
   _LOCATION: ${LOCATION}
 
+options:
+    volumes:
+    - name: 'ssh'
+      path: '/root/.ssh'
+
 steps:
+# ステップ 1: 
 - name: 'gcr.io/cloud-builders/git'
   args:
   - '-c'
@@ -15,7 +21,7 @@ steps:
   - name: 'ssh'
     path: '/root/.ssh'
 
-# SSHキーとknown_hostsファイルをセットアップ
+# ステップ 2: SSHキーとknown_hostsファイルをセットアップ
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
@@ -24,11 +30,6 @@ steps:
     gcloud secrets versions access latest --secret=secret-name > /root/.ssh/id_github
     chmod 600 /root/.ssh/id_github
     echo 'github.com ssh-rsa [公開キー]' >> /root/.ssh/known_hosts
-
-  options:
-    volumes:
-    - name: 'ssh'
-      path: '/root/.ssh'
 
 # ステップ 3: Docker を設定
 - name: 'gcr.io/cloud-builders/docker'

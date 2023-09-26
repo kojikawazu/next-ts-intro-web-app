@@ -35,10 +35,11 @@ steps:
     set -e
 
     # Get secrets from Secret Manager and export them as environment variables
-    export _PROJECT_ID=$(gcloud secrets versions access latest --secret=project-id --format='get(payload.data)' | base64 --decode)
-    export _WEP_APP_IMAGE=$(gcloud secrets versions access latest --secret=web-app-image --format='get(payload.data)' | base64 --decode)
-    export _REPO_WEB_APP=$(gcloud secrets versions access latest --secret=repo-web-app --format='get(payload.data)' | base64 --decode)
-    export _LOCATION=$(gcloud secrets versions access latest --secret=location --format='get(payload.data)' | base64 --decode)
+    echo "_PROJECT_ID=$(gcloud secrets versions access latest --secret=project-id --format='get(payload.data)' | base64 --decode)" >> /workspace/_env
+    echo "_WEP_APP_IMAGE=$(gcloud secrets versions access latest --secret=web-app-image --format='get(payload.data)' | base64 --decode)" >> /workspace/_env
+    echo "_REPO_WEB_APP=$(gcloud secrets versions access latest --secret=repo-web-app --format='get(payload.data)' | base64 --decode)" >> /workspace/_env
+    echo "_LOCATION=$(gcloud secrets versions access latest --secret=location --format='get(payload.data)' | base64 --decode)" >> /workspace/_env
+    source /workspace/_env
 
     # Print the variables to the log (optional, for debugging purposes)
     echo "PROJECT_ID: ${_PROJECT_ID}"

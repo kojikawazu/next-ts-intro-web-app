@@ -12,7 +12,7 @@ import SkillCard from '@/app/components/skills/SkillCard';
 import SkillsAndMore from '@/app/components/skills/SkillsAndMore';
 
 /** ロード数 */
-const CARD_ADDITION_COUNT = Number(process.env.NEXT_PUBLIC_SKILLS_CARD_LOAD_COUNT || 6);
+const CARD_ADDITION_COUNT = Number(MESSAGES.MAIL.SKILLS_CARD_LOAD_COUNT || 6);
 
 /**
  * スキルコンポーネント

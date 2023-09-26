@@ -1,4 +1,5 @@
 import React from 'react';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import { useContactLogic } from '@/app/features/contact/useContactLogic';
 import { componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 import Notification from '@/app/components/common/notice/Notification';
@@ -18,7 +19,7 @@ const ContactSendNotification = () => {
         setOffNotificationVisible
     } = useContactLogic();
     const bgColor = contactStatusStr === 'failed' ? 'bg-red-500' : 'bg-green-500';
-    const notice  = ((contactStatusStr === 'failed' ? process.env.NEXT_PUBLIC_NOTICE_FAILED : process.env.NEXT_PUBLIC_NOTICE_SUCCESSED) || "notice") as string;
+    const notice  = ((contactStatusStr === 'failed' ? MESSAGES.MAIL.NOTICE_FAILED : MESSAGES.MAIL.NOTICE_SUCCESSED) || "notice") as string;
 
     componentJSX(ContactSendNotification);
     return (

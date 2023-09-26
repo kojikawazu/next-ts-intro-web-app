@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { MESSAGES } from '@/app/shared/constants/constants';
 import { isEnvProd, isEnvDev } from '@/app/shared/utils//utilities';
 import { customLog } from '@/app/shared/utils/logUtilities';
 import { isValidLength, isValidEmail, isValidSpecialCharacters } from '@/app/shared/utils/validateUtilities';
@@ -19,11 +20,11 @@ import {
 import { RootState } from '@/app/features/store';
 
 // Constants
-const ERROR_NAME      = process.env.NEXT_PUBLIC_CONTACT_ERROR_NAME    || "再度入力してください";
-const ERROR_EMAIL     = process.env.NEXT_PUBLIC_CONTACT_ERROR_EMAIL   || "再度入力してください";
-const ERROR_MESSAGE   = process.env.NEXT_PUBLIC_CONTACT_ERROR_MESSAGE || "再度入力してください";
-const CONFIRM_DATA    = process.env.NEXT_PUBLIC_CONTACT_CONFIRM       || "メッセージ送信してもよろしいでしょうか？";
-const TITLE_PREFIX    = process.env.NEXT_PUBLIC_MAIN_TITLE_PREFIX     || "からのお問い合わせ";
+const ERROR_NAME      = MESSAGES.MAIL.CONTACT_ERROR_NAME    || "再度入力してください";
+const ERROR_EMAIL     = MESSAGES.MAIL.CONTACT_ERROR_EMAIL   || "再度入力してください";
+const ERROR_MESSAGE   = MESSAGES.MAIL.CONTACT_ERROR_MESSAGE || "再度入力してください";
+const CONFIRM_DATA    = MESSAGES.MAIL.CONTACT_CONFIRM       || "メッセージ送信してもよろしいでしょうか？";
+const TITLE_PREFIX    = MESSAGES.MAIL.MAIN_TITLE_PREFIX     || "からのお問い合わせ";
 const SEND_MAIL_URL   = (isEnvProd() ? process.env.NEXT_PUBLIC_SEND_MAIL_URL_PROD : process.env.NEXT_PUBLIC_SEND_MAIL_URL) || "";
 
 const VISIBLE_COUNT = 4500;

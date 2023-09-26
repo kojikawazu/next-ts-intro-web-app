@@ -4,9 +4,15 @@ substitutions:
   _REPO_NAME: ${REPO_NAME}
   _LOCATION: ${LOCATION}
 steps:
-# ステップ 2: コードをチェックアウト
 - name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'git@github.com:kojikawazu/next-ts-intro-web-app.git']
+  args:
+  - '-c'
+  - 'core.sshCommand=ssh -i /root/.ssh/id_github -o UserKnownHostsFile=/root/.ssh/known_hosts'
+  - 'clone'
+  - 'git@github.com:kojikawazu/next-ts-intro-web-app.git'
+  volumes:
+  - name: 'ssh'
+    path: '/root/.ssh'
 
 # ステップ 3: Docker を設定
 - name: 'gcr.io/cloud-builders/docker'

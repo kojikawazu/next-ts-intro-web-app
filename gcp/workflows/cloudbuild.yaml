@@ -18,7 +18,7 @@ steps:
   - |
     gcloud secrets versions access latest --secret=secret-name > /root/.ssh/id_github
     chmod 600 /root/.ssh/id_github
-    echo 'github.com ssh-rsa [公開キー]' >> /root/.ssh/known_hosts
+    ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
 
 # ステップ 2:
 - name: 'gcr.io/cloud-builders/git'

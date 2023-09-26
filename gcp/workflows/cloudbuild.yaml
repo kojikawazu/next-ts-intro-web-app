@@ -31,6 +31,14 @@ steps:
   - 'clone'
   - 'git@github.com:kojikawazu/next-ts-intro-web-app.git'
 
+# ファイル確認
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    cd ./next-ts-intro-web-app && ls -l
+
 # Docker を設定
 - name: 'gcr.io/cloud-builders/docker'
   args: ['login', 'asia-northeast1-docker.pkg.dev']
@@ -81,6 +89,6 @@ steps:
   args:
   - '-c'
   - |
-    docker build -t $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE ./next-ts-intro-web-app
+    docker build -t $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE -f ./next-ts-intro-web-app/docker/Dockerfile ./next-ts-intro-web-app
     docker push $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE:latest
   secretEnv: ['WEP_APP_IMAGE', 'REPO_WEB_APP', 'LOCATION']

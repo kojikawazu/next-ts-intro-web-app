@@ -43,6 +43,11 @@ jobs:
         echo "WEB_IMAGE=${{ secrets.WEB_IMAGE }}" >> docker-compose.env
         echo "WEB_PORT_1=${{ secrets.WEB_PORT_1 }}" >> docker-compose.env
 
+        echo "PROJECT_ID: ${{ env.PROJECT_ID }}"
+        echo "IMAGE_NAME: ${{ env.IMAGE_NAME }}"
+        echo "REPO_NAME:  ${{ env.REPO_NAME }}"
+        echo "LOCATION:   ${{ env.LOCATION }}"
+
     - name: Configure Docker
       run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 

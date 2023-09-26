@@ -20,7 +20,7 @@ steps:
     chmod 600 /root/.ssh/id_github
     ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
 
-# ステップ 2:
+# ステップ 2: GitHubからclone
 - name: 'gcr.io/cloud-builders/git'
   args:
   - '-c'
@@ -60,11 +60,21 @@ steps:
 
 # ステップ 5: 最新のイメージをバックアップ
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['pull', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest || true',
-         '&&', 'docker', 'tag', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup',
-         '&&', 'docker', 'push', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup']
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    docker pull ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest || true
+    if [ $? -eq 0 ]; then
+      docker tag ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:latest ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup
+      docker push ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}:backup
+    fi
 
 # ステップ 6: Docker イメージをビルドしてプッシュ
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}', './next-ts-intro-web-app',
-         '&&', 'docker', 'push', '${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}']
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    docker build -t ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME} ./next-ts-intro-web-app,
+    docker push ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}

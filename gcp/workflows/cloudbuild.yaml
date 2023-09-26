@@ -17,9 +17,6 @@ steps:
   - 'core.sshCommand=ssh -i /root/.ssh/id_github -o UserKnownHostsFile=/root/.ssh/known_hosts'
   - 'clone'
   - 'git@github.com:kojikawazu/next-ts-intro-web-app.git'
-  volumes:
-  - name: 'ssh'
-    path: '/root/.ssh'
 
 # ステップ 2: SSHキーとknown_hostsファイルをセットアップ
 - name: 'gcr.io/cloud-builders/gcloud'

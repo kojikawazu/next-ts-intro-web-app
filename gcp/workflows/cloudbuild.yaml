@@ -3,6 +3,15 @@ options:
     - name: 'ssh'
       path: '/root/.ssh'
 
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/web-app-image/versions/latest
+      env: 'WEP_APP_IMAGE'
+    - versionName: projects/$PROJECT_ID/secrets/repo-web-app/versions/latest
+      env: 'REPO_WEB_APP'
+    - versionName: projects/$PROJECT_ID/location/repo-web-app/versions/latest
+      env: 'LOCATION'
+  
 steps:
 # SSHキーとknown_hostsファイルをセットアップ
 - name: 'gcr.io/cloud-builders/gcloud'
@@ -34,19 +43,6 @@ steps:
   - |
     set -e
 
-    # Get secrets from Secret Manager and export them as environment variables
-    echo "_PROJECT_ID=$(gcloud secrets versions access latest --secret=project-id --format='get(payload.data)' | base64 --decode)" >> /workspace/_env
-    echo "_WEP_APP_IMAGE=$(gcloud secrets versions access latest --secret=web-app-image --format='get(payload.data)' | base64 --decode)" >> /workspace/_env
-    echo "_REPO_WEB_APP=$(gcloud secrets versions access latest --secret=repo-web-app --format='get(payload.data)' | base64 --decode)" >> /workspace/_env
-    echo "_LOCATION=$(gcloud secrets versions access latest --secret=location --format='get(payload.data)' | base64 --decode)" >> /workspace/_env
-    source /workspace/_env
-
-    # Print the variables to the log (optional, for debugging purposes)
-    echo "PROJECT_ID: ${_PROJECT_ID}"
-    echo "WEP_APP_IMAGE: $_WEP_APP_IMAGE}"
-    echo "REPO_WEB_APP: ${_REPO_WEB_APP}"
-    echo "LOCATION: ${_LOCATION}"
-
     cd next-ts-intro-web-app
     gcloud secrets versions access latest --secret=node-env > temp.txt
     echo "NODE_ENV=$(cat temp.txt)" > .env
@@ -72,11 +68,12 @@ steps:
   args:
   - '-c'
   - |
-    docker pull ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_WEB_APP}/${_WEP_APP_IMAGE}:latest || true
+    docker pull $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE:latest || true
     if [ $? -eq 0 ]; then
-      docker tag ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_WEB_APP}/${_WEP_APP_IMAGE}:latest ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_WEB_APP}/${_WEP_APP_IMAGE}:backup
-      docker push ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_WEB_APP}/${_WEP_APP_IMAGE}:backup
+      docker tag $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE:latest $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE:backup
+      docker push $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE:backup
     fi
+  secretEnv: ['WEP_APP_IMAGE', 'REPO_WEB_APP', 'LOCATION']
 
 # ステップ 6: Docker イメージをビルドしてプッシュ
 - name: 'gcr.io/cloud-builders/docker'
@@ -84,5 +81,6 @@ steps:
   args:
   - '-c'
   - |
-    docker build -t ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_WEB_APP}/${_WEP_APP_IMAGE} ./next-ts-intro-web-app,
-    docker push ${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO_WEB_APP}/${_WEP_APP_IMAGE}
+    docker build -t $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE ./next-ts-intro-web-app,
+    docker push $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE
+  secretEnv: ['WEP_APP_IMAGE', 'REPO_WEB_APP', 'LOCATION']

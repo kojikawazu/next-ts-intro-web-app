@@ -6,11 +6,13 @@ on:
       - master
 
 env:
+  # Project ID
   PROJECT_ID: ${{ secrets.PROJECT_PRI_NAME }}
   # Web App Image
   IMAGE_NAME: ${{ secrets.WEB_CONTAINER_IMAGE }}
   # Artifact Registry
   REPO_NAME: ${{ secrets.ARTIFACT_REGISTORY_WEB_APP }}
+  # Location
   LOCATION: ${{ secrets.GCP_LOCATION }}
   # GCE
   GCE_INSTANCE: ${{ secrets.GCE_INSTANCE }}
@@ -54,6 +56,10 @@ jobs:
 
     - name: Configure Docker
       run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+
+    - name: Remove previous backup
+      run: |
+        gcloud artifacts docker images delete ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup --delete-tags
 
     - name: Backup latest image
       run: |

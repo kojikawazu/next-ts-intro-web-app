@@ -47,13 +47,6 @@ jobs:
         echo "NEXT_PUBLIC_SEND_ERROR_LOG=${{ secrets.NEXT_PUBLIC_SEND_ERROR_LOG }}" >> .env
         echo "NEXT_PUBLIC_BUILD_WORD=${{ secrets.NEXT_PUBLIC_BUILD_WORD }}" >> .env
 
-        echo "NGINX_CONTAINER=${{ secrets.NGINX_CONTAINER }}" >> docker-compose.env
-        echo "NGINX_PORT_1=${{ secrets.NGINX_PORT_1 }}" >> docker-compose.env
-        echo "NGINX_PORT_2=${{ secrets.NGINX_PORT_2 }}" >> docker-compose.env
-        echo "WEB_CONTAINER=${{ secrets.WEB_CONTAINER }}" >> docker-compose.env
-        echo "WEB_IMAGE=${{ secrets.WEB_IMAGE }}" >> docker-compose.env
-        echo "WEB_PORT_1=${{ secrets.WEB_PORT_1 }}" >> docker-compose.env
-
     - name: Configure Docker
       run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 
@@ -80,6 +73,15 @@ jobs:
         docker tag ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
         docker push ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
 
+    - name: Setup docker-compose environments file
+      run: |
+        echo "NGINX_CONTAINER=${{ secrets.NGINX_CONTAINER }}" >> docker-compose.env
+        echo "NGINX_PORT_1=${{ secrets.NGINX_PORT_1 }}" >> docker-compose.env
+        echo "NGINX_PORT_2=${{ secrets.NGINX_PORT_2 }}" >> docker-compose.env
+        echo "WEB_CONTAINER=${{ secrets.WEB_CONTAINER }}" >> docker-compose.env
+        echo "WEB_IMAGE=${{ secrets.WEB_IMAGE }}" >> docker-compose.env
+        echo "WEB_PORT_1=${{ secrets.WEB_PORT_1 }}" >> docker-compose.env
+  
     - name: Create Nginx configuration file
       run: |
         # Change .env
@@ -136,7 +138,11 @@ jobs:
           sudo cp -fp docker-compose.* ${{ env.GCE_PROJECTS }}/.
           ls -l ${{ env.GCE_PROJECTS }}
           rm -f /home/runner/projects/*" || exit 1
-        # docker-compose
+    
+    - name: Update Docker Compose
+      run: |
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
           cd ${{ env.GCE_PROJECTS }}
-          sudo -u ${{ env.GCE_USER }} docker-compose --env-file docker-compose.env up -d" || exit 1
+          sudo -u ${{ env.GCE_USER }} docker-compose --env-file docker-compose.env pull web
+          sudo -u ${{ env.GCE_USER }} docker-compose --env-file docker-compose.env up -d web
+        " || exit 1

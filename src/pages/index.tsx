@@ -39,10 +39,9 @@ import FrontArea from '@/app/components/front/FrontArea';
 // SSG
 // クラウドからJSON取得する場合
 export const getStaticProps: GetStaticProps = async () => {
-  
   const endpoint  = (isEnvProd() ? process.env.NEXT_PUBLIC_GET_INTRO_JSON_PROD : process.env.NEXT_PUBLIC_GET_INTRO_JSON) || "";
   const buildMode = (process.env.NEXT_PUBLIC_BUILD_WORD) || "";
-  console.log(`endpoint: ${endpoint}`);
+
   try {
       const response = await fetch(endpoint, {
           method: 'POST',

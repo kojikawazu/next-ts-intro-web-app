@@ -55,11 +55,12 @@ jobs:
     - name: Configure Docker
       run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 
-    - name: Backup latest image
-      run: |
-        docker pull ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest || true
-        docker tag ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup
-        docker push ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup
+    #- name: Backup latest image
+    #  run: |
+    #    docker pull ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest || true
+    #    docker tag ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup
+    #    docker push ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
@@ -68,63 +69,63 @@ jobs:
         push: true
         tags: ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}
 
-    - name: Create Nginx configuration file
-      run: |
-        # Change .env
-        sed -i -e "s/NEXT_PUBLIC_BUILD_WORD=.*//" .env
+    # - name: Create Nginx configuration file
+    #   run: |
+    #     # Change .env
+    #     sed -i -e "s/NEXT_PUBLIC_BUILD_WORD=.*//" .env
 
-        # Create nginx.env
-        echo "NGINX_HTTP_PORT=${{ secrets.NGINX_HTTP_PORT }}" >> nginx.env
-        echo "NGINX_DOMAIN=${{ secrets.NGINX_DOMAIN }}" >> nginx.env
-        echo "LOCAL_WEB_URL=${{ secrets.LOCAL_WEB_URL }}" >> nginx.env
-        echo "NGINX_HTTPS_PORT=${{ secrets.NGINX_HTTPS_PORT }}" >> nginx.env
-        echo "CHAIN_PEM=${{ secrets.CHAIN_PEM }}" >> nginx.env
-        echo "PRI_PEM=${{ secrets.PRI_PEM }}" >> nginx.env
-        # Create runner projects file
-        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "mkdir -p /home/runner/projects" || exit 1
-        # GCE Deploy
-        gcloud compute scp nginx.env ${{ env.GCE_INSTANCE }}:/home/runner/projects/. --zone ${{ env.GCE_ZONE }} || exit 1
-        gcloud compute scp ./etc/nginx/conf.d/default_template.conf ${{ env.GCE_INSTANCE }}:/home/runner/projects/. --zone ${{ env.GCE_ZONE }} || exit 1
-        # Create default.conf
-        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
-          ls -l /home/runner/projects
-          . /home/runner/projects/nginx.env
-          export NGINX_HTTP_PORT=\${NGINX_HTTP_PORT}
-          export NGINX_DOMAIN=\${NGINX_DOMAIN}
-          export LOCAL_WEB_URL=\${LOCAL_WEB_URL}
-          export NGINX_HTTPS_PORT=\${NGINX_HTTPS_PORT}
-          export CHAIN_PEM=\${CHAIN_PEM}
-          export PRI_PEM=\${PRI_PEM}
-          cd /home/runner/projects
-          touch default.conf
-          sudo chmod 666 default.conf
-          envsubst  < default_template.conf > default.conf
-          sed -i -e 's/URI_VALUE/\$uri/g' default.conf
-          sed -i -e 's/HOST_VALUE/\$host/g' default.conf
-          sed -i -e 's/REMOTE_ADDR_VALUE/\$remote_addr/g' default.conf
-          sed -i -e 's/PROXY_X_FORWARDED_FOR/\$proxy_add_x_forwarded_for/g' default.conf
-          sed -i -e 's/SCHEME_VALUE/\$scheme/g' default.conf
-          " || exit 1
-        # GCE Copy
-        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
-          sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} /home/runner/projects/default.conf
-          mkdir -p ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d
-          sudo cp -fp /home/runner/projects/default.conf ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d/default.conf" || exit 1
+    #     # Create nginx.env
+    #     echo "NGINX_HTTP_PORT=${{ secrets.NGINX_HTTP_PORT }}" >> nginx.env
+    #     echo "NGINX_DOMAIN=${{ secrets.NGINX_DOMAIN }}" >> nginx.env
+    #     echo "LOCAL_WEB_URL=${{ secrets.LOCAL_WEB_URL }}" >> nginx.env
+    #     echo "NGINX_HTTPS_PORT=${{ secrets.NGINX_HTTPS_PORT }}" >> nginx.env
+    #     echo "CHAIN_PEM=${{ secrets.CHAIN_PEM }}" >> nginx.env
+    #     echo "PRI_PEM=${{ secrets.PRI_PEM }}" >> nginx.env
+    #     # Create runner projects file
+    #     gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "mkdir -p /home/runner/projects" || exit 1
+    #     # GCE Deploy
+    #     gcloud compute scp nginx.env ${{ env.GCE_INSTANCE }}:/home/runner/projects/. --zone ${{ env.GCE_ZONE }} || exit 1
+    #     gcloud compute scp ./etc/nginx/conf.d/default_template.conf ${{ env.GCE_INSTANCE }}:/home/runner/projects/. --zone ${{ env.GCE_ZONE }} || exit 1
+    #     # Create default.conf
+    #     gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+    #       ls -l /home/runner/projects
+    #       . /home/runner/projects/nginx.env
+    #       export NGINX_HTTP_PORT=\${NGINX_HTTP_PORT}
+    #       export NGINX_DOMAIN=\${NGINX_DOMAIN}
+    #       export LOCAL_WEB_URL=\${LOCAL_WEB_URL}
+    #       export NGINX_HTTPS_PORT=\${NGINX_HTTPS_PORT}
+    #       export CHAIN_PEM=\${CHAIN_PEM}
+    #       export PRI_PEM=\${PRI_PEM}
+    #       cd /home/runner/projects
+    #       touch default.conf
+    #       sudo chmod 666 default.conf
+    #       envsubst  < default_template.conf > default.conf
+    #       sed -i -e 's/URI_VALUE/\$uri/g' default.conf
+    #       sed -i -e 's/HOST_VALUE/\$host/g' default.conf
+    #       sed -i -e 's/REMOTE_ADDR_VALUE/\$remote_addr/g' default.conf
+    #       sed -i -e 's/PROXY_X_FORWARDED_FOR/\$proxy_add_x_forwarded_for/g' default.conf
+    #       sed -i -e 's/SCHEME_VALUE/\$scheme/g' default.conf
+    #       " || exit 1
+    #     # GCE Copy
+    #     gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+    #       sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} /home/runner/projects/default.conf
+    #       mkdir -p ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d
+    #       sudo cp -fp /home/runner/projects/default.conf ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d/default.conf" || exit 1
 
-    - name: Deploy files to GCE
-      run: |
-        # GCE Deploy
-        gcloud compute scp docker-compose.env ${{ env.GCE_INSTANCE }}:/home/runner/projects/. --zone ${{ env.GCE_ZONE }} || exit 1
-        gcloud compute scp ./docker/docker-compose.yml ${{ env.GCE_INSTANCE }}:/home/runner/projects/. --zone ${{ env.GCE_ZONE }} || exit 1
-        # GCE Copy
-        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
-          cd /home/runner/projects
-          ls -l
-          sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} docker-compose.*
-          sudo cp -fp docker-compose.* ${{ env.GCE_PROJECTS }}/.
-          ls -l ${{ env.GCE_PROJECTS }}
-          rm -f /home/runner/projects/*" || exit 1
-        # docker-compose
-        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
-          cd ${{ env.GCE_PROJECTS }}
-          sudo -u ${{ env.GCE_USER }} docker-compose --env-file docker-compose.env up -d" || exit 1
+    # - name: Deploy files to GCE
+    #   run: |
+    #     # GCE Deploy
+    #     gcloud compute scp docker-compose.env ${{ env.GCE_INSTANCE }}:/home/runner/projects/. --zone ${{ env.GCE_ZONE }} || exit 1
+    #     gcloud compute scp ./docker/docker-compose.yml ${{ env.GCE_INSTANCE }}:/home/runner/projects/. --zone ${{ env.GCE_ZONE }} || exit 1
+    #     # GCE Copy
+    #     gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+    #       cd /home/runner/projects
+    #       ls -l
+    #       sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} docker-compose.*
+    #       sudo cp -fp docker-compose.* ${{ env.GCE_PROJECTS }}/.
+    #       ls -l ${{ env.GCE_PROJECTS }}
+    #       rm -f /home/runner/projects/*" || exit 1
+    #     # docker-compose
+    #     gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+    #       cd ${{ env.GCE_PROJECTS }}
+    #       sudo -u ${{ env.GCE_USER }} docker-compose --env-file docker-compose.env up -d" || exit 1

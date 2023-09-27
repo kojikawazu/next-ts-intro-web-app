@@ -6,22 +6,40 @@ on:
       - master
 
 env:
-  # Project ID
+  # Common
   PROJECT_ID: ${{ secrets.PROJECT_PRI_NAME }}
-  # Web App Image
   IMAGE_NAME: ${{ secrets.WEB_CONTAINER_IMAGE }}
-  # Artifact Registry
   REPO_NAME: ${{ secrets.ARTIFACT_REGISTORY_WEB_APP }}
-  # Location
   LOCATION: ${{ secrets.GCP_LOCATION }}
-  # GCE
   GCE_INSTANCE: ${{ secrets.GCE_INSTANCE }}
-  # GCE projects
   GCE_PROJECTS: ${{ secrets.GCE_PROJECTS }}
-  # GCE user
   GCE_USER: ${{ secrets.GCE_USER }}
-  # GCE zone
   GCE_ZONE: ${{ secrets.GCE_ZONE }}
+
+  # .env
+  NEXT_PUBLIC_GET_INTRO_JSON_PROD: ${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON_PROD }}
+  NEXT_PUBLIC_GET_INTRO_JSON: ${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON }}
+  NEXT_PUBLIC_SEND_MAIL_URL_PROD: ${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL_PROD }}
+  NEXT_PUBLIC_SEND_MAIL_URL: ${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL }}
+  NEXT_PUBLIC_SEND_ERROR_LOG_PROD: ${{ secrets.NEXT_PUBLIC_SEND_ERROR_LOG_PROD }}
+  NEXT_PUBLIC_SEND_ERROR_LOG: ${{ secrets.NEXT_PUBLIC_SEND_ERROR_LOG }}
+  NEXT_PUBLIC_BUILD_WORD: ${{ secrets.NEXT_PUBLIC_BUILD_WORD }}
+
+  # docker-compose.env
+  NGINX_CONTAINER: ${{ secrets.NGINX_CONTAINER }}
+  NGINX_PORT_1: ${{ secrets.NGINX_PORT_1 }}
+  NGINX_PORT_2: ${{ secrets.NGINX_PORT_2 }}
+  WEB_CONTAINER: ${{ secrets.WEB_CONTAINER }}
+  WEB_IMAGE: ${{ secrets.WEB_IMAGE }}
+  WEB_PORT_1: ${{ secrets.WEB_PORT_1 }}
+
+  # nginx.env
+  NGINX_HTTP_PORT: ${{ secrets.NGINX_HTTP_PORT }}
+  NGINX_DOMAIN: ${{ secrets.NGINX_DOMAIN }}
+  LOCAL_WEB_URL: ${{ secrets.LOCAL_WEB_URL }}
+  NGINX_HTTPS_PORT: ${{ secrets.NGINX_HTTPS_PORT }}
+  CHAIN_PEM: ${{ secrets.CHAIN_PEM }}
+  PRI_PEM: ${{ secrets.PRI_PEM }}
 
 jobs:
   build-and-deploy:
@@ -39,13 +57,13 @@ jobs:
     - name: Setup environments file
       run: |
         # Create .env
-        echo "NEXT_PUBLIC_GET_INTRO_JSON_PROD=${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON_PROD }}" >> .env
-        echo "NEXT_PUBLIC_GET_INTRO_JSON=${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON }}" >> .env
-        echo "NEXT_PUBLIC_SEND_MAIL_URL_PROD=${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL_PROD }}" >> .env
-        echo "NEXT_PUBLIC_SEND_MAIL_URL=${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL }}" >> .env
-        echo "NEXT_PUBLIC_SEND_ERROR_LOG_PROD=${{ secrets.NEXT_PUBLIC_SEND_ERROR_LOG_PROD }}" >> .env
-        echo "NEXT_PUBLIC_SEND_ERROR_LOG=${{ secrets.NEXT_PUBLIC_SEND_ERROR_LOG }}" >> .env
-        echo "NEXT_PUBLIC_BUILD_WORD=${{ secrets.NEXT_PUBLIC_BUILD_WORD }}" >> .env
+        echo "NEXT_PUBLIC_GET_INTRO_JSON_PROD=${{ env.NEXT_PUBLIC_GET_INTRO_JSON_PROD }}" >> .env
+        echo "NEXT_PUBLIC_GET_INTRO_JSON=${{ env.NEXT_PUBLIC_GET_INTRO_JSON }}" >> .env
+        echo "NEXT_PUBLIC_SEND_MAIL_URL_PROD=${{ env.NEXT_PUBLIC_SEND_MAIL_URL_PROD }}" >> .env
+        echo "NEXT_PUBLIC_SEND_MAIL_URL=${{ env.NEXT_PUBLIC_SEND_MAIL_URL }}" >> .env
+        echo "NEXT_PUBLIC_SEND_ERROR_LOG_PROD=${{ env.NEXT_PUBLIC_SEND_ERROR_LOG_PROD }}" >> .env
+        echo "NEXT_PUBLIC_SEND_ERROR_LOG=${{ env.NEXT_PUBLIC_SEND_ERROR_LOG }}" >> .env
+        echo "NEXT_PUBLIC_BUILD_WORD=${{ env.NEXT_PUBLIC_BUILD_WORD }}" >> .env
 
     - name: Configure Docker
       run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
@@ -75,25 +93,23 @@ jobs:
 
     - name: Setup docker-compose environments file
       run: |
-        echo "NGINX_CONTAINER=${{ secrets.NGINX_CONTAINER }}" >> docker-compose.env
-        echo "NGINX_PORT_1=${{ secrets.NGINX_PORT_1 }}" >> docker-compose.env
-        echo "NGINX_PORT_2=${{ secrets.NGINX_PORT_2 }}" >> docker-compose.env
-        echo "WEB_CONTAINER=${{ secrets.WEB_CONTAINER }}" >> docker-compose.env
-        echo "WEB_IMAGE=${{ secrets.WEB_IMAGE }}" >> docker-compose.env
-        echo "WEB_PORT_1=${{ secrets.WEB_PORT_1 }}" >> docker-compose.env
+        echo "NGINX_CONTAINER=${{ env.NGINX_CONTAINER }}" >> docker-compose.env
+        echo "NGINX_PORT_1=${{ env.NGINX_PORT_1 }}" >> docker-compose.env
+        echo "NGINX_PORT_2=${{ env.NGINX_PORT_2 }}" >> docker-compose.env
+        echo "WEB_CONTAINER=${{ env.WEB_CONTAINER }}" >> docker-compose.env
+        echo "WEB_IMAGE=${{ env.WEB_IMAGE }}" >> docker-compose.env
+        echo "WEB_PORT_1=${{ env.WEB_PORT_1 }}" >> docker-compose.env
   
     - name: Create Nginx configuration file
       run: |
-        # Change .env
-        sed -i -e "s/NEXT_PUBLIC_BUILD_WORD=.*//" .env
-
         # Create nginx.env
-        echo "NGINX_HTTP_PORT=${{ secrets.NGINX_HTTP_PORT }}" >> nginx.env
-        echo "NGINX_DOMAIN=${{ secrets.NGINX_DOMAIN }}" >> nginx.env
-        echo "LOCAL_WEB_URL=${{ secrets.LOCAL_WEB_URL }}" >> nginx.env
-        echo "NGINX_HTTPS_PORT=${{ secrets.NGINX_HTTPS_PORT }}" >> nginx.env
-        echo "CHAIN_PEM=${{ secrets.CHAIN_PEM }}" >> nginx.env
-        echo "PRI_PEM=${{ secrets.PRI_PEM }}" >> nginx.env
+        echo "NGINX_HTTP_PORT=${{ env.NGINX_HTTP_PORT }}" >> nginx.env
+        echo "NGINX_DOMAIN=${{ env.NGINX_DOMAIN }}" >> nginx.env
+        echo "LOCAL_WEB_URL=${{ env.LOCAL_WEB_URL }}" >> nginx.env
+        echo "NGINX_HTTPS_PORT=${{ env.NGINX_HTTPS_PORT }}" >> nginx.env
+        echo "CHAIN_PEM=${{ env.CHAIN_PEM }}" >> nginx.env
+        echo "PRI_PEM=${{ env.PRI_PEM }}" >> nginx.env
+
         # Create runner projects file
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "mkdir -p /home/runner/projects" || exit 1
         # GCE Deploy

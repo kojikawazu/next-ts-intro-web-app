@@ -135,6 +135,7 @@ jobs:
           sed -i -e 's/PROXY_X_FORWARDED_FOR/\$proxy_add_x_forwarded_for/g' default.conf
           sed -i -e 's/SCHEME_VALUE/\$scheme/g' default.conf
           " || exit 1
+
         # GCE Copy
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
           sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} /home/runner/projects/default.conf
@@ -143,10 +144,11 @@ jobs:
 
     - name: Deploy files to GCE
       run: |
-        # GCE Deploy
+        # docker-compose.env and docker-compose.yml Deploy
         gcloud compute scp docker-compose.env ${{ env.GCE_INSTANCE }}:/home/runner/projects/. --zone ${{ env.GCE_ZONE }} || exit 1
         gcloud compute scp ./docker/docker-compose.yml ${{ env.GCE_INSTANCE }}:/home/runner/projects/. --zone ${{ env.GCE_ZONE }} || exit 1
-        # GCE Copy
+
+        # docker-compose.env and docker-compose.yml Copy
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
           cd /home/runner/projects
           ls -l

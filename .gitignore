@@ -45,3 +45,4 @@ resources/json/
 
 docker/docker-compose_development.yml
 etc/nginx/conf.d/default.conf
+.github/workflows/build-and-deploy-backup.yml

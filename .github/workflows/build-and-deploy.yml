@@ -36,6 +36,15 @@ jobs:
 
     - name: Setup environments file
       run: |
+        # Create .env
+        echo "NEXT_PUBLIC_GET_INTRO_JSON_PROD=${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON_PROD }}" >> .env
+        echo "NEXT_PUBLIC_GET_INTRO_JSON=${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON }}" >> .env
+        echo "NEXT_PUBLIC_SEND_MAIL_URL_PROD=${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL_PROD }}" >> .env
+        echo "NEXT_PUBLIC_SEND_MAIL_URL=${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL }}" >> .env
+        echo "NEXT_PUBLIC_SEND_ERROR_LOG_PROD=${{ secrets.NEXT_PUBLIC_SEND_ERROR_LOG_PROD }}" >> .env
+        echo "NEXT_PUBLIC_SEND_ERROR_LOG=${{ secrets.NEXT_PUBLIC_SEND_ERROR_LOG }}" >> .env
+        echo "NEXT_PUBLIC_BUILD_WORD=${{ secrets.NEXT_PUBLIC_BUILD_WORD }}" >> .env
+
         echo "NGINX_CONTAINER=${{ secrets.NGINX_CONTAINER }}" >> docker-compose.env
         echo "NGINX_PORT_1=${{ secrets.NGINX_PORT_1 }}" >> docker-compose.env
         echo "NGINX_PORT_2=${{ secrets.NGINX_PORT_2 }}" >> docker-compose.env
@@ -46,12 +55,24 @@ jobs:
     - name: Configure Docker
       run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 
-    - name: Trigger Google Cloud Build
+    - name: Backup latest image
       run: |
-        gcloud builds submit --config ./gcp/workflows/cloudbuild.yaml
+        docker pull ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest || true
+        docker tag ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup
+        docker push ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: docker/Dockerfile
+        push: true
+        tags: ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}
 
     - name: Create Nginx configuration file
       run: |
+        # Change .env
+        sed -i -e "s/NEXT_PUBLIC_BUILD_WORD=.*//" .env
+
         # Create nginx.env
         echo "NGINX_HTTP_PORT=${{ secrets.NGINX_HTTP_PORT }}" >> nginx.env
         echo "NGINX_DOMAIN=${{ secrets.NGINX_DOMAIN }}" >> nginx.env

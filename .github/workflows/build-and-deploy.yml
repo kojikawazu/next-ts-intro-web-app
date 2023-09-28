@@ -70,7 +70,7 @@ jobs:
 
     - name: Remove previous backup
       run: |
-        gcloud artifacts docker images delete ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup --delete-tags
+        gcloud artifacts docker images delete ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup --delete-tags || true
 
     - name: Backup latest image
       run: |

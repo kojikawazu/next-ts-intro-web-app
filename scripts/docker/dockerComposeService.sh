@@ -9,7 +9,7 @@
 # オペレーションチェック
 # ----------------------------------------------
 usage() {
-    echo "Usage: \"$0\" {up|down|update_web|start_web}"
+    echo "Usage: \"$0\" {up|down|downup|update_web|start_web|start_all|stop_all}"
 }
 
 if [ "$#" -eq 0 ]; then
@@ -36,15 +36,15 @@ readonly ENV_FILE=docker-compose.env
 # ----------------------------------------------
 
 start_container() {
-    docker-compose --env-file "${ENV_FILE}" up -d || {
-        echo "Failed to execute: docker-compose --env-file ${ENV_FILE} up -d" >&2
+    docker-compose --env-file "${ENV_FILE}" up -d web nginx || {
+        echo "Failed to execute: docker-compose --env-file ${ENV_FILE} up -d web nginx" >&2
         exit 1
     }
 }
 
 stop_container() {
-    docker-compose --env-file "${ENV_FILE}" down || {
-        echo "Failed to execute: docker-compose --env-file ${ENV_FILE} down" >&2
+    docker-compose --env-file "${ENV_FILE}" down web nginx || {
+        echo "Failed to execute: docker-compose --env-file ${ENV_FILE} down web nginx" >&2
         exit 1
     }
 }
@@ -63,6 +63,20 @@ start_web_container() {
     }
 }
 
+start_all_container() {
+    docker-compose --env-file "${ENV_FILE}" up -d || {
+        echo "Failed to execute: docker-compose --env-file ${ENV_FILE} up -d" >&2
+        exit 1
+    }
+}
+
+stop_all_container() {
+    docker-compose --env-file "${ENV_FILE}" down || {
+        echo "Failed to execute: docker-compose --env-file ${ENV_FILE} down" >&2
+        exit 1
+    }
+}
+
 main() {
 
   case ${OPERATION} in
@@ -72,11 +86,21 @@ main() {
     "down")
       stop_container
       ;;
+    "downup")
+      stop_container
+      start_container 
+      ;;
     "update_web")
       update_web_container
       ;;
     "start_web")
       start_web_container
+      ;;
+    "start_all")
+      start_all_container
+      ;;
+    "stop_all")
+      stop_all_container
       ;;
     *)
       usage

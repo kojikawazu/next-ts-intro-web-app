@@ -59,9 +59,9 @@ RUN sed -i -e "s/NEXT_PUBLIC_BUILD_WORD=.*//" /app/.env
 # ---------------------------------------------------
 # サービスの設定
 # ---------------------------------------------------
-RUN sudo systemctl daemon-reload
-RUN sudo systemctl enable containerControl
-RUN sudo systemctl start containerControl
+RUN systemctl daemon-reload
+RUN systemctl enable containerControl
+RUN systemctl start containerControl
 
 # ---------------------------------------------------
 # 3000番ポートを公開

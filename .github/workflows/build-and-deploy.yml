@@ -179,7 +179,7 @@ jobs:
           sudo chmod 755 *.service
           sudo chmod 755 *.sh
           sudo chown root:root *.service
-          sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} services/*.sh
+          sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} *.sh
           sudo cp -fp *.service /etc/systemd/system/.
           sudo cp -fp *.sh ${{ env.GCE_PROJECTS }}/.
         " || exit 1

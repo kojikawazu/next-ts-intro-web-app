@@ -34,14 +34,11 @@ COPY . .
 RUN chown -R appuser:appuser /app
 RUN mv -f /app/scripts/entrypoint/entryPoint.sh /app/.
 RUN mv -f /app/scripts/docker/dockerComposeService.sh /app/.
-RUN mv -f /app/etc/services/containerControl.service /etc/systemd/system/.
 
 # ---------------------------------------------------
 # 所有者変更
 # ---------------------------------------------------
 RUN chmod +x *.sh
-RUN chmod 755 /etc/systemd/system/containerControl.service
-RUN chown root:root /etc/systemd/system/containerControl.service
 RUN printf "$(ls -altr /app)\n"
 
 # ---------------------------------------------------
@@ -55,13 +52,6 @@ RUN printf "$(ls -altr /app)\n"
 # 不要な環境変数の削除
 # ---------------------------------------------------
 RUN sed -i -e "s/NEXT_PUBLIC_BUILD_WORD=.*//" /app/.env
-
-# ---------------------------------------------------
-# サービスの設定
-# ---------------------------------------------------
-RUN systemctl daemon-reload
-RUN systemctl enable containerControl
-RUN systemctl start containerControl
 
 # ---------------------------------------------------
 # 3000番ポートを公開

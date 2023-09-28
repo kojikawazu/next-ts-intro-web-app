@@ -182,12 +182,15 @@ jobs:
           sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} *.sh
           sudo cp -fp *.service /etc/systemd/system/.
           sudo cp -fp *.sh ${{ env.GCE_PROJECTS }}/.
+
+          ls -al ${{ env.GCE_PROJECTS }}
         " || exit 1
 
     - name: Delete temporary files
       run: |
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
           rm -rf ${{ env.WORK_PROJECT_DIR }}/*
+          ls -al ${{ env.WORK_PROJECT_DIR }}
         " || exit 1
 
     - name: Update Docker Compose

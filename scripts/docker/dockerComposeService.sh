@@ -9,7 +9,7 @@
 # オペレーションチェック
 # ----------------------------------------------
 usage() {
-    echo "Usage: \"$0\" {up|down|downup|update_web|start_web|start_all|stop_all}"
+    echo "Usage: \"$0\" {up|down|downup|update_web|start_web|start_all}"
 }
 
 if [ "$#" -eq 0 ]; then
@@ -43,8 +43,8 @@ start_container() {
 }
 
 stop_container() {
-    docker-compose --env-file "${ENV_FILE}" down web nginx || {
-        echo "Failed to execute: docker-compose --env-file ${ENV_FILE} down web nginx" >&2
+    docker-compose --env-file "${ENV_FILE}" down || {
+        echo "Failed to execute: docker-compose --env-file ${ENV_FILE} down" >&2
         exit 1
     }
 }
@@ -70,13 +70,6 @@ start_all_container() {
     }
 }
 
-stop_all_container() {
-    docker-compose --env-file "${ENV_FILE}" down || {
-        echo "Failed to execute: docker-compose --env-file ${ENV_FILE} down" >&2
-        exit 1
-    }
-}
-
 main() {
 
   case ${OPERATION} in
@@ -98,9 +91,6 @@ main() {
       ;;
     "start_all")
       start_all_container
-      ;;
-    "stop_all")
-      stop_all_container
       ;;
     *)
       usage

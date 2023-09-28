@@ -169,26 +169,33 @@ jobs:
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "mkdir -p ${{ env.WORK_PROJECT_DIR }}/services" || exit 1
 
         # 
+        gcloud compute scp ./scripts/docker/dockerComposeService.sh ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/services/. --zone ${{ env.GCE_ZONE }} || exit 1
+        gcloud compute scp ./scripts/docker/containerManager.sh ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/services/. --zone ${{ env.GCE_ZONE }} || exit 1
         gcloud compute scp ./etc/services/*.service ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/services/. --zone ${{ env.GCE_ZONE }} || exit 1
 
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
           cd ${{ env.WORK_PROJECT_DIR }}/services
-          sudo chmod 755 ${{ env.WORK_PROJECT_DIR }}/services/*.service
-          sudo chown root:root ${{ env.WORK_PROJECT_DIR }}/services/*.service
-          sudo cp *.service /etc/systemd/system/.
 
-          sudo systemctl daemon-reload
-          sudo systemctl enable containerControl
+          sudo chmod 755 *.service
+          sudo chmod 755 *.sh
+          sudo chown root:root *.service
+          sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} services/*.sh
+          sudo cp -fp *.service /etc/systemd/system/.
+          sudo cp -fp *.sh ${{ env.GCE_PROJECTS }}/.
         " || exit 1
 
     - name: Delete temporary files
       run: |
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
-          rm -rf /home/runner/projects/*" || exit 1
+          rm -rf ${{ env.WORK_PROJECT_DIR }}/*
+        " || exit 1
 
     - name: Update Docker Compose
       run: |
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+          sudo systemctl daemon-reload
+          sudo systemctl enable containerManager
+
           cd ${{ env.GCE_PROJECTS }}
           sudo -u ${{ env.GCE_USER }} bash ./dockerComposeService.sh update_web
           sudo -u ${{ env.GCE_USER }} bash ./dockerComposeService.sh start_web

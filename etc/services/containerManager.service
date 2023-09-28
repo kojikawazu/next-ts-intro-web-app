@@ -1,0 +1,16 @@
+[Unit]
+Description=Container manager Service
+After=network.target
+
+[Service]
+ExecStart=/home/k_kawa_lin_315/projects/containerManager.sh
+User=k_kawa_lin_315
+Group=k_kawa_lin_315
+Environment=LOG_DIR=/var/log
+WorkingDirectory=/home/k_kawa_lin_315/projects
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=containerManagerService
+
+[Install]
+WantedBy=multi-user.target

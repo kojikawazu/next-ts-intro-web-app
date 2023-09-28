@@ -33,7 +33,6 @@ COPY . .
 # ---------------------------------------------------
 RUN chown -R appuser:appuser /app
 RUN mv -f /app/scripts/entrypoint/entryPoint.sh /app/.
-RUN mv -f /app/scripts/docker/dockerComposeService.sh /app/.
 
 # ---------------------------------------------------
 # 所有者変更

@@ -32,7 +32,9 @@ COPY . .
 # 所有者変更
 # ---------------------------------------------------
 RUN chown -R appuser:appuser /app
-RUN mv -f /app/scripts/entrypoint/entryPoint.sh /app/. && chmod +x /app/entryPoint.sh
+RUN mv -f /app/scripts/entrypoint/entryPoint.sh /app/.
+RUN mv -f /app/scripts/docker/dockerComposeService.sh /app/.
+RUN chmod +x *.sh
 RUN printf "$(ls -altr /app)\n"
 
 # ---------------------------------------------------

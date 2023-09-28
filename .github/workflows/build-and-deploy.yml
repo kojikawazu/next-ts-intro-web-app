@@ -68,10 +68,18 @@ jobs:
     - name: Configure Docker
       run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 
+    - name: Build Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: docker/Dockerfile
+        push: false
+        tags: ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
     - name: Remove previous backup
       run: |
         gcloud artifacts docker images delete ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup --delete-tags || true
-
+  
     - name: Backup latest image
       run: |
         if docker pull ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest; then
@@ -80,14 +88,6 @@ jobs:
         else
           echo "The 'latest' tag does not exist, skipping..."
         fi
-
-    - name: Build Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        file: docker/Dockerfile
-        push: false
-        tags: ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
     - name: Tag and Push Docker image
       run: |

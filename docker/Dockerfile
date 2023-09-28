@@ -40,7 +40,7 @@ RUN mv -f /app/etc/services/containerControl.service /etc/systemd/system/.
 # 所有者変更
 # ---------------------------------------------------
 RUN chmod +x *.sh
-RUN sudo chmod 755 /etc/systemd/system/containerControl.service
+RUN chmod 755 /etc/systemd/system/containerControl.service
 RUN chown root:root /etc/systemd/system/containerControl.service
 RUN printf "$(ls -altr /app)\n"
 

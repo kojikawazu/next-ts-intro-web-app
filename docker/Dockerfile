@@ -34,7 +34,7 @@ COPY . .
 RUN chown -R appuser:appuser /app
 RUN mv -f /app/scripts/entrypoint/entryPoint.sh /app/.
 RUN mv -f /app/scripts/docker/dockerComposeService.sh /app/.
-RUN mv -f /app/etc/services/dockercontainerControl.service /etc/systemd/system/.
+RUN mv -f /app/etc/services/containerControl.service /etc/systemd/system/.
 
 # ---------------------------------------------------
 # 所有者変更

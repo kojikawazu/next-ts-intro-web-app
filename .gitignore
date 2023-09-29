@@ -2,19 +2,16 @@
 
 # dependencies
 private
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 
-# testing
-/coverage
-
 # next.js
-/.next/
-/out/
+.next/
+out/
 
 # production
-/build
+build
 
 # misc
 .DS_Store
@@ -26,7 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+.env*
 
 # vercel
 .vercel
@@ -35,12 +32,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# env
-.env
-.env.local
-.env.test
-
 # resources
+public/*_icon/
 resources/json/
 
 docker/docker-compose_development.yml

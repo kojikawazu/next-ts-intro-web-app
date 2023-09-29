@@ -1,28 +1,41 @@
 import React from 'react';
 import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { validatePropsFilter, validateFunctionProps, validateNumberProps } from '@/app/shared/utils/validateUtilities';
+import { 
+    validatePropsFilter, 
+    validateFunctionProps, 
+    validateNumberProps } from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/error/ErrorComponent';
 import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 
 /** Propsの型定義 */
-type CareerIndicatorProps = { 
+type IndicatorProps = { 
     currentIndex: number;
-    careerDataLength: number; 
+    careerDataLength: number;
+    className: string;
+    innerClass: string;
+    btnBaseClass: string;
+    btnActiveClass: string;
+    btnNoActiveClass: string;
     jumpToCard: (arg0: number) => void;
 }
 
 /**
- * CareerIndicatorコンポーネント
+ * Indicatorコンポーネント
  * @returns JSX
  */
-const CareerIndicator: React.FC<CareerIndicatorProps> = ({ 
+const Indicator: React.FC<IndicatorProps> = ({ 
     currentIndex, 
-    careerDataLength, 
-    jumpToCard 
+    careerDataLength,
+    className,
+    innerClass,
+    btnBaseClass,
+    btnActiveClass,
+    btnNoActiveClass, 
+    jumpToCard
 }) => {
-    componentStart(CareerIndicator);
+    componentStart(Indicator);
 
     // Props検証
     const functionError = validateFunctionProps([jumpToCard], MESSAGES.ERRORS.NOT_FUNCTIONS);
@@ -30,29 +43,25 @@ const CareerIndicator: React.FC<CareerIndicatorProps> = ({
     const errors        = validatePropsFilter([functionError, numberError]);
     if (errors.length > 0) {
         const errorJoin = errors.join(' ');
-        customLog(CareerIndicator, 'error', errorJoin);
+        customLog(Indicator, 'error', errorJoin);
         sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
-    const buttonBaseClass = classNames(["mx-2", "p-0.5", "xs:p-1", "sssm:p-2", "rounded-full", "cursor-pointer"]);
-
-    componentJSX(CareerIndicator);
+    componentJSX(Indicator);
     return (
-        <div className="flex z-10">
-            <div className="flex justify-center mt-4 mb-12">
+        <div className={className}>
+            <div className={innerClass}>
                 {Array.from({ length: careerDataLength }).map((_, index) => {
-                    const activeClass = index === currentIndex 
-                        ? 'bg-black text-black hover:bg-gray-700 hover:text-gray-700' 
-                        : 'bg-gray-300 text-gray-300 hover:bg-gray-400 hover:text-gray-400';
-                    const className = classNames(buttonBaseClass, activeClass);
+                    const activeClass = index === currentIndex ? btnActiveClass : btnNoActiveClass;
+                    const className   = classNames(btnBaseClass, activeClass);
                     
                     return (
                         <button 
                             key={index} 
                             onClick={() => jumpToCard(index)}
                             className={className}
-                            aria-label={`Move to career ${index + 1}`}>
+                            aria-label={`Move to ${index + 1}`}>
                             &bull;
                         </button> 
                     );
@@ -62,4 +71,4 @@ const CareerIndicator: React.FC<CareerIndicatorProps> = ({
     );
 };
 
-export default CareerIndicator;
+export default Indicator;

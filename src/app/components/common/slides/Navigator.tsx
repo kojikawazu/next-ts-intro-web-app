@@ -7,7 +7,7 @@ import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import ArrowIcon from '@/app/components/common/icons/ArrowIcon';
 
 /** Propsの型定義 */
-type CareerNavigatorProps = {
+type NavigatorProps = {
     direction: 'prev' | 'next';
     componentClassName?: string;
     btnclassName?: string;
@@ -15,40 +15,40 @@ type CareerNavigatorProps = {
 }
 
 /**
- * CareerNavigatorコンポーネント
+ * Navigatorコンポーネント
  * @returns JSX
  */
-const CareerNavigator: React.FC<CareerNavigatorProps> = ({ 
+const Navigator: React.FC<NavigatorProps> = ({ 
     direction, 
     componentClassName = "", 
     btnclassName = "", 
     onClick 
 }) => {
-    componentStart(CareerNavigator);
+    componentStart(Navigator);
 
     // Props検証
     const functionError = validateFunctionProps([onClick], MESSAGES.ERRORS.NOT_FUNCTIONS);
     const errors        = validatePropsFilter([functionError]);
     if (errors.length > 0) {
         const errorJoin = errors.join(' ');
-        customLog(CareerNavigator, 'error', errorJoin);
+        customLog(Navigator, 'error', errorJoin);
         sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
     
     const isPrev = direction === 'prev';
 
-    componentJSX(CareerNavigator);
+    componentJSX(Navigator);
     return (
-        <div className={`basis-0 xl:basis-2/12 flex justify-center items-center z-10 ${componentClassName}`}>
+        <div className={componentClassName}>
             <button
-                className={`bg-white hover:bg-gray-100 text-black rounded-full ${btnclassName}`}
+                className={btnclassName}
                 onClick={onClick}
-                aria-label={isPrev ? "Previous career" : "Next career"}>
+                aria-label={isPrev ? "Previous" : "Next"}>
                 <ArrowIcon angleCSS={isPrev ? "-rotate-90" : "rotate-90"} />
             </button>
         </div>
     );
 };
 
-export default CareerNavigator;
+export default Navigator;

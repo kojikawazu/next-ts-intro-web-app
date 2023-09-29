@@ -1,14 +1,17 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import CareerNavigator from '@/app/components/careers/slides/CareerNavigator';
+import Navigator from '@/app/components/common/slides/Navigator';
 
 // Mocks
-jest.mock('@/app/components/common/icons/ArrowIcon', () => { return jest.fn(props => <div data-testid="arrow-icon">OK</div>)});
+jest.mock('@/app/components/common/icons/ArrowIcon', () => { 
+    return jest.fn(props => <div data-testid="arrow-icon">OK</div>)
+});
 
-/** CareerNavigatorのテストコード */
-describe('<CareerNavigator />', () => {
+/** Navigatorのテストコード */
+describe('<Navigator />', () => {
     let mockClickHandler: jest.Mock;
+    const mockDirection = 'prev';
     const mockComponentClassName = '';
     const mockBtnclassName       = '';
 
@@ -21,7 +24,12 @@ describe('<CareerNavigator />', () => {
         
         /** テストの前準備 */
         beforeEach(() => {
-            render(<CareerNavigator direction="prev" onClick={mockClickHandler} componentClassName={mockComponentClassName} btnclassName={mockBtnclassName} />);
+            render(
+                <Navigator 
+                    direction={mockDirection} 
+                    onClick={mockClickHandler} 
+                    componentClassName={mockComponentClassName} 
+                    btnclassName={mockBtnclassName} />);
         });
 
         describe('Positive Scenarios', () => {
@@ -31,10 +39,10 @@ describe('<CareerNavigator />', () => {
             });
 
             it('fires onClick handler when clicked', () => {
-                const button = screen.getByRole('button', { name: /Previous career/i });
+                const button = screen.getByRole('button', { name: /Previous/i });
                 fireEvent.click(button);
                 expect(mockClickHandler).toHaveBeenCalledTimes(1);
-                });
+            });
         });
     });
 
@@ -42,7 +50,12 @@ describe('<CareerNavigator />', () => {
 
         /** テストの前準備 */
         beforeEach(() => {
-            render(<CareerNavigator direction="next" onClick={mockClickHandler} componentClassName={mockComponentClassName} btnclassName={mockBtnclassName} />);
+            render(
+                <Navigator 
+                    direction="next" 
+                    onClick={mockClickHandler} 
+                    componentClassName={mockComponentClassName} 
+                    btnclassName={mockBtnclassName} />);
         });
 
         describe('Positive Scenarios', () => {
@@ -52,7 +65,7 @@ describe('<CareerNavigator />', () => {
             });
 
             it('fires onClick handler when clicked', () => {
-                const button = screen.getByRole('button', { name: /Next career/i });
+                const button = screen.getByRole('button', { name: /Next/i });
                 fireEvent.click(button);
                 expect(mockClickHandler).toHaveBeenCalledTimes(1);
             });
@@ -66,15 +79,17 @@ describe('<CareerNavigator />', () => {
         it('renders error message for missing props', () => {
             const defaultProps = {
                 direction: 'prev' as 'prev' | 'next',
+                componentClassName:"bg-black",
+                btnclassName: "bg-white",
                 onClick: () => {}
             }
 
-            const {container} = render(<CareerNavigator {...defaultProps} />);
+            const {container} = render(<Navigator {...defaultProps} />);
             const divElement = container.querySelector('div');
-            expect(divElement).toHaveClass("basis-0 xl:basis-2/12 flex justify-center items-center z-10");
+            expect(divElement).toHaveClass("bg-black");
 
-            const button = screen.getByRole('button', { name: /Previous career/i });
-            expect(button).toHaveClass("bg-white hover:bg-gray-100 text-black rounded-full");
+            const button = screen.getByRole('button', { name: /Previous/i });
+            expect(button).toHaveClass("bg-white");
         });
     });
 
@@ -90,7 +105,7 @@ describe('<CareerNavigator />', () => {
                 onClick: undefined as any
             }
 
-            render(<CareerNavigator {...defaultProps} />);
+            render(<Navigator {...defaultProps} />);
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
             console.error = originalError;
         });

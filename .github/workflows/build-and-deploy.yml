@@ -148,7 +148,7 @@ jobs:
           mkdir -p ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d
           sudo cp -fp ${{ env.WORK_PROJECT_DIR }}/default.conf ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d/default.conf" || exit 1
 
-    - name: Deploy files to GCE
+    - name: Deploy docker-compose to GCE
       run: |
         # docker-compose.env and docker-compose.yml Deploy
         gcloud compute scp docker-compose.env ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/. --zone ${{ env.GCE_ZONE }} || exit 1
@@ -163,16 +163,17 @@ jobs:
           ls -l ${{ env.GCE_PROJECTS }}
           rm -f ${{ env.WORK_PROJECT_DIR }}/*" || exit 1
 
-    - name: Deploy files to GCE
+    - name: Deploy containerManager to GCE
       run: |
         # Creation of service directory for work
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "mkdir -p ${{ env.WORK_PROJECT_DIR }}/services" || exit 1
 
-        # 
+        #  Deploy containerManager files
         gcloud compute scp ./scripts/docker/dockerComposeService.sh ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/services/. --zone ${{ env.GCE_ZONE }} || exit 1
         gcloud compute scp ./scripts/docker/containerManager.sh ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/services/. --zone ${{ env.GCE_ZONE }} || exit 1
         gcloud compute scp ./etc/services/*.service ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/services/. --zone ${{ env.GCE_ZONE }} || exit 1
 
+        # Setting containerManager
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
           cd ${{ env.WORK_PROJECT_DIR }}/services
 
@@ -200,6 +201,8 @@ jobs:
           sudo systemctl enable containerManager
 
           cd ${{ env.GCE_PROJECTS }}
+          sudo -u ${{ env.GCE_USER }} docker system prune
+          sudo -u ${{ env.GCE_USER }} docker volume prune
           sudo -u ${{ env.GCE_USER }} bash ./dockerComposeService.sh update_web
           sudo -u ${{ env.GCE_USER }} bash ./dockerComposeService.sh start_web
         " || exit 1

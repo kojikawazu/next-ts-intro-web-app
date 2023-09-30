@@ -238,7 +238,7 @@ jobs:
             ls -al ${{ env.WORK_PROJECT_DIR }}
           " || exit 1
 
-  deduce-disk-space:
+  reduce-disk-space:
     runs-on: ubuntu-latest
 
     steps:
@@ -263,7 +263,7 @@ jobs:
 
   docker-compose-start:
     runs-on: ubuntu-latest
-    needs: ["build-web", "deploy-setting-files"]
+    needs: ["build-web", "deploy-setting-files", "reduce-disk-space"]
 
     steps:
     - name: Checkout code

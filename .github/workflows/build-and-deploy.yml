@@ -175,13 +175,14 @@ jobs:
             sed -i -e 's/REMOTE_ADDR_VALUE/\$remote_addr/g' default.conf
             sed -i -e 's/PROXY_X_FORWARDED_FOR/\$proxy_add_x_forwarded_for/g' default.conf
             sed -i -e 's/SCHEME_VALUE/\$scheme/g' default.conf
-            " || exit 1
+          " || exit 1
   
           # default.conf Copy
           gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
             sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} ${{ env.WORK_PROJECT_DIR }}/default.conf
             mkdir -p ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d
-            sudo cp -fp ${{ env.WORK_PROJECT_DIR }}/default.conf ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d/default.conf" || exit 1
+            sudo cp -fp ${{ env.WORK_PROJECT_DIR }}/default.conf ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d/default.conf
+          " || exit 1
   
       - name: Deploy docker-compose to GCE
         run: |
@@ -222,6 +223,14 @@ jobs:
             ls -al ${{ env.GCE_PROJECTS }}
           " || exit 1
   
+      - name: Reload Services
+        run: |
+            gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+              sudo systemctl daemon-reload
+              sudo systemctl enable containerManager
+              systemctl status containerManager
+            " || exit 1
+
       - name: Delete temporary files
         run: |
           gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
@@ -248,10 +257,6 @@ jobs:
     - name: Update Docker Compose
       run: |
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
-          sudo systemctl daemon-reload
-          sudo systemctl enable containerManager
-          systemctl status containerManager
-
           cd ${{ env.GCE_PROJECTS }}
           sudo -u ${{ env.GCE_USER }} docker system prune -f
           sudo -u ${{ env.GCE_USER }} docker volume prune -f

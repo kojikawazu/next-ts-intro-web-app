@@ -5,6 +5,7 @@ private
 node_modules
 /.pnp
 .pnp.js
+.vscode
 
 # next.js
 .next/

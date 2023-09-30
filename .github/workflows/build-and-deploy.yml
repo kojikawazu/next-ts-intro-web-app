@@ -67,7 +67,7 @@ jobs:
           ${{ runner.OS }}-
 
     - name: Install dependencies
-      run: npm ci
+      run: npm ci && npm install --save-dev ts-jest
       
     - name: Run tests
       run: npm test

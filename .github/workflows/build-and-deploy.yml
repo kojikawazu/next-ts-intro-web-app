@@ -95,17 +95,16 @@ jobs:
         docker tag ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
         docker push ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
 
-    - name: Setup docker-compose environments file
+    - name: Setup environments file
       run: |
+        # Create docker-compose.env
         echo "NGINX_CONTAINER=${{ env.NGINX_CONTAINER }}" >> docker-compose.env
         echo "NGINX_PORT_1=${{ env.NGINX_PORT_1 }}" >> docker-compose.env
         echo "NGINX_PORT_2=${{ env.NGINX_PORT_2 }}" >> docker-compose.env
         echo "WEB_CONTAINER=${{ env.WEB_CONTAINER }}" >> docker-compose.env
         echo "WEB_IMAGE=${{ env.WEB_IMAGE }}" >> docker-compose.env
         echo "WEB_PORT_1=${{ env.WEB_PORT_1 }}" >> docker-compose.env
-  
-    - name: Create Nginx configuration file
-      run: |
+
         # Create nginx.env
         echo "NGINX_HTTP_PORT=${{ env.NGINX_HTTP_PORT }}" >> nginx.env
         echo "NGINX_DOMAIN=${{ env.NGINX_DOMAIN }}" >> nginx.env
@@ -113,7 +112,9 @@ jobs:
         echo "NGINX_HTTPS_PORT=${{ env.NGINX_HTTPS_PORT }}" >> nginx.env
         echo "CHAIN_PEM=${{ env.CHAIN_PEM }}" >> nginx.env
         echo "PRI_PEM=${{ env.PRI_PEM }}" >> nginx.env
-
+  
+    - name: Create Nginx configuration file
+      run: |
         # Create runner projects file
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "mkdir -p ${{ env.WORK_PROJECT_DIR }}" || exit 1
 
@@ -147,6 +148,7 @@ jobs:
           sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} ${{ env.WORK_PROJECT_DIR }}/default.conf
           mkdir -p ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d
           sudo cp -fp ${{ env.WORK_PROJECT_DIR }}/default.conf ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d/default.conf" || exit 1
+          ls -l ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d
 
     - name: Deploy docker-compose to GCE
       run: |
@@ -161,7 +163,7 @@ jobs:
           sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} docker-compose.*
           sudo cp -fp docker-compose.* ${{ env.GCE_PROJECTS }}/.
           ls -l ${{ env.GCE_PROJECTS }}
-          rm -f ${{ env.WORK_PROJECT_DIR }}/*" || exit 1
+        " || exit 1
 
     - name: Deploy containerManager to GCE
       run: |
@@ -199,6 +201,7 @@ jobs:
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
           sudo systemctl daemon-reload
           sudo systemctl enable containerManager
+          systemctl status containerManager
 
           cd ${{ env.GCE_PROJECTS }}
           sudo -u ${{ env.GCE_USER }} docker system prune -f

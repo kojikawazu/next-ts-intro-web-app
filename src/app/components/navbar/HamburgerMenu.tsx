@@ -59,7 +59,7 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
     }
 
     // CSS
-    const baseClass      = ['z-40', 'top-0', 'left-0', 'fixed', 'w-full', 'h-screen', 'pt-24', 'px-3', { 'top-[-100%]': !isOpen }];
+    const baseClass      = ['z-40', 'top-0', 'left-0', 'fixed', 'w-full', 'h-screen', 'pt-24', 'px-3', { 'top-[-120%]': !isOpen }];
     const textClass      = ['text-left'];
     const colorClass     = ['bg-lblue-opacity-09'];
     const animationClass = ['ease-linear', 'duration-300'];

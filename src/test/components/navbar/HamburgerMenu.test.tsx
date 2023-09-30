@@ -14,6 +14,7 @@ jest.mock('@/app/hooks/useScroll');
 
 /** ハンバーガーメニューコンポーネントのテスト */
 describe('<HamburgerMenu />', () => {
+    const initialHeight = 'top-[-120%]';
     // Mocks
     let mockAboutScroll: jest.Mock;
     let mockCareerScroll: jest.Mock;
@@ -95,7 +96,7 @@ describe('<HamburgerMenu />', () => {
 
             /// メニューが閉じているか確認
             const closedMenu = screen.getByRole('navigation', { hidden: true });
-            expect(closedMenu).toHaveClass('top-[-100%]');
+            expect(closedMenu).toHaveClass(initialHeight);
 
             // ハンバーガーボタンをクリックしてメニューを開く
             const openingButton = screen.getByRole('button', { name: "メニューを開く" });
@@ -103,7 +104,7 @@ describe('<HamburgerMenu />', () => {
 
             // メニューが開いているか確認
             const openMenu = await screen.findByRole('navigation');
-            expect(openMenu).not.toHaveClass('top-[-100%]');
+            expect(openMenu).not.toHaveClass(initialHeight);
 
             // ハンバーガーボタンを再度クリックしてメニューを閉じる
             const closingButton = screen.getByRole('button', { name: "メニューを閉じる" });
@@ -111,7 +112,7 @@ describe('<HamburgerMenu />', () => {
 
             // メニューが再び閉じているか確認
             await waitFor(() => {
-                expect(closedMenu).toHaveClass('top-[-100%]');
+                expect(closedMenu).toHaveClass(initialHeight);
             });
         });
 
@@ -123,7 +124,7 @@ describe('<HamburgerMenu />', () => {
 
             await waitFor(() => {
                 const openMenu = screen.getByRole('navigation');
-                expect(openMenu).not.toHaveClass('top-[-100%]');
+                expect(openMenu).not.toHaveClass(initialHeight);
             });
 
             fireEvent.click(screen.getByText('About'));
@@ -147,7 +148,7 @@ describe('<HamburgerMenu />', () => {
 
             await waitFor(() => {
                 const openMenu = screen.getByRole('navigation');
-                expect(openMenu).not.toHaveClass('top-[-100%]');
+                expect(openMenu).not.toHaveClass(initialHeight);
             });
 
             fireEvent.click(screen.getByText('sampleLabel'));

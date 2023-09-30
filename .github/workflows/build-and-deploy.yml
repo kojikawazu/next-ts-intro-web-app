@@ -60,8 +60,8 @@ jobs:
       
     - name: Run tests
       run: npm test
-
-  build-and-deploy:
+  
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -112,6 +112,21 @@ jobs:
       run: |
         docker tag ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
         docker push ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Google Cloud Authentication
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+  
+    - name: Configure Docker
+      run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 
     - name: Setup environments file
       run: |
@@ -166,7 +181,6 @@ jobs:
           sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} ${{ env.WORK_PROJECT_DIR }}/default.conf
           mkdir -p ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d
           sudo cp -fp ${{ env.WORK_PROJECT_DIR }}/default.conf ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d/default.conf" || exit 1
-          ls -l ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d
 
     - name: Deploy docker-compose to GCE
       run: |

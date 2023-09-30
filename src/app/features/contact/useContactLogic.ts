@@ -96,9 +96,9 @@ export const useContactLogic = () => {
             // 確認ダイアログの表示
             if (window.confirm(CONFIRM_DATA)) {
                 // 開発環境の時は送付しない
-                if (isEnvDev()) {
-                    return ;
-                }
+                //if (isEnvDev()) {
+                //    return ;
+                //}
                 // 環境変数(メール送付API)なければ送信不可
                 if (!SEND_MAIL_URL) {
                     dispatch(sendContactFailed("error"));
@@ -109,6 +109,7 @@ export const useContactLogic = () => {
                 // メール送信のロジック
                 dispatch(sendContactStart());
 
+                console.log(contactEmail);
                 // APIエンドポイントとパラメータを設定
                 const API_ENDPOINT = SEND_MAIL_URL;
                 const emailData = {
@@ -136,7 +137,7 @@ export const useContactLogic = () => {
                 } catch (error) {
                     dispatch(sendContactFailed("error"));
                     handleSendNotice();
-                    customLog('str', 'error', "Error send email:", error);
+                    customLog('str', 'error', "Error send email catch:", error);
                 }
             }
         }

@@ -26,7 +26,7 @@ const Footer = () => {
 
     // エラーハンドリング
     if (!introData || !introData.navbar_data) {
-        const errorJoin = MESSAGES.ERRORS.DATA_LOADING;
+        const errorJoin = MESSAGES.ERRORS.DATA_ERROR;
         customLog(Footer, 'error', errorJoin);
         sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />

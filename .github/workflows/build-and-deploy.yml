@@ -56,22 +56,9 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 16.17.1
-  
-    # - name: Cache node modules
-    #   uses: actions/cache@v2
-    #   with:
-    #     path: node_modules
-    #     key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}-${{ github.run_id }}
-    #     restore-keys: |
-    #       ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}-
-    #       ${{ runner.OS }}-build-
-    #       ${{ runner.OS }}-
 
     - name: Install dependencies
       run: npm install
-    
-    - name: Install dependencies
-      run: npm install ts-jest jest --save-dev
       
     - name: Run tests
       run: npm test
@@ -92,8 +79,8 @@ jobs:
     - name: Setup environments file
       run: |
         # Create .env
-        echo "NODE_ENV=${{ env.NODE_ENV }}"  >> .env
-        echo "APP_ENV=${{ env.APP_ENV }}"  >> .env
+        #echo "NODE_ENV=${{ env.NODE_ENV }}"  >> .env
+        #echo "APP_ENV=${{ env.APP_ENV }}"  >> .env
         echo "NEXT_PUBLIC_GET_INTRO_JSON_PROD=${{ env.NEXT_PUBLIC_GET_INTRO_JSON_PROD }}" >> .env
         echo "NEXT_PUBLIC_GET_INTRO_JSON=${{ env.NEXT_PUBLIC_GET_INTRO_JSON }}" >> .env
         echo "NEXT_PUBLIC_SEND_MAIL_URL_PROD=${{ env.NEXT_PUBLIC_SEND_MAIL_URL_PROD }}" >> .env

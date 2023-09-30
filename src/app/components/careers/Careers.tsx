@@ -22,7 +22,7 @@ const Careers = () => {
 
     // エラーハンドリング
     if (!navbarData || !careerTitleData || !careerData || !refData) {
-        const errorJoin = MESSAGES.ERRORS.DATA_LOADING;
+        const errorJoin = MESSAGES.ERRORS.DATA_ERROR;
         customLog(Careers, 'error', errorJoin);
         sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />

@@ -19,8 +19,8 @@ const Contact = () => {
     const { introData, refData } = useIntroData();
 
      // Props検証
-     if (!introData || !refData) {
-        const errorJoin = MESSAGES.ERRORS.DATA_LOADING;
+     if (!introData || !introData.contact_data || !refData) {
+        const errorJoin = MESSAGES.ERRORS.DATA_ERROR;
         customLog(Contact, 'error', errorJoin);
         sendLogsToGCF([errorJoin], 'ERROR');
         return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />;

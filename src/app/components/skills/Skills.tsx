@@ -28,7 +28,7 @@ const Skills = () => {
 
   // エラーハンドリング
   if (!introData?.navbar_data || !introData?.skills_data || !refData) {
-    const errorJoin = MESSAGES.ERRORS.DATA_LOADING;
+    const errorJoin = MESSAGES.ERRORS.DATA_ERROR;
     customLog(Skills, 'error', errorJoin);
     sendLogsToGCF([errorJoin], 'ERROR');
     return <ErrorComponent errorData={MESSAGES.ERRORS.DATA_LOADING} />

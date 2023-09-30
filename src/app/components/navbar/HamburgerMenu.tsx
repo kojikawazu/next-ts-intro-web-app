@@ -67,43 +67,48 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
     const actionClass    = [{ 'top-[-120%]': !isOpen }, { 'h-[10%]': !isOpen}];
     const navClass       = classNames(baseClass, textClass, colorClass, animationClass, flexClass, actionClass);
 
+    const arrowIconRotate = "rotate-90";
+    const arrowIconSize   = 24; 
+
     componentJSX(HamburgerMenu);
     return (
         <>
             {/* nav */}
-            <nav className={navClass}>
-                <div className="absolute top-8 left-0 w-30 h-5">
-                    <NavBarTitle 
-                        ariaLabel={navBarTitleAriaLabel}
-                        btnClass={navBarTitleBtnClass}
-                        onClick={() => {
-                            navBarTitleOnClick();
-                            toggleMenu();
-                        }}
-                        label={navBarTitleLabel} /> 
-                </div>
-                <div className="absolute top-10 right-10 w-10 h-10">
-                    <HamburgerCloseBtn
-                        onClick={toggleMenu} />
-                </div>
-                
-                <ul role="menu">
-                    {menuList.map((menu) => (
-                        <HamburgerLink
-                            key={menu.label}
-                            label={menu.label}
+            {isOpen && (
+                <nav className={navClass}>
+                    <div className="absolute top-8 left-0 w-30 h-5">
+                        <NavBarTitle 
+                            ariaLabel={navBarTitleAriaLabel}
+                            btnClass={navBarTitleBtnClass}
                             onClick={() => {
-                                menu.action();
+                                navBarTitleOnClick();
                                 toggleMenu();
                             }}
-                            iconComponent={
-                                <ArrowIcon  
-                                    angleCSS="rotate-90"
-                                    iconSize={24} />
-                            } />
-                    ))}
-                </ul>
-            </nav>
+                            label={navBarTitleLabel} /> 
+                    </div>
+                    <div className="absolute top-10 right-10 w-10 h-10">
+                        <HamburgerCloseBtn
+                            onClick={toggleMenu} />
+                    </div>
+                    
+                    <ul role="menu">
+                        {menuList.map((menu) => (
+                            <HamburgerLink
+                                key={menu.label}
+                                label={menu.label}
+                                onClick={() => {
+                                    menu.action();
+                                    toggleMenu();
+                                }}
+                                iconComponent={
+                                    <ArrowIcon  
+                                        angleCSS={arrowIconRotate}
+                                        iconSize={arrowIconSize} />
+                                } />
+                        ))}
+                    </ul>
+                </nav>
+            )}
 
             {/* humbergerbutton */}
             {!isOpen && (

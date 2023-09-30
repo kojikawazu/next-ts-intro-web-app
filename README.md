@@ -1,34 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 自己紹介用のWebアプリケーション
+---
 
-## Getting Started
-
-First, run the development server:
+以前構築していた自己紹介用のWebアプリをリニューアルしました。
+URLは以下になります。
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+https://introtechkk.com
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+基本的に1ページ完結でシンプルに「私はこういう人です」と見ていただけることをコンセプトに開発しました。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+コンポーネントは以下となります。
+- ヘッダー
+- 自己PR
+- キャリア
+- スキル
+- お問い合わせフォーム
+- フッター
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+全ての技術選定一覧を以下に記載しました。
 
-## Learn More
+- フロントエンド
+  - 言語 
+    - TypeScript
+  - FW 
+    - Next.js 13
+    - TailwindCSS
+  - 実行環境
+    - Node.js 16
+    
+- バックエンドAPI
+  - サーバレス
+    - Cloud Functions
+    - Java Script
+  - 実行環境
+    - Node.js 20
+ 
+- クラウド(GCP) 
+  - VM環境
+    - Compute Engine
+  - ユーザー
+    - Cloud IAM
+    - サービスアカウント
+  - リソース関係
+    - Cloud Storage(画像、JSON)
+    - Secret Manager(非公開文字列)
+    - Artifact Registory(コンテナイメージ)
+  - VPC
+    - ファイアーウォールルール
 
-To learn more about Next.js, take a look at the following resources:
+- コード管理
+  - GitHub
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- CI/CD
+  - GitHub Actions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- ドキュメント関係
+  - Markdown
+  - drawio
+- デザイン関係
+  - Figma
+  - PhotoShop
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+※ バックエンドAPIは情報漏洩を防止し、公開できるようになるまでは非公開としてます。

@@ -50,7 +50,7 @@ const CareerCard: React.FC<CareerCardProps> = ({
     }
 
     // tailwindcss
-    let componentsHeight  = classNames(["h-[400px]", "xxs:h-[400px]", "xs:h-[420px]", "sssm:h-[350px]", "ssm:h-[330px]"]);
+    let componentsHeight  = classNames(["h-[400px]", "xxs:h-[400px]", "xs:h-[420px]", "sssm:h-[370px]", "ssm:h-[330px]"]);
     componentsHeight      = classNames(componentsHeight, ["sm:h-[350px]", "md:h-[800px]", "lg:h-[700px]", "xl:h-[800px]"]);
     let componentsBgColor = classNames(["bg-white", "hover:bg-yellow-50", "md:hover:bg-white"]);
     const componentsClass = classNames(componentsHeight, componentsBgColor, className, ["w-full", "mx-auto", "my-16", "rounded-3xl"]); 

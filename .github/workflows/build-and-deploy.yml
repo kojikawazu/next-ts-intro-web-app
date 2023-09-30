@@ -18,6 +18,8 @@ env:
   WORK_PROJECT_DIR: /home/runner/projects
 
   # .env
+  NODE_ENV: ${{ secrets.NODE_ENV }}
+  APP_ENV: ${{ secrets.APP_ENV }}
   NEXT_PUBLIC_GET_INTRO_JSON_PROD: ${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON_PROD }}
   NEXT_PUBLIC_GET_INTRO_JSON: ${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON }}
   NEXT_PUBLIC_SEND_MAIL_URL_PROD: ${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL_PROD }}
@@ -77,6 +79,8 @@ jobs:
     - name: Setup environments file
       run: |
         # Create .env
+        echo "NODE_ENV=${{ env.NODE_ENV }}"  >> .env
+        echo "APP_ENV=${{ env.APP_ENV }}"  >> .env
         echo "NEXT_PUBLIC_GET_INTRO_JSON_PROD=${{ env.NEXT_PUBLIC_GET_INTRO_JSON_PROD }}" >> .env
         echo "NEXT_PUBLIC_GET_INTRO_JSON=${{ env.NEXT_PUBLIC_GET_INTRO_JSON }}" >> .env
         echo "NEXT_PUBLIC_SEND_MAIL_URL_PROD=${{ env.NEXT_PUBLIC_SEND_MAIL_URL_PROD }}" >> .env

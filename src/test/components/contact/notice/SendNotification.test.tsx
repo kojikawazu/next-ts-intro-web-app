@@ -81,11 +81,10 @@ describe('<SendNotification />', () => {
                 contactStatusStr: 'failed',
                 setOffNotificationVisible: jest.fn()
             });
-            delete process.env.NEXT_PUBLIC_NOTICE_FAILED;
 
             render( <SendNotification /> );
 
-            const notificationComponent = screen.getByText('notice');
+            const notificationComponent = screen.getByText('送信に失敗しました');
             expect(notificationComponent).toBeInTheDocument();
             expect(notificationComponent).toHaveClass('visible');
             expect(notificationComponent).toHaveClass('opacity-100');

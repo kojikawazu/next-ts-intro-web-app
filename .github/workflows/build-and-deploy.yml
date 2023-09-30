@@ -201,8 +201,8 @@ jobs:
           sudo systemctl enable containerManager
 
           cd ${{ env.GCE_PROJECTS }}
-          sudo -u ${{ env.GCE_USER }} docker system prune
-          sudo -u ${{ env.GCE_USER }} docker volume prune
+          sudo -u ${{ env.GCE_USER }} docker system prune -f
+          sudo -u ${{ env.GCE_USER }} docker volume prune -f
           sudo -u ${{ env.GCE_USER }} bash ./dockerComposeService.sh update_web
           sudo -u ${{ env.GCE_USER }} bash ./dockerComposeService.sh start_web
         " || exit 1

@@ -20,21 +20,36 @@ describe('<HamburgerMenu />', () => {
     let mockSkillsScroll: jest.Mock;
     let mockContactScroll: jest.Mock;
     let menuList: NavBarMenuType[] = [];
+    let mockTitleScroll: jest.Mock;
 
-    const tempComponent = (
-        <NavBarTitle 
-            ariaLabel="Scroll to top"
-            btnClass=""
-            onClick={() => {}}
-            label="" />
-    );
+    const renderHamburgerMenu = () => {
+        render(<HamburgerMenu 
+            menuList={menuList} 
+            navBarTitleAriaLabel="Scroll to top" 
+            navBarTitleBtnClass="sampleBtnClass"
+            navBarTitleOnClick={mockTitleScroll}
+            navBarTitleLabel="sampleLabel"
+            />);
+    }
+
+    const renderErrorHamburgerMenu = () => {
+        render(<HamburgerMenu 
+            menuList={menuList} 
+            navBarTitleAriaLabel="Scroll to top" 
+            navBarTitleBtnClass=""
+            navBarTitleOnClick={mockTitleScroll}
+            navBarTitleLabel=""
+            />);
+    }
 
     /** 各テストの前準備 */
     beforeEach(() => {
+        // Mock設定
         mockAboutScroll = jest.fn();
         mockCareerScroll = jest.fn();
         mockSkillsScroll = jest.fn();
         mockContactScroll = jest.fn();
+        mockTitleScroll = jest.fn();
 
         (useIntroData as jest.Mock).mockReturnValue({
             introData: mockInitialData,
@@ -46,6 +61,7 @@ describe('<HamburgerMenu />', () => {
             .mockReturnValueOnce(mockCareerScroll)
             .mockReturnValueOnce(mockSkillsScroll)
             .mockReturnValueOnce(mockContactScroll);
+        mockTitleScroll.mockReturnValueOnce(() => {});
         
         menuList = [
             { label: mockInitialData.navbar_data.about_name,   ariaLabel: "About",   action: mockAboutScroll },
@@ -63,10 +79,10 @@ describe('<HamburgerMenu />', () => {
     /** 正常系 */
     /** ----------------------------------------------------------------------------------- */
 
-    describe('<HamburgerMenu /> - Positive Scenarios', () => {
+    describe('Positive Scenarios', () => {
 
         it('displays the menu items with the correct data', () => {
-            render(<HamburgerMenu menuList={menuList} navbarTitle={tempComponent} />);
+            renderHamburgerMenu();
             
             expect(screen.getByText('About')).toBeInTheDocument();
             expect(screen.getByText('Career')).toBeInTheDocument();
@@ -75,7 +91,7 @@ describe('<HamburgerMenu />', () => {
         });
 
         it('toggles the menu when hamburger button is clicked', async () => {
-            render(<HamburgerMenu menuList={menuList} navbarTitle={tempComponent} />);
+            renderHamburgerMenu();
 
             /// メニューが閉じているか確認
             const closedMenu = screen.getByRole('navigation', { hidden: true });
@@ -100,7 +116,7 @@ describe('<HamburgerMenu />', () => {
         });
 
         it('calls the appropriate scroll function when each menu item is clicked', async () => {
-            render(<HamburgerMenu menuList={menuList} navbarTitle={tempComponent} />);
+            renderHamburgerMenu();
 
             const openingButton = screen.getByRole('button', { name: "メニューを開く" });
             fireEvent.click(openingButton);
@@ -122,13 +138,28 @@ describe('<HamburgerMenu />', () => {
             fireEvent.click(screen.getByText('Contact'));
             expect(mockContactScroll).toHaveBeenCalledTimes(1);
         });
+
+        it('when the title is clicked, the appropriate scroll function is called.', async () => {
+            renderHamburgerMenu();
+
+            const openingButton = screen.getByRole('button', { name: "メニューを開く" });
+            fireEvent.click(openingButton);
+
+            await waitFor(() => {
+                const openMenu = screen.getByRole('navigation');
+                expect(openMenu).not.toHaveClass('top-[-100%]');
+            });
+
+            fireEvent.click(screen.getByText('sampleLabel'));
+            expect(mockTitleScroll).toHaveBeenCalledTimes(1);
+        });   
     });
 
-    describe('<HamburgerMenu /> - Negative Scenarios', () => {
+    describe('Negative Scenarios', () => {
         it('displays error component when data is missing', () => {
             const originalError = console.error;
             console.error = () => {};
-            render(<HamburgerMenu menuList={[]} navbarTitle={tempComponent} />);
+            renderErrorHamburgerMenu();
             
             expect(screen.getByText(MESSAGES.INVALIDS.INVALID_PROPS)).toBeInTheDocument();
             console.error = originalError;

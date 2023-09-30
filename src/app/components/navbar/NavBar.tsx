@@ -54,18 +54,14 @@ const NavBar = () => {
     const navBarTitleBackgroundClass = ["hover:text-gray-600"];
     const navBarTitleClass           = classNames(navBarBaseClass, navBarTitleUnderLineClass, navBarTitleTextClass, navBarTitleBackgroundClass);
 
-    const navBarTitle = (
-        <NavBarTitle 
-            ariaLabel="Scroll to top"
-            btnClass={`${navBarTitleClass}`}
-            onClick={handleScrollTop}
-            label={link_title} /> 
-    );
-
     componentJSX(NavBar);
     return (
         <div className={`sticky top-0 z-50 ${className}`}>
-            {navBarTitle}
+            <NavBarTitle 
+                ariaLabel="Scroll to top"
+                btnClass={navBarTitleClass}
+                onClick={handleScrollTop}
+                label={link_title} /> 
 
             <div className="flex justify-end items-center">
                 <div className="hidden md:inline-block">
@@ -75,7 +71,10 @@ const NavBar = () => {
                 <div className="inline-block md:hidden">
                     <HamburgerMenu 
                         menuList={menuList}
-                        navbarTitle={navBarTitle} />
+                        navBarTitleAriaLabel="Scroll to top"
+                        navBarTitleBtnClass={navBarTitleClass}
+                        navBarTitleOnClick={handleScrollTop}
+                        navBarTitleLabel={link_title} />
                 </div>
             </div>
         </div>

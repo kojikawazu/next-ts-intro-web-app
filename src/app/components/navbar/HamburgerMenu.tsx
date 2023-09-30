@@ -2,19 +2,28 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { MESSAGES } from '@/app/shared/constants/constants';
 import { NavBarMenuType } from '@/app/types/NavBarMenuType';
-import { validatePropsFilter, validateArraysProps } from '@/app/shared/utils/validateUtilities';
+import { 
+    validatePropsFilter, 
+    validateFunctionProps,
+    validateArraysProps,
+    validateStringProps
+} from '@/app/shared/utils/validateUtilities';
 import ErrorComponent from '@/app/components/common/error/ErrorComponent';
 import { customLog, componentStart, componentJSX } from '@/app/shared/utils/logUtilities';
 import { sendLogsToGCF } from '@/app/shared/helper/googleCloudLogger';
 import HamburgerOpenBtn from '@/app/components/navbar/hamburger/HamburgerOpenBtn';
 import HamburgerCloseBtn from '@/app/components/navbar/hamburger/HamburgerCloseBtn';
+import NavBarTitle from '@/app/components/navbar/title/NavBarTitle';
 import HamburgerLink from '@/app/components/navbar/hamburger/HamburgerLink';
 import ArrowIcon from '@/app/components/common/icons/ArrowIcon';
 
 /** Propsの型定義 */
 type HamburgerMenuProps = {
     menuList: Array<NavBarMenuType>;
-    navbarTitle: React.ReactNode
+    navBarTitleAriaLabel: string;
+    navBarTitleBtnClass: string;
+    navBarTitleOnClick: () => void;
+    navBarTitleLabel: string;
 }
 
 /**
@@ -23,7 +32,10 @@ type HamburgerMenuProps = {
  */
 const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
     menuList,
-    navbarTitle
+    navBarTitleAriaLabel,
+    navBarTitleBtnClass,
+    navBarTitleOnClick,
+    navBarTitleLabel
 }) => {
     componentStart(HamburgerMenu);
 
@@ -35,8 +47,10 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
     };
 
     // Props検証
-    const arrayError  = validateArraysProps([menuList], MESSAGES.ERRORS.NOT_ARRAYS)
-    const errors      = validatePropsFilter([arrayError]);
+    const functionError = validateFunctionProps([navBarTitleOnClick], MESSAGES.ERRORS.NOT_FUNCTIONS);
+    const arrayError  = validateArraysProps([menuList], MESSAGES.ERRORS.NOT_ARRAYS);
+    const stringError   = validateStringProps([navBarTitleAriaLabel, navBarTitleBtnClass, navBarTitleLabel], MESSAGES.ERRORS.NOT_STRING);
+    const errors      = validatePropsFilter([functionError, arrayError, stringError]);
     if (errors.length > 0) {
         const errorJoin = errors.join(' ');
         customLog(HamburgerMenu, 'error', errorJoin);
@@ -58,7 +72,14 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
             {/* nav */}
             <nav className={navClass}>
                 <div className="absolute top-8 left-0 w-30 h-5">
-                    {navbarTitle}
+                    <NavBarTitle 
+                        ariaLabel={navBarTitleAriaLabel}
+                        btnClass={navBarTitleBtnClass}
+                        onClick={() => {
+                            navBarTitleOnClick();
+                            toggleMenu();
+                        }}
+                        label={navBarTitleLabel} /> 
                 </div>
                 <div className="absolute top-10 right-10 w-10 h-10">
                     <HamburgerCloseBtn

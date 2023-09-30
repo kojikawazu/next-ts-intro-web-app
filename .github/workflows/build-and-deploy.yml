@@ -57,8 +57,14 @@ jobs:
       with:
         node-version: 16.17.1
   
-    - name: Install dependencies
-      run: npm install
+    - name: Cache node modules
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-build-
+          ${{ runner.OS }}-
 
     - name: Install dependencies
       run: npm ci

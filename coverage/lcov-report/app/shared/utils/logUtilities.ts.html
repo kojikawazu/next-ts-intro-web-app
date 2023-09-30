@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/10</span>
+                <span class='fraction'>6/10</span>
             </div>
         
             
@@ -119,16 +119,15 @@
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
 <a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L57'></a><a href='#L57'>57</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">44x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">41x</span>
-<span class="cline-any cline-yes">71x</span>
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-yes">69x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -137,9 +136,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2684x</span>
-<span class="cline-any cline-yes">1342x</span>
-<span class="cline-any cline-yes">1342x</span>
+<span class="cline-any cline-yes">2900x</span>
+<span class="cline-any cline-yes">1450x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -152,12 +150,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">142x</span>
-<span class="cline-any cline-yes">71x</span>
-<span class="cline-any cline-yes">71x</span>
+<span class="cline-any cline-yes">279x</span>
+<span class="cline-any cline-yes">139x</span>
+<span class="cline-any cline-yes">139x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">71x</span>
-<span class="cline-any cline-yes">71x</span>
+<span class="cline-any cline-yes">139x</span>
+<span class="cline-any cline-yes">139x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -167,17 +165,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">41x</span>
-<span class="cline-any cline-yes">700x</span>
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-yes">753x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">41x</span>
-<span class="cline-any cline-yes">642x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-yes">697x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { isEnvDev } from '@/app/shared/utils//utilities';
 &nbsp;
 /**
  * コンポート名の取得
@@ -195,8 +193,7 @@ export const getComponentName = (component: React.ComponentType&lt;any&gt;): Str
  * @param optionalParams 可変ログ文字列
  */
 export const customDebug = (component: React.ComponentType&lt;any&gt;, message: string, ...optionalParams: any[]) =&gt; {
-    const ENV = process.env.NODE_ENV || <span class="branch-1 cbranch-no" title="branch not covered" >"production";</span>
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (ENV === 'development') {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (isEnvDev()) {
         const componentName = <span class="cstat-no" title="statement not covered" >getComponentName(component);</span>
 <span class="cstat-no" title="statement not covered" >        console.debug(`[${componentName}]: debug : `, message, ...optionalParams);</span>
     }
@@ -209,9 +206,9 @@ export const customDebug = (component: React.ComponentType&lt;any&gt;, message: 
  * @param message 
  * @param optionalParams 可変ログ文字列 
  */
-export const customLog = (component: React.ComponentType&lt;any&gt;, kind: 'info' | 'error', message: string, ...optionalParams: any[]) =&gt; {
-    const componentName = getComponentName(component);
-    const consoleKind = (kind == 'error' ? 'error' : <span class="branch-1 cbranch-no" title="branch not covered" >'log')</span>;
+export const customLog = (component: React.ComponentType&lt;any&gt; | 'str', kind: 'info' | 'error', message: string, ...optionalParams: any[]) =&gt; {
+    const componentName = (typeof component === 'function' ? getComponentName(component) : "str");
+    const consoleKind   = (kind == 'error' ? 'error' : <span class="branch-1 cbranch-no" title="branch not covered" >'log')</span>;
 &nbsp;
     if (consoleKind == 'error') {
         console.error(`[${componentName}]: ${consoleKind} : `, message, ...optionalParams);
@@ -241,7 +238,7 @@ export const componentJSX = (component: React.ComponentType&lt;any&gt;) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-09-17T18:54:52.206Z
+                at 2023-09-30T05:46:45.694Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

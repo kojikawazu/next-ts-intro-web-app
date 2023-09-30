@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54.54% </span>
+                <span class="strong">95.45% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/22</span>
+                <span class='fraction'>21/22</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/10</span>
+                <span class='fraction'>9/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54.54% </span>
+                <span class="strong">95.45% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/22</span>
+                <span class='fraction'>21/22</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -209,23 +209,23 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
@@ -300,24 +300,24 @@ const contactSlice = createSlice({
         setFadingOut: <span class="fstat-no" title="function not covered" >(s</span>tate, action: PayloadAction&lt;boolean&gt;) =&gt; {
 <span class="cstat-no" title="statement not covered" >            state.isFadingOut = action.payload;</span>
         },
-        sendContactStart: <span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; {
-<span class="cstat-no" title="statement not covered" >            state.contactStatus = 'loading';</span>
-<span class="cstat-no" title="statement not covered" >            state.contactError  = null;</span>
+        sendContactStart: (state) =&gt; {
+            state.contactStatus = 'loading';
+            state.contactError  = null;
         },
-        sendContactSuccess: <span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; {
-<span class="cstat-no" title="statement not covered" >            state.contactStatus = 'succeeded';</span>
+        sendContactSuccess: (state) =&gt; {
+            state.contactStatus = 'succeeded';
         },
         sendContactFailed: (state, action: PayloadAction&lt;string&gt;) =&gt; {
             state.contactStatus = 'failed';
             state.contactError  = action.payload;
         },
-        resetContactForm: <span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; {
-<span class="cstat-no" title="statement not covered" >            state.contactName      = '';</span>
-<span class="cstat-no" title="statement not covered" >            state.contactEmail     = '';</span>
-<span class="cstat-no" title="statement not covered" >            state.contactMessage   = '';</span>
-<span class="cstat-no" title="statement not covered" >            state.contactStatus    = 'idle';</span>
-<span class="cstat-no" title="statement not covered" >            state.contactError     = null;</span>
-<span class="cstat-no" title="statement not covered" >            state.validationErrors = {};</span>
+        resetContactForm: (state) =&gt; {
+            state.contactName      = '';
+            state.contactEmail     = '';
+            state.contactMessage   = '';
+            state.contactStatus    = 'idle';
+            state.contactError     = null;
+            state.validationErrors = {};
         },
         setValidationErrors: (state, action: PayloadAction&lt;ContactState['validationErrors']&gt;) =&gt; {
             state.validationErrors = action.payload;
@@ -346,7 +346,7 @@ const contactSlice = createSlice({
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-09-17T18:54:52.206Z
+                at 2023-09-30T05:46:45.694Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

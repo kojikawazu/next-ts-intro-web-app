@@ -4,3 +4,5 @@
 .gcloudignore
 *.md
 node_modules
+coverage
+gcp

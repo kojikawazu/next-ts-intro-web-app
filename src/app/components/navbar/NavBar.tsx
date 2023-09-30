@@ -43,7 +43,7 @@ const NavBar = () => {
         { label: contact_name, ariaLabel: "Contact", action: contactScrollToRef }
     ];
 
-    const baseClass       = ["h-[100px]"];
+    const baseClass       = ["sticky", "top-0", "z-50", "h-[100px]"];
     const flexClass       = ["flex", "justify-between", "items-center"];
     const backgroundClass = ["bg-lblue"];
     const className       = classNames(baseClass, flexClass, backgroundClass);
@@ -54,11 +54,13 @@ const NavBar = () => {
     const navBarTitleBackgroundClass = ["hover:text-gray-600"];
     const navBarTitleClass           = classNames(navBarBaseClass, navBarTitleUnderLineClass, navBarTitleTextClass, navBarTitleBackgroundClass);
 
+    const navBarAriaLabel = "Scroll to top";
+
     componentJSX(NavBar);
     return (
-        <div className={`sticky top-0 z-50 ${className}`}>
+        <div className={className}>
             <NavBarTitle 
-                ariaLabel="Scroll to top"
+                ariaLabel={navBarAriaLabel}
                 btnClass={navBarTitleClass}
                 onClick={handleScrollTop}
                 label={link_title} /> 
@@ -71,7 +73,7 @@ const NavBar = () => {
                 <div className="inline-block md:hidden">
                     <HamburgerMenu 
                         menuList={menuList}
-                        navBarTitleAriaLabel="Scroll to top"
+                        navBarTitleAriaLabel={navBarAriaLabel}
                         navBarTitleBtnClass={navBarTitleClass}
                         navBarTitleOnClick={handleScrollTop}
                         navBarTitleLabel={link_title} />

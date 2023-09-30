@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --verbose --coverage",
+    "test": "npx jest --verbose --coverage",
     "test_clear": "jest --clearCache"
   },
   "dependencies": {

@@ -59,12 +59,13 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
     }
 
     // CSS
-    const baseClass      = ['z-40', 'top-0', 'left-0', 'fixed', 'w-full', 'h-screen', 'pt-24', 'px-3', { 'top-[-120%]': !isOpen }];
+    const baseClass      = ['z-40', 'top-0', 'left-0', 'fixed', 'w-full', 'h-screen', 'pt-24', 'px-3'];
     const textClass      = ['text-left'];
     const colorClass     = ['bg-lblue-opacity-09'];
     const animationClass = ['ease-linear', 'duration-300'];
     const flexClass      = ['flex', 'flex-col', 'justify-start'];
-    const navClass       = classNames(baseClass, textClass, colorClass, animationClass, flexClass);
+    const actionClass    = [{ 'top-[-120%]': !isOpen }, { 'h-[10%]': !isOpen}];
+    const navClass       = classNames(baseClass, textClass, colorClass, animationClass, flexClass, actionClass);
 
     componentJSX(HamburgerMenu);
     return (

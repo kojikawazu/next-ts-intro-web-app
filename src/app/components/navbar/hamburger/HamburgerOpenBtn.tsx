@@ -32,6 +32,7 @@ const HamburgerOpenBtn: React.FC<HamburgerOpenBtnProps> = ({
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
     
+    const btnClass    = classNames(["w-10",  "h-10", "space-y-2", "mr-7"]);
     const commonClass = classNames(["w-8", "h-0.5", "bg-dblue"]);
     const mtClass     = classNames(["mt-1.5"]);
 
@@ -41,7 +42,7 @@ const HamburgerOpenBtn: React.FC<HamburgerOpenBtnProps> = ({
             type="button"
             onClick={onClick}
             aria-label={ariaLabel}
-            className="w-10 h-10 space-y-2 mr-7">
+            className={btnClass}>
             <div className={commonClass}></div>
             <div className={`${commonClass} ${mtClass}`}></div>
             <div className={`${commonClass} ${mtClass}`}></div>

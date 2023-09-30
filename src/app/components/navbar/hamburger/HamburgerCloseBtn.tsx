@@ -39,6 +39,7 @@ const HamburgerCloseBtn: React.FC<HamburgerCloseBtnProps> = ({
     componentJSX(HamburgerCloseBtn);
     return (
         <button 
+            type="button"
             aria-label={ariaLabel}
             onClick={onClick}>
             <div className={leftClass}></div>

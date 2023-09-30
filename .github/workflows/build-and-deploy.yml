@@ -57,15 +57,15 @@ jobs:
       with:
         node-version: 16.17.1
   
-    - name: Cache node modules
-      uses: actions/cache@v2
-      with:
-        path: node_modules
-        key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}-${{ github.run_id }}
-        restore-keys: |
-          ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}-
-          ${{ runner.OS }}-build-
-          ${{ runner.OS }}-
+    # - name: Cache node modules
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: node_modules
+    #     key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}-${{ github.run_id }}
+    #     restore-keys: |
+    #       ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}-
+    #       ${{ runner.OS }}-build-
+    #       ${{ runner.OS }}-
 
     - name: Install dependencies
       run: npm install

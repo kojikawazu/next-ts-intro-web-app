@@ -42,7 +42,7 @@ const CareerSlideContainer: React.FC<CareerSlideContainerProps> = ({
     }
 
     let cardAppendClass = classNames(["w-11/12", "xl:w-5/6"]);
-    cardAppendClass     = classNames(cardAppendClass, ["h-[540px]", "md:h-[1010px]"]);
+    cardAppendClass     = classNames(cardAppendClass, ["h-[610px]", "sssm:h-[540px]", "md:h-[1010px]"]);
     cardAppendClass     = classNames(cardAppendClass, ["mx-4", "sm:mx-8", "md:mx-10", "xl:mx-24"]);
 
     componentJSX(CareerSlideContainer);

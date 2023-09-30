@@ -238,6 +238,29 @@ jobs:
             ls -al ${{ env.WORK_PROJECT_DIR }}
           " || exit 1
 
+  deduce-disk-space:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Google Cloud Authentication
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+  
+    - name: Configure Docker
+      run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+
+    - name: Update Docker Compose
+      run: |
+        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+          cd ${{ env.GCE_PROJECTS }}
+          sudo -u ${{ env.GCE_USER }} docker system prune -f
+          sudo -u ${{ env.GCE_USER }} docker volume prune -f
+        " || exit 1
+
   docker-compose-start:
     runs-on: ubuntu-latest
     needs: ["build-web", "deploy-setting-files"]
@@ -258,8 +281,6 @@ jobs:
       run: |
         gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
           cd ${{ env.GCE_PROJECTS }}
-          sudo -u ${{ env.GCE_USER }} docker system prune -f
-          sudo -u ${{ env.GCE_USER }} docker volume prune -f
           sudo -u ${{ env.GCE_USER }} bash ./dockerComposeService.sh update_web
           sudo -u ${{ env.GCE_USER }} bash ./dockerComposeService.sh start_web
         " || exit 1

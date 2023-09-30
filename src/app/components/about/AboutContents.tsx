@@ -33,7 +33,7 @@ const AboutContents: React.FC<AboutContentsProps> = ({
         return <ErrorComponent errorData={MESSAGES.INVALIDS.INVALID_PROPS} /> ;
     }
 
-    const className      = classNames(["w-full", "h-[1000px]", "xs:h-[900px]", "ssssm:h-[800px]", "md:h-[900px]", "lg:h-[800px]"]);
+    const className      = classNames(["w-full", "h-[1000px]", "xs:h-[900px]", "ssssm:h-[830px]", "md:h-[900px]", "lg:h-[800px]"]);
     const childClassName = classNames(["w-full", "h-[400px]"]);
     const innerClassname = classNames(["w-full", "lg:w-[60%]", "h-[500px]"]);
 

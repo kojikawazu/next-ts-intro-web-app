@@ -22,7 +22,7 @@ import FrontArea from '@/app/components/front/FrontArea';
 // ISG(Incremental Static Generation)
 // ローカルからJSON取得する場合
 // export const getStaticProps: GetStaticProps = async () => {
-//     const filePath = path.resolve('./resources/json/navbar_intro.json');
+//     const filePath = path.resolve('xxxxxxx');
 
 //     // jsonデータ読み取り
 //     const tempData = await fsPromises.readFile(filePath, 'utf-8');

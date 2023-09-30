@@ -287,7 +287,7 @@ describe('<ContactForm />', () => {
             fireEvent.click(btnName);
 
              await waitFor(() => {
-                expect(console.error).toHaveBeenCalledWith("Error send email:", new Error('Bad Request'));
+                expect(console.error).toHaveBeenCalledWith("[str]: error : ", "Error send email catch:", new Error('Bad Request'));
                 expect(nameInput.value).toBe('John');
                 expect(emailInput.value).toBe('john@example.com');
                 expect(contentsText.value).toBe('OK');

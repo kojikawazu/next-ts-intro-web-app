@@ -1,8 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MESSAGES } from '@/app/shared/constants/constants';
-import { consoleLog } from '@/app/shared/utils/utilities';
-import { validateFunctionProps } from '@/app/shared/utils/validateUtilities';
 import SkillsAndMore from '@/app/components/skills/SkillsAndMore';
 
 /** SkillsAndMoreコンポーネントのテスト */

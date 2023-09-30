@@ -61,13 +61,14 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}-${{ github.run_id }}
         restore-keys: |
+          ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}-
           ${{ runner.OS }}-build-
           ${{ runner.OS }}-
 
     - name: Install dependencies
-      run: npm ci && npm install --save-dev ts-jest
+      run: npm install
       
     - name: Run tests
       run: npm test

@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: ${NGINX_CONTAINER}
+    ports:
+      - "${NGINX_PORT_1}"
+      - "${NGINX_PORT_2}"
+    volumes:
+      - ./etc/nginx/conf.d:/etc/nginx/conf.d
+      - ./certbot-www:/var/www/certbot
+      - ./certs:/etc/letsencrypt
+    depends_on:
+      - web
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certs:/etc/letsencrypt
+      - ./certbot-etc:/etc/certbot
+      - ./certbot-www:/var/www/certbot
+    depends_on:
+      - nginx
+
+  web:
+    container_name: ${WEB_CONTAINER}
+    image: ${WEB_IMAGE}
+    ports:
+      - "${WEB_PORT_1}"

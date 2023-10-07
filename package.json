@@ -1,0 +1,46 @@
+{
+  "name": "next-ts-intro-web-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "npx jest --verbose --coverage",
+    "test_clear": "jest --clearCache"
+  },
+  "dependencies": {
+    "@google-cloud/logging": "^11.0.0",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/node": "20.5.1",
+    "@types/react": "18.2.20",
+    "@types/react-dom": "18.2.7",
+    "@types/react-redux": "^7.1.26",
+    "autoprefixer": "10.4.15",
+    "axios": "^1.5.0",
+    "classnames": "^2.3.2",
+    "dotenv": "^16.3.1",
+    "next": "13.4.19",
+    "next-redux-wrapper": "^8.1.0",
+    "postcss": "8.4.28",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-redux": "^8.1.2",
+    "redux": "^4.2.1",
+    "swiper": "^10.3.1",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.0.1",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/jest": "^29.5.3",
+    "eslint": "8.47.0",
+    "eslint-config-next": "13.4.19",
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2",
+    "ts-jest": "^29.1.1"
+  }
+}

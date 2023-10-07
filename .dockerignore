@@ -1,0 +1,9 @@
+.git
+.dockerignore
+.vscode
+.gcloudignore
+*.md
+node_modules
+coverage
+gcp
+public/*_icon

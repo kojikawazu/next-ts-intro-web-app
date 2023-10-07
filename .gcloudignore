@@ -1,0 +1,12 @@
+.next
+.vscode
+coverage
+manuals
+node_modules
+public/link_icon
+public/skill_icon
+resources
+.env
+.env.local
+.env.test
+.gitignore

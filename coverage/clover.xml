@@ -1,0 +1,1658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1696052805809" clover="3.2.0">
+  <project timestamp="1696052805809" name="All files">
+    <metrics statements="1361" coveredstatements="1301" conditionals="364" coveredconditionals="329" methods="140" coveredmethods="114" elements="1865" coveredelements="1744" complexity="0" loc="1361" ncloc="1361" packages="32" files="65" classes="65"/>
+    <package name="app.components.about">
+      <metrics statements="45" coveredstatements="45" conditionals="5" coveredconditionals="5" methods="2" coveredmethods="2"/>
+      <file name="About.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\about\About.tsx">
+        <metrics statements="20" coveredstatements="20" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="21" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+      </file>
+      <file name="AboutContents.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\about\AboutContents.tsx">
+        <metrics statements="25" coveredstatements="25" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="5" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="28" count="4" type="stmt"/>
+        <line num="29" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="40" count="3" type="stmt"/>
+        <line num="41" count="3" type="stmt"/>
+        <line num="57" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.about.profile">
+      <metrics statements="76" coveredstatements="76" conditionals="15" coveredconditionals="15" methods="5" coveredmethods="5"/>
+      <file name="ProfileCard.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\about\profile\ProfileCard.tsx">
+        <metrics statements="21" coveredstatements="21" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="23" count="5" type="stmt"/>
+        <line num="26" count="5" type="stmt"/>
+        <line num="27" count="5" type="stmt"/>
+        <line num="28" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="35" count="4" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
+        <line num="49" count="3" type="stmt"/>
+      </file>
+      <file name="ProfileContentsCard.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\about\profile\ProfileContentsCard.tsx">
+        <metrics statements="24" coveredstatements="24" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="20" count="8" type="stmt"/>
+        <line num="22" count="8" type="stmt"/>
+        <line num="25" count="8" type="stmt"/>
+        <line num="26" count="8" type="stmt"/>
+        <line num="27" count="8" type="cond" truecount="1" falsecount="0"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="34" count="7" type="stmt"/>
+        <line num="35" count="7" type="stmt"/>
+        <line num="37" count="7" type="stmt"/>
+        <line num="38" count="7" type="stmt"/>
+        <line num="42" count="12" type="stmt"/>
+        <line num="53" count="4" type="stmt"/>
+      </file>
+      <file name="ProfileStandardCard.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\about\profile\ProfileStandardCard.tsx">
+        <metrics statements="31" coveredstatements="31" conditionals="11" coveredconditionals="11" methods="2" coveredmethods="2"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="28" count="12" type="stmt"/>
+        <line num="29" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="12" type="stmt"/>
+        <line num="35" count="12" type="stmt"/>
+        <line num="36" count="12" type="stmt"/>
+        <line num="37" count="12" type="stmt"/>
+        <line num="38" count="12" type="cond" truecount="1" falsecount="0"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="45" count="10" type="stmt"/>
+        <line num="46" count="10" type="stmt"/>
+        <line num="48" count="10" type="stmt"/>
+        <line num="49" count="10" type="stmt"/>
+        <line num="67" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="69" count="19" type="stmt"/>
+        <line num="87" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.careers.cards">
+      <metrics statements="45" coveredstatements="45" conditionals="5" coveredconditionals="5" methods="3" coveredmethods="3"/>
+      <file name="CareerCard.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\careers\cards\CareerCard.tsx">
+        <metrics statements="38" coveredstatements="38" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="12" type="stmt"/>
+        <line num="32" count="12" type="stmt"/>
+        <line num="33" count="12" type="stmt"/>
+        <line num="34" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="12" type="stmt"/>
+        <line num="39" count="12" type="stmt"/>
+        <line num="42" count="12" type="stmt"/>
+        <line num="43" count="12" type="stmt"/>
+        <line num="44" count="12" type="stmt"/>
+        <line num="45" count="12" type="cond" truecount="1" falsecount="0"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="53" count="11" type="stmt"/>
+        <line num="54" count="11" type="stmt"/>
+        <line num="55" count="11" type="stmt"/>
+        <line num="56" count="11" type="stmt"/>
+        <line num="58" count="11" type="stmt"/>
+        <line num="59" count="11" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="104" count="1" type="stmt"/>
+      </file>
+      <file name="StackCard.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\careers\cards\StackCard.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.careers.parts">
+      <metrics statements="155" coveredstatements="155" conditionals="21" coveredconditionals="21" methods="9" coveredmethods="9"/>
+      <file name="CareerContents.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\careers\parts\CareerContents.tsx">
+        <metrics statements="21" coveredstatements="21" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="8" type="stmt"/>
+        <line num="21" count="8" type="stmt"/>
+        <line num="22" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="8" type="stmt"/>
+        <line num="27" count="8" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="29" count="8" type="cond" truecount="1" falsecount="0"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="36" count="7" type="stmt"/>
+        <line num="37" count="7" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+      </file>
+      <file name="CareerMember.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\careers\parts\CareerMember.tsx">
+        <metrics statements="21" coveredstatements="21" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="8" type="stmt"/>
+        <line num="21" count="8" type="stmt"/>
+        <line num="22" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="8" type="stmt"/>
+        <line num="27" count="8" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="29" count="8" type="cond" truecount="1" falsecount="0"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="36" count="7" type="stmt"/>
+        <line num="37" count="7" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+      </file>
+      <file name="CareerPeriod.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\careers\parts\CareerPeriod.tsx">
+        <metrics statements="22" coveredstatements="22" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="9" type="stmt"/>
+        <line num="22" count="9" type="stmt"/>
+        <line num="23" count="9" type="stmt"/>
+        <line num="24" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="9" type="stmt"/>
+        <line num="29" count="9" type="stmt"/>
+        <line num="30" count="9" type="stmt"/>
+        <line num="31" count="9" type="cond" truecount="1" falsecount="0"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="38" count="8" type="stmt"/>
+        <line num="39" count="8" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+      </file>
+      <file name="CareerPhase.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\careers\parts\CareerPhase.tsx">
+        <metrics statements="24" coveredstatements="24" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="8" type="stmt"/>
+        <line num="22" count="8" type="stmt"/>
+        <line num="23" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="8" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="29" count="8" type="stmt"/>
+        <line num="30" count="8" type="stmt"/>
+        <line num="31" count="8" type="cond" truecount="1" falsecount="0"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="38" count="7" type="stmt"/>
+        <line num="39" count="7" type="stmt"/>
+        <line num="47" count="21" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+      </file>
+      <file name="CareerRole.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\careers\parts\CareerRole.tsx">
+        <metrics statements="21" coveredstatements="21" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="8" type="stmt"/>
+        <line num="21" count="8" type="stmt"/>
+        <line num="22" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="8" type="stmt"/>
+        <line num="27" count="8" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="29" count="8" type="cond" truecount="1" falsecount="0"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="36" count="7" type="stmt"/>
+        <line num="37" count="7" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+      </file>
+      <file name="CareerStacks.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\careers\parts\CareerStacks.tsx">
+        <metrics statements="24" coveredstatements="24" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="8" type="stmt"/>
+        <line num="22" count="8" type="stmt"/>
+        <line num="23" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="8" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="29" count="8" type="stmt"/>
+        <line num="30" count="8" type="stmt"/>
+        <line num="31" count="8" type="cond" truecount="1" falsecount="0"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="38" count="7" type="stmt"/>
+        <line num="39" count="7" type="stmt"/>
+        <line num="47" count="21" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+      </file>
+      <file name="CareerTitle.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\careers\parts\CareerTitle.tsx">
+        <metrics statements="22" coveredstatements="22" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="6" type="stmt"/>
+        <line num="21" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="6" type="stmt"/>
+        <line num="26" count="6" type="stmt"/>
+        <line num="27" count="6" type="stmt"/>
+        <line num="28" count="6" type="cond" truecount="1" falsecount="0"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="35" count="5" type="stmt"/>
+        <line num="37" count="5" type="stmt"/>
+        <line num="38" count="5" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.common.error">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="ErrorComponent.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\common\error\ErrorComponent.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="13" count="39" type="stmt"/>
+        <line num="14" count="69" type="stmt"/>
+        <line num="15" count="69" type="stmt"/>
+        <line num="20" count="39" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.common.icons">
+      <metrics statements="43" coveredstatements="43" conditionals="24" coveredconditionals="24" methods="4" coveredmethods="4"/>
+      <file name="ArrowIcon.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\common\icons\ArrowIcon.tsx">
+        <metrics statements="9" coveredstatements="9" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="56" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="56" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="56" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="56" type="stmt"/>
+        <line num="22" count="56" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+      </file>
+      <file name="ProfileIcon.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\common\icons\ProfileIcon.tsx">
+        <metrics statements="11" coveredstatements="11" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="19" count="5" type="stmt"/>
+        <line num="20" count="15" type="stmt"/>
+        <line num="21" count="15" type="stmt"/>
+        <line num="22" count="15" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="15" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="15" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="15" type="stmt"/>
+        <line num="43" count="5" type="stmt"/>
+      </file>
+      <file name="ScrollTopIcon.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\common\icons\ScrollTopIcon.tsx">
+        <metrics statements="10" coveredstatements="10" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="15" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="11" type="stmt"/>
+        <line num="19" count="11" type="stmt"/>
+        <line num="20" count="11" type="stmt"/>
+        <line num="22" count="11" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+      </file>
+      <file name="SnsIconLink.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\common\icons\SnsIconLink.tsx">
+        <metrics statements="13" coveredstatements="13" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="15" count="5" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="22" count="25" type="stmt"/>
+        <line num="23" count="25" type="stmt"/>
+        <line num="24" count="25" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="25" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="25" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="25" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="25" type="stmt"/>
+        <line num="47" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.common.notice">
+      <metrics statements="26" coveredstatements="26" conditionals="11" coveredconditionals="11" methods="1" coveredmethods="1"/>
+      <file name="Notification.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\common\notice\Notification.tsx">
+        <metrics statements="26" coveredstatements="26" conditionals="11" coveredconditionals="11" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="8" type="stmt"/>
+        <line num="26" count="8" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="30" count="8" type="stmt"/>
+        <line num="31" count="8" type="stmt"/>
+        <line num="32" count="8" type="stmt"/>
+        <line num="33" count="8" type="cond" truecount="1" falsecount="0"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="40" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="41" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="7" type="stmt"/>
+        <line num="44" count="7" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.common.slides">
+      <metrics statements="24" coveredstatements="24" conditionals="9" coveredconditionals="9" methods="1" coveredmethods="1"/>
+      <file name="Navigator.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\common\slides\Navigator.tsx">
+        <metrics statements="24" coveredstatements="24" conditionals="9" coveredconditionals="9" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="6" type="stmt"/>
+        <line num="23" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="6" type="stmt"/>
+        <line num="27" count="6" type="stmt"/>
+        <line num="30" count="6" type="stmt"/>
+        <line num="31" count="6" type="stmt"/>
+        <line num="32" count="6" type="cond" truecount="1" falsecount="0"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="39" count="5" type="stmt"/>
+        <line num="41" count="5" type="stmt"/>
+        <line num="42" count="5" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.common.spinner">
+      <metrics statements="6" coveredstatements="6" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+      <file name="LoadingSpinner.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\common\spinner\LoadingSpinner.tsx">
+        <metrics statements="6" coveredstatements="6" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="5" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.common.title">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="Title.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\common\title\Title.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="7" type="stmt"/>
+        <line num="15" count="7" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.contact">
+      <metrics statements="68" coveredstatements="68" conditionals="22" coveredconditionals="22" methods="5" coveredmethods="5"/>
+      <file name="Contact.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\contact\Contact.tsx">
+        <metrics statements="29" coveredstatements="29" conditionals="21" coveredconditionals="21" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="6" type="stmt"/>
+        <line num="19" count="6" type="stmt"/>
+        <line num="22" count="6" type="cond" truecount="4" falsecount="0"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="28" count="4" type="stmt"/>
+        <line num="32" count="4" type="stmt"/>
+        <line num="37" count="4" type="stmt"/>
+        <line num="38" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="45" count="4" type="stmt"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="47" count="2" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+      </file>
+      <file name="ContactForm.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\contact\ContactForm.tsx">
+        <metrics statements="39" coveredstatements="39" conditionals="1" coveredconditionals="1" methods="4" coveredmethods="4"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="29" count="44" type="stmt"/>
+        <line num="31" count="44" type="stmt"/>
+        <line num="35" count="44" type="stmt"/>
+        <line num="36" count="44" type="stmt"/>
+        <line num="37" count="44" type="stmt"/>
+        <line num="38" count="44" type="stmt"/>
+        <line num="39" count="44" type="stmt"/>
+        <line num="40" count="44" type="stmt"/>
+        <line num="41" count="44" type="stmt"/>
+        <line num="42" count="44" type="stmt"/>
+        <line num="43" count="44" type="stmt"/>
+        <line num="46" count="44" type="stmt"/>
+        <line num="51" count="44" type="stmt"/>
+        <line num="52" count="44" type="cond" truecount="1" falsecount="0"/>
+        <line num="53" count="4" type="stmt"/>
+        <line num="54" count="4" type="stmt"/>
+        <line num="55" count="4" type="stmt"/>
+        <line num="56" count="4" type="stmt"/>
+        <line num="59" count="40" type="stmt"/>
+        <line num="60" count="40" type="stmt"/>
+        <line num="78" count="7" type="stmt"/>
+        <line num="94" count="6" type="stmt"/>
+        <line num="108" count="5" type="stmt"/>
+        <line num="121" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.contact.input">
+      <metrics statements="102" coveredstatements="102" conditionals="32" coveredconditionals="32" methods="5" coveredmethods="5"/>
+      <file name="ContactButton.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\contact\input\ContactButton.tsx">
+        <metrics statements="23" coveredstatements="23" conditionals="9" coveredconditionals="9" methods="2" coveredmethods="2"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="24" count="48" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="48" type="stmt"/>
+        <line num="26" count="48" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="48" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="48" type="stmt"/>
+        <line num="30" count="48" type="stmt"/>
+        <line num="33" count="48" type="stmt"/>
+        <line num="34" count="48" type="stmt"/>
+        <line num="35" count="48" type="cond" truecount="1" falsecount="0"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="42" count="47" type="stmt"/>
+        <line num="43" count="47" type="stmt"/>
+        <line num="54" count="3" type="stmt"/>
+      </file>
+      <file name="ContactFreeTextInput.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\contact\input\ContactFreeTextInput.tsx">
+        <metrics statements="27" coveredstatements="27" conditionals="9" coveredconditionals="9" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
+        <line num="25" count="48" type="stmt"/>
+        <line num="26" count="48" type="stmt"/>
+        <line num="27" count="48" type="stmt"/>
+        <line num="28" count="48" type="stmt"/>
+        <line num="29" count="48" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="48" type="cond" truecount="2" falsecount="0"/>
+        <line num="31" count="48" type="stmt"/>
+        <line num="32" count="48" type="stmt"/>
+        <line num="34" count="48" type="stmt"/>
+        <line num="37" count="48" type="stmt"/>
+        <line num="38" count="48" type="stmt"/>
+        <line num="39" count="48" type="stmt"/>
+        <line num="40" count="48" type="cond" truecount="1" falsecount="0"/>
+        <line num="41" count="3" type="stmt"/>
+        <line num="42" count="3" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="44" count="3" type="stmt"/>
+        <line num="47" count="45" type="stmt"/>
+        <line num="48" count="45" type="stmt"/>
+        <line num="63" count="3" type="stmt"/>
+      </file>
+      <file name="ContactInput.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\contact\input\ContactInput.tsx">
+        <metrics statements="24" coveredstatements="24" conditionals="7" coveredconditionals="7" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="23" count="129" type="stmt"/>
+        <line num="24" count="129" type="stmt"/>
+        <line num="25" count="129" type="stmt"/>
+        <line num="26" count="129" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="129" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="129" type="stmt"/>
+        <line num="30" count="129" type="stmt"/>
+        <line num="33" count="129" type="stmt"/>
+        <line num="34" count="129" type="stmt"/>
+        <line num="35" count="129" type="cond" truecount="1" falsecount="0"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="39" count="3" type="stmt"/>
+        <line num="42" count="126" type="stmt"/>
+        <line num="43" count="126" type="stmt"/>
+        <line num="63" count="3" type="stmt"/>
+      </file>
+      <file name="ContactTextInput.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\contact\input\ContactTextInput.tsx">
+        <metrics statements="28" coveredstatements="28" conditionals="7" coveredconditionals="7" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="26" count="89" type="stmt"/>
+        <line num="27" count="89" type="stmt"/>
+        <line num="28" count="89" type="stmt"/>
+        <line num="29" count="89" type="stmt"/>
+        <line num="30" count="89" type="stmt"/>
+        <line num="31" count="89" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="89" type="stmt"/>
+        <line num="33" count="89" type="stmt"/>
+        <line num="34" count="89" type="stmt"/>
+        <line num="36" count="89" type="stmt"/>
+        <line num="39" count="89" type="stmt"/>
+        <line num="40" count="89" type="stmt"/>
+        <line num="41" count="89" type="stmt"/>
+        <line num="42" count="89" type="cond" truecount="1" falsecount="0"/>
+        <line num="43" count="5" type="stmt"/>
+        <line num="44" count="5" type="stmt"/>
+        <line num="45" count="5" type="stmt"/>
+        <line num="46" count="5" type="stmt"/>
+        <line num="49" count="84" type="stmt"/>
+        <line num="50" count="84" type="stmt"/>
+        <line num="66" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.contact.notice">
+      <metrics statements="17" coveredstatements="17" conditionals="6" coveredconditionals="5" methods="1" coveredmethods="1"/>
+      <file name="ContactSendNotification.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\contact\notice\ContactSendNotification.tsx">
+        <metrics statements="17" coveredstatements="17" conditionals="6" coveredconditionals="5" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="21" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="4" type="cond" truecount="3" falsecount="1"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.contact.spinner">
+      <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="ContactActionSpinner.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\contact\spinner\ContactActionSpinner.tsx">
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.footer">
+      <metrics statements="25" coveredstatements="25" conditionals="19" coveredconditionals="19" methods="1" coveredmethods="1"/>
+      <file name="Footer.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\footer\Footer.tsx">
+        <metrics statements="25" coveredstatements="25" conditionals="19" coveredconditionals="19" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="7" type="stmt"/>
+        <line num="23" count="7" type="stmt"/>
+        <line num="25" count="7" type="stmt"/>
+        <line num="28" count="7" type="cond" truecount="3" falsecount="0"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="35" count="6" type="stmt"/>
+        <line num="36" count="6" type="stmt"/>
+        <line num="38" count="6" type="stmt"/>
+        <line num="39" count="6" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.footer.parts">
+      <metrics statements="85" coveredstatements="85" conditionals="21" coveredconditionals="21" methods="4" coveredmethods="4"/>
+      <file name="FooterArrowLink.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\footer\parts\FooterArrowLink.tsx">
+        <metrics statements="23" coveredstatements="23" conditionals="7" coveredconditionals="7" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="11" type="stmt"/>
+        <line num="25" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="11" type="stmt"/>
+        <line num="30" count="11" type="stmt"/>
+        <line num="31" count="11" type="stmt"/>
+        <line num="32" count="11" type="cond" truecount="1" falsecount="0"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="39" count="10" type="stmt"/>
+        <line num="40" count="10" type="stmt"/>
+        <line num="50" count="2" type="stmt"/>
+      </file>
+      <file name="FooterCopyRight.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\footer\parts\FooterCopyRight.tsx">
+        <metrics statements="8" coveredstatements="8" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="9" type="stmt"/>
+        <line num="19" count="9" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+      </file>
+      <file name="FooterLink.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\footer\parts\FooterLink.tsx">
+        <metrics statements="30" coveredstatements="30" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="30" type="stmt"/>
+        <line num="23" count="30" type="stmt"/>
+        <line num="24" count="30" type="stmt"/>
+        <line num="26" count="30" type="stmt"/>
+        <line num="28" count="30" type="stmt"/>
+        <line num="31" count="30" type="stmt"/>
+        <line num="32" count="30" type="stmt"/>
+        <line num="33" count="30" type="stmt"/>
+        <line num="34" count="30" type="cond" truecount="1" falsecount="0"/>
+        <line num="35" count="6" type="stmt"/>
+        <line num="36" count="6" type="stmt"/>
+        <line num="37" count="6" type="stmt"/>
+        <line num="38" count="6" type="stmt"/>
+        <line num="41" count="24" type="stmt"/>
+        <line num="42" count="24" type="stmt"/>
+        <line num="43" count="24" type="stmt"/>
+        <line num="44" count="24" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="24" type="stmt"/>
+        <line num="47" count="24" type="stmt"/>
+        <line num="48" count="24" type="stmt"/>
+        <line num="59" count="2" type="stmt"/>
+      </file>
+      <file name="FooterTitleBtn.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\footer\parts\FooterTitleBtn.tsx">
+        <metrics statements="24" coveredstatements="24" conditionals="7" coveredconditionals="7" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="12" type="stmt"/>
+        <line num="25" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="12" type="stmt"/>
+        <line num="28" count="12" type="stmt"/>
+        <line num="31" count="12" type="stmt"/>
+        <line num="32" count="12" type="stmt"/>
+        <line num="33" count="12" type="stmt"/>
+        <line num="34" count="12" type="cond" truecount="1" falsecount="0"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="41" count="11" type="stmt"/>
+        <line num="42" count="11" type="stmt"/>
+        <line num="54" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.hero">
+      <metrics statements="19" coveredstatements="19" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+      <file name="Hero.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\hero\Hero.tsx">
+        <metrics statements="19" coveredstatements="19" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="20" count="3" type="cond" truecount="3" falsecount="0"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.hero.background">
+      <metrics statements="25" coveredstatements="25" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+      <file name="HeroBackground.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\hero\background\HeroBackground.tsx">
+        <metrics statements="25" coveredstatements="25" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="6" type="stmt"/>
+        <line num="23" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="6" type="stmt"/>
+        <line num="26" count="6" type="stmt"/>
+        <line num="29" count="6" type="stmt"/>
+        <line num="30" count="6" type="stmt"/>
+        <line num="31" count="6" type="cond" truecount="1" falsecount="0"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="38" count="4" type="stmt"/>
+        <line num="39" count="4" type="stmt"/>
+        <line num="41" count="4" type="stmt"/>
+        <line num="42" count="4" type="stmt"/>
+        <line num="53" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.navbar">
+      <metrics statements="111" coveredstatements="111" conditionals="26" coveredconditionals="26" methods="9" coveredmethods="9"/>
+      <file name="HamburgerMenu.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\navbar\HamburgerMenu.tsx">
+        <metrics statements="48" coveredstatements="48" conditionals="3" coveredconditionals="3" methods="6" coveredmethods="6"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="14" type="stmt"/>
+        <line num="35" count="14" type="stmt"/>
+        <line num="36" count="14" type="stmt"/>
+        <line num="37" count="14" type="stmt"/>
+        <line num="38" count="14" type="stmt"/>
+        <line num="40" count="14" type="stmt"/>
+        <line num="43" count="14" type="stmt"/>
+        <line num="45" count="14" type="stmt"/>
+        <line num="46" count="9" type="stmt"/>
+        <line num="50" count="14" type="stmt"/>
+        <line num="51" count="14" type="stmt"/>
+        <line num="52" count="14" type="stmt"/>
+        <line num="53" count="14" type="stmt"/>
+        <line num="54" count="14" type="cond" truecount="1" falsecount="0"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="62" count="13" type="stmt"/>
+        <line num="63" count="13" type="stmt"/>
+        <line num="64" count="13" type="stmt"/>
+        <line num="65" count="13" type="stmt"/>
+        <line num="66" count="13" type="stmt"/>
+        <line num="67" count="13" type="stmt"/>
+        <line num="68" count="13" type="stmt"/>
+        <line num="70" count="13" type="stmt"/>
+        <line num="71" count="13" type="stmt"/>
+        <line num="73" count="13" type="stmt"/>
+        <line num="74" count="13" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="94" count="52" type="stmt"/>
+        <line num="99" count="4" type="stmt"/>
+        <line num="100" count="4" type="stmt"/>
+        <line num="120" count="1" type="stmt"/>
+      </file>
+      <file name="NavBar.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\navbar\NavBar.tsx">
+        <metrics statements="39" coveredstatements="39" conditionals="20" coveredconditionals="20" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="25" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="26" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="27" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="28" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="31" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="39" count="3" type="stmt"/>
+        <line num="46" count="3" type="stmt"/>
+        <line num="47" count="3" type="stmt"/>
+        <line num="48" count="3" type="stmt"/>
+        <line num="49" count="3" type="stmt"/>
+        <line num="51" count="3" type="stmt"/>
+        <line num="52" count="3" type="stmt"/>
+        <line num="53" count="3" type="stmt"/>
+        <line num="54" count="3" type="stmt"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="57" count="3" type="stmt"/>
+        <line num="59" count="3" type="stmt"/>
+        <line num="60" count="3" type="stmt"/>
+        <line num="86" count="1" type="stmt"/>
+      </file>
+      <file name="NormalMenu.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\navbar\NormalMenu.tsx">
+        <metrics statements="24" coveredstatements="24" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="26" count="3" type="stmt"/>
+        <line num="27" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="39" count="8" type="stmt"/>
+        <line num="40" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="41" count="8" type="stmt"/>
+        <line num="43" count="8" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.navbar.hamburger">
+      <metrics statements="70" coveredstatements="70" conditionals="7" coveredconditionals="7" methods="3" coveredmethods="3"/>
+      <file name="HamburgerCloseBtn.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\navbar\hamburger\HamburgerCloseBtn.tsx">
+        <metrics statements="24" coveredstatements="24" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="20" count="17" type="stmt"/>
+        <line num="21" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="17" type="stmt"/>
+        <line num="26" count="17" type="stmt"/>
+        <line num="27" count="17" type="stmt"/>
+        <line num="28" count="17" type="cond" truecount="1" falsecount="0"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="35" count="16" type="stmt"/>
+        <line num="36" count="16" type="stmt"/>
+        <line num="37" count="16" type="stmt"/>
+        <line num="39" count="16" type="stmt"/>
+        <line num="40" count="16" type="stmt"/>
+        <line num="51" count="2" type="stmt"/>
+      </file>
+      <file name="HamburgerLink.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\navbar\hamburger\HamburgerLink.tsx">
+        <metrics statements="22" coveredstatements="22" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="20" count="55" type="stmt"/>
+        <line num="21" count="55" type="stmt"/>
+        <line num="22" count="55" type="stmt"/>
+        <line num="24" count="55" type="stmt"/>
+        <line num="27" count="55" type="stmt"/>
+        <line num="28" count="55" type="stmt"/>
+        <line num="29" count="55" type="stmt"/>
+        <line num="30" count="55" type="cond" truecount="1" falsecount="0"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="37" count="54" type="stmt"/>
+        <line num="38" count="54" type="stmt"/>
+        <line num="68" count="2" type="stmt"/>
+      </file>
+      <file name="HamburgerOpenBtn.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\navbar\hamburger\HamburgerOpenBtn.tsx">
+        <metrics statements="24" coveredstatements="24" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="20" count="12" type="stmt"/>
+        <line num="21" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="12" type="stmt"/>
+        <line num="26" count="12" type="stmt"/>
+        <line num="27" count="12" type="stmt"/>
+        <line num="28" count="12" type="cond" truecount="1" falsecount="0"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="35" count="11" type="stmt"/>
+        <line num="36" count="11" type="stmt"/>
+        <line num="37" count="11" type="stmt"/>
+        <line num="39" count="11" type="stmt"/>
+        <line num="40" count="11" type="stmt"/>
+        <line num="53" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.navbar.normal">
+      <metrics statements="24" coveredstatements="24" conditionals="5" coveredconditionals="5" methods="1" coveredmethods="1"/>
+      <file name="NormalHeaderMenuLink.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\navbar\normal\NormalHeaderMenuLink.tsx">
+        <metrics statements="24" coveredstatements="24" conditionals="5" coveredconditionals="5" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="14" type="stmt"/>
+        <line num="24" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="14" type="stmt"/>
+        <line num="26" count="14" type="stmt"/>
+        <line num="28" count="14" type="stmt"/>
+        <line num="31" count="14" type="stmt"/>
+        <line num="32" count="14" type="stmt"/>
+        <line num="33" count="14" type="stmt"/>
+        <line num="34" count="14" type="cond" truecount="1" falsecount="0"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="41" count="12" type="stmt"/>
+        <line num="42" count="12" type="stmt"/>
+        <line num="53" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.navbar.title">
+      <metrics statements="23" coveredstatements="23" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+      <file name="NavBarTitle.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\navbar\title\NavBarTitle.tsx">
+        <metrics statements="23" coveredstatements="23" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="21" count="21" type="stmt"/>
+        <line num="22" count="21" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="21" type="stmt"/>
+        <line num="24" count="21" type="stmt"/>
+        <line num="26" count="21" type="stmt"/>
+        <line num="29" count="21" type="stmt"/>
+        <line num="30" count="21" type="stmt"/>
+        <line num="31" count="21" type="stmt"/>
+        <line num="32" count="21" type="cond" truecount="1" falsecount="0"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="39" count="19" type="stmt"/>
+        <line num="40" count="19" type="stmt"/>
+        <line num="50" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.components.skills">
+      <metrics statements="93" coveredstatements="93" conditionals="27" coveredconditionals="25" methods="5" coveredmethods="5"/>
+      <file name="SkillCard.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\skills\SkillCard.tsx">
+        <metrics statements="36" coveredstatements="36" conditionals="11" coveredconditionals="11" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="29" count="40" type="stmt"/>
+        <line num="30" count="39" type="cond" truecount="2" falsecount="0"/>
+        <line num="31" count="39" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="39" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="39" type="stmt"/>
+        <line num="37" count="39" type="stmt"/>
+        <line num="38" count="39" type="stmt"/>
+        <line num="39" count="39" type="stmt"/>
+        <line num="40" count="39" type="cond" truecount="1" falsecount="0"/>
+        <line num="41" count="4" type="stmt"/>
+        <line num="42" count="4" type="stmt"/>
+        <line num="43" count="4" type="stmt"/>
+        <line num="44" count="4" type="stmt"/>
+        <line num="48" count="35" type="stmt"/>
+        <line num="49" count="35" type="stmt"/>
+        <line num="50" count="35" type="stmt"/>
+        <line num="51" count="35" type="stmt"/>
+        <line num="52" count="35" type="stmt"/>
+        <line num="53" count="35" type="stmt"/>
+        <line num="54" count="35" type="cond" truecount="2" falsecount="0"/>
+        <line num="55" count="35" type="cond" truecount="2" falsecount="0"/>
+        <line num="57" count="35" type="stmt"/>
+        <line num="58" count="35" type="stmt"/>
+        <line num="87" count="2" type="stmt"/>
+      </file>
+      <file name="Skills.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\skills\Skills.tsx">
+        <metrics statements="27" coveredstatements="27" conditionals="15" coveredconditionals="13" methods="2" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="15" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="12" type="stmt"/>
+        <line num="25" count="12" type="stmt"/>
+        <line num="27" count="12" type="stmt"/>
+        <line num="30" count="12" type="cond" truecount="11" falsecount="1"/>
+        <line num="31" count="5" type="stmt"/>
+        <line num="32" count="5" type="stmt"/>
+        <line num="33" count="5" type="stmt"/>
+        <line num="34" count="5" type="stmt"/>
+        <line num="37" count="7" type="stmt"/>
+        <line num="38" count="7" type="stmt"/>
+        <line num="40" count="7" type="stmt"/>
+        <line num="41" count="7" type="stmt"/>
+        <line num="51" count="60" type="cond" truecount="1" falsecount="0"/>
+        <line num="52" count="36" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+      </file>
+      <file name="SkillsAndMore.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\components\skills\SkillsAndMore.tsx">
+        <metrics statements="30" coveredstatements="30" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="11" type="stmt"/>
+        <line num="27" count="11" type="stmt"/>
+        <line num="28" count="11" type="stmt"/>
+        <line num="29" count="11" type="stmt"/>
+        <line num="30" count="11" type="stmt"/>
+        <line num="32" count="11" type="stmt"/>
+        <line num="35" count="11" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="40" count="11" type="stmt"/>
+        <line num="41" count="11" type="stmt"/>
+        <line num="42" count="11" type="stmt"/>
+        <line num="43" count="11" type="stmt"/>
+        <line num="45" count="11" type="cond" truecount="1" falsecount="0"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="53" count="10" type="stmt"/>
+        <line num="62" count="10" type="stmt"/>
+        <line num="63" count="10" type="stmt"/>
+        <line num="74" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.contexts">
+      <metrics statements="11" coveredstatements="4" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <file name="introContext.tsx" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\contexts\introContext.tsx">
+        <metrics statements="11" coveredstatements="4" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="15" count="5" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="17" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="31" count="5" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.features.contact">
+      <metrics statements="96" coveredstatements="81" conditionals="29" coveredconditionals="20" methods="32" coveredmethods="24"/>
+      <file name="contactSlice.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\features\contact\contactSlice.ts">
+        <metrics statements="22" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="9"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="35" count="4" type="stmt"/>
+        <line num="40" count="7" type="stmt"/>
+        <line num="43" count="6" type="stmt"/>
+        <line num="46" count="5" type="stmt"/>
+        <line num="49" count="2" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="55" count="2" type="stmt"/>
+        <line num="56" count="2" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="74" count="7" type="stmt"/>
+        <line num="81" count="4" type="stmt"/>
+        <line num="93" count="4" type="stmt"/>
+      </file>
+      <file name="useContactLogic.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\features\contact\useContactLogic.ts">
+        <metrics statements="74" coveredstatements="60" conditionals="29" coveredconditionals="20" methods="22" coveredmethods="15"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="23" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="25" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="26" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="27" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="28" count="3" type="cond" truecount="2" falsecount="2"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="34" count="3" type="stmt"/>
+        <line num="36" count="42" type="stmt"/>
+        <line num="39" count="89" type="stmt"/>
+        <line num="40" count="89" type="stmt"/>
+        <line num="41" count="89" type="stmt"/>
+        <line num="42" count="89" type="stmt"/>
+        <line num="43" count="89" type="stmt"/>
+        <line num="44" count="89" type="stmt"/>
+        <line num="45" count="89" type="stmt"/>
+        <line num="46" count="42" type="stmt"/>
+        <line num="52" count="42" type="stmt"/>
+        <line num="53" count="7" type="stmt"/>
+        <line num="55" count="7" type="cond" truecount="4" falsecount="0"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="58" count="7" type="cond" truecount="3" falsecount="0"/>
+        <line num="59" count="2" type="stmt"/>
+        <line num="61" count="7" type="cond" truecount="3" falsecount="0"/>
+        <line num="62" count="3" type="stmt"/>
+        <line num="64" count="7" type="stmt"/>
+        <line num="65" count="7" type="stmt"/>
+        <line num="71" count="42" type="stmt"/>
+        <line num="73" count="2" type="stmt"/>
+        <line num="76" count="2" type="stmt"/>
+        <line num="77" count="0" type="stmt"/>
+        <line num="81" count="2" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="92" count="42" type="stmt"/>
+        <line num="93" count="7" type="stmt"/>
+        <line num="95" count="10" type="cond" truecount="1" falsecount="0"/>
+        <line num="97" count="6" type="cond" truecount="1" falsecount="0"/>
+        <line num="103" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="104" count="0" type="stmt"/>
+        <line num="105" count="0" type="stmt"/>
+        <line num="106" count="0" type="stmt"/>
+        <line num="110" count="2" type="stmt"/>
+        <line num="112" count="2" type="stmt"/>
+        <line num="114" count="2" type="stmt"/>
+        <line num="115" count="2" type="stmt"/>
+        <line num="123" count="2" type="stmt"/>
+        <line num="128" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="129" count="1" type="stmt"/>
+        <line num="130" count="1" type="stmt"/>
+        <line num="131" count="1" type="stmt"/>
+        <line num="133" count="0" type="stmt"/>
+        <line num="134" count="0" type="stmt"/>
+        <line num="135" count="0" type="stmt"/>
+        <line num="138" count="1" type="stmt"/>
+        <line num="139" count="1" type="stmt"/>
+        <line num="140" count="1" type="stmt"/>
+        <line num="146" count="42" type="stmt"/>
+        <line num="154" count="7" type="stmt"/>
+        <line num="155" count="6" type="stmt"/>
+        <line num="156" count="5" type="stmt"/>
+        <line num="157" count="0" type="stmt"/>
+        <line num="158" count="0" type="stmt"/>
+        <line num="159" count="0" type="stmt"/>
+        <line num="160" count="0" type="stmt"/>
+        <line num="164" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.features.dialog">
+      <metrics statements="25" coveredstatements="9" conditionals="3" coveredconditionals="0" methods="7" coveredmethods="0"/>
+      <file name="dialogSlice.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\features\dialog\dialogSlice.ts">
+        <metrics statements="9" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+      </file>
+      <file name="useDialogLogic.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\features\dialog\useDialogLogic.ts">
+        <metrics statements="16" coveredstatements="4" conditionals="3" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="24" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="33" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.features.loadlimit">
+      <metrics statements="20" coveredstatements="20" conditionals="13" coveredconditionals="13" methods="4" coveredmethods="3"/>
+      <file name="loadLimitSlice.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\features\loadlimit\loadLimitSlice.ts">
+        <metrics statements="10" coveredstatements="10" conditionals="7" coveredconditionals="7" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="19" count="9" type="stmt"/>
+        <line num="22" count="9" type="cond" truecount="5" falsecount="0"/>
+        <line num="27" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="32" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="39" count="3" type="stmt"/>
+      </file>
+      <file name="useLoadLimit.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\features\loadlimit\useLoadLimit.ts">
+        <metrics statements="10" coveredstatements="10" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="2"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="11" count="7" type="stmt"/>
+        <line num="18" count="7" type="stmt"/>
+        <line num="20" count="6" type="cond" truecount="5" falsecount="0"/>
+        <line num="24" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="29" count="7" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.hooks">
+      <metrics statements="17" coveredstatements="4" conditionals="7" coveredconditionals="0" methods="8" coveredmethods="0"/>
+      <file name="useScroll.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\hooks\useScroll.ts">
+        <metrics statements="7" coveredstatements="2" conditionals="5" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="4"/>
+      </file>
+      <file name="useWindowWidth.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\hooks\useWindowWidth.ts">
+        <metrics statements="10" coveredstatements="2" conditionals="2" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.shared.constants">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="constants.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\shared\constants\constants.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="5" count="44" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.shared.helper">
+      <metrics statements="15" coveredstatements="9" conditionals="9" coveredconditionals="4" methods="1" coveredmethods="1"/>
+      <file name="googleCloudLogger.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\shared\helper\googleCloudLogger.ts">
+        <metrics statements="15" coveredstatements="9" conditionals="9" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="4" count="39" type="cond" truecount="3" falsecount="1"/>
+        <line num="11" count="69" type="cond" truecount="0" falsecount="1"/>
+        <line num="12" count="69" type="stmt"/>
+        <line num="18" count="69" type="cond" truecount="0" falsecount="1"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="22" count="69" type="cond" truecount="1" falsecount="0"/>
+        <line num="23" count="69" type="stmt"/>
+        <line num="24" count="69" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="36" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.shared.utils">
+      <metrics statements="70" coveredstatements="67" conditionals="34" coveredconditionals="27" methods="20" coveredmethods="20"/>
+      <file name="formUtilities.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\shared\utils\formUtilities.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="18" type="stmt"/>
+      </file>
+      <file name="logUtilities.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\shared\utils\logUtilities.ts">
+        <metrics statements="17" coveredstatements="14" conditionals="10" coveredconditionals="6" methods="5" coveredmethods="5"/>
+        <line num="1" count="44" type="stmt"/>
+        <line num="8" count="44" type="stmt"/>
+        <line num="9" count="69" type="cond" truecount="2" falsecount="1"/>
+        <line num="18" count="2900" type="stmt"/>
+        <line num="19" count="1450" type="cond" truecount="0" falsecount="1"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="32" count="279" type="stmt"/>
+        <line num="33" count="139" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="139" type="cond" truecount="1" falsecount="1"/>
+        <line num="36" count="139" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="139" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="47" count="44" type="stmt"/>
+        <line num="48" count="753" type="stmt"/>
+        <line num="55" count="44" type="stmt"/>
+        <line num="56" count="697" type="stmt"/>
+      </file>
+      <file name="utilities.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\shared\utils\utilities.ts">
+        <metrics statements="10" coveredstatements="10" conditionals="6" coveredconditionals="3" methods="3" coveredmethods="3"/>
+        <line num="1" count="44" type="stmt"/>
+        <line num="7" count="44" type="stmt"/>
+        <line num="8" count="42" type="cond" truecount="1" falsecount="1"/>
+        <line num="9" count="42" type="stmt"/>
+        <line num="16" count="44" type="stmt"/>
+        <line num="17" count="1519" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="1519" type="stmt"/>
+        <line num="25" count="44" type="stmt"/>
+        <line num="26" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="27" count="4" type="stmt"/>
+      </file>
+      <file name="validateUtilities.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\app\shared\utils\validateUtilities.ts">
+        <metrics statements="41" coveredstatements="41" conditionals="18" coveredconditionals="18" methods="11" coveredmethods="11"/>
+        <line num="8" count="41" type="stmt"/>
+        <line num="9" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="41" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="19" count="5" type="stmt"/>
+        <line num="27" count="41" type="stmt"/>
+        <line num="29" count="10" type="stmt"/>
+        <line num="30" count="10" type="stmt"/>
+        <line num="39" count="41" type="stmt"/>
+        <line num="40" count="1652" type="stmt"/>
+        <line num="41" count="1652" type="cond" truecount="1" falsecount="0"/>
+        <line num="42" count="41" type="stmt"/>
+        <line num="45" count="598" type="stmt"/>
+        <line num="54" count="41" type="stmt"/>
+        <line num="55" count="46" type="stmt"/>
+        <line num="56" count="43" type="cond" truecount="3" falsecount="0"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="60" count="21" type="stmt"/>
+        <line num="69" count="41" type="stmt"/>
+        <line num="70" count="636" type="stmt"/>
+        <line num="71" count="318" type="cond" truecount="1" falsecount="0"/>
+        <line num="72" count="5" type="stmt"/>
+        <line num="75" count="313" type="stmt"/>
+        <line num="84" count="41" type="stmt"/>
+        <line num="85" count="128" type="stmt"/>
+        <line num="86" count="79" type="cond" truecount="1" falsecount="0"/>
+        <line num="87" count="3" type="stmt"/>
+        <line num="90" count="61" type="stmt"/>
+        <line num="99" count="41" type="stmt"/>
+        <line num="100" count="106" type="stmt"/>
+        <line num="101" count="53" type="cond" truecount="3" falsecount="0"/>
+        <line num="102" count="6" type="stmt"/>
+        <line num="105" count="47" type="stmt"/>
+        <line num="114" count="41" type="stmt"/>
+        <line num="115" count="60" type="stmt"/>
+        <line num="116" count="30" type="cond" truecount="1" falsecount="0"/>
+        <line num="117" count="5" type="stmt"/>
+        <line num="120" count="25" type="stmt"/>
+        <line num="128" count="41" type="stmt"/>
+        <line num="129" count="1127" type="cond" truecount="2" falsecount="0"/>
+        <line num="130" count="717" type="cond" truecount="4" falsecount="0"/>
+      </file>
+    </package>
+    <package name="test.mocks">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="mockData.ts" path="C:\Users\nanai\Desktop\workspace\workspace(nextjs)\next-ts-intro-web-app\src\test\mocks\mockData.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="4" count="8" type="stmt"/>
+        <line num="79" count="8" type="stmt"/>
+        <line num="83" count="8" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

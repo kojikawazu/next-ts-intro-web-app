@@ -1,0 +1,288 @@
+name: Build and Deploy to GCR
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  # Common
+  PROJECT_ID: ${{ secrets.PROJECT_PRI_NAME }}
+  IMAGE_NAME: ${{ secrets.WEB_CONTAINER_IMAGE }}
+  REPO_NAME: ${{ secrets.ARTIFACT_REGISTORY_WEB_APP }}
+  LOCATION: ${{ secrets.GCP_LOCATION }}
+  GCE_INSTANCE: ${{ secrets.GCE_INSTANCE }}
+  GCE_PROJECTS: ${{ secrets.GCE_PROJECTS }}
+  GCE_USER: ${{ secrets.GCE_USER }}
+  GCE_ZONE: ${{ secrets.GCE_ZONE }}
+  WORK_PROJECT_DIR: /home/runner/projects
+
+  # .env
+  NEXT_PUBLIC_GET_INTRO_JSON_PROD: ${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON_PROD }}
+  NEXT_PUBLIC_GET_INTRO_JSON: ${{ secrets.NEXT_PUBLIC_GET_INTRO_JSON }}
+  NEXT_PUBLIC_SEND_MAIL_URL_PROD: ${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL_PROD }}
+  NEXT_PUBLIC_SEND_MAIL_URL: ${{ secrets.NEXT_PUBLIC_SEND_MAIL_URL }}
+  NEXT_PUBLIC_SEND_ERROR_LOG_PROD: ${{ secrets.NEXT_PUBLIC_SEND_ERROR_LOG_PROD }}
+  NEXT_PUBLIC_SEND_ERROR_LOG: ${{ secrets.NEXT_PUBLIC_SEND_ERROR_LOG }}
+  NEXT_PUBLIC_BUILD_WORD: ${{ secrets.NEXT_PUBLIC_BUILD_WORD }}
+
+  # docker-compose.env
+  NGINX_CONTAINER: ${{ secrets.NGINX_CONTAINER }}
+  NGINX_PORT_1: ${{ secrets.NGINX_PORT_1 }}
+  NGINX_PORT_2: ${{ secrets.NGINX_PORT_2 }}
+  WEB_CONTAINER: ${{ secrets.WEB_CONTAINER }}
+  WEB_IMAGE: ${{ secrets.WEB_IMAGE }}
+  WEB_PORT_1: ${{ secrets.WEB_PORT_1 }}
+
+  # nginx.env
+  NGINX_HTTP_PORT: ${{ secrets.NGINX_HTTP_PORT }}
+  NGINX_DOMAIN: ${{ secrets.NGINX_DOMAIN }}
+  LOCAL_WEB_URL: ${{ secrets.LOCAL_WEB_URL }}
+  NGINX_HTTPS_PORT: ${{ secrets.NGINX_HTTPS_PORT }}
+  CHAIN_PEM: ${{ secrets.CHAIN_PEM }}
+  PRI_PEM: ${{ secrets.PRI_PEM }}
+
+jobs:
+  test-web:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.17.1
+
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Run tests
+      run: npm test
+  
+  build-web:
+    runs-on: ubuntu-latest
+    needs: test-web
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Google Cloud Authentication
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Setup environments file
+      run: |
+        # Create .env
+        echo "NODE_ENV=${{ secrets.NODE_ENV }}"  >> .env
+        echo "APP_ENV=${{ secrets.APP_ENV }}"  >> .env
+        echo "NEXT_PUBLIC_GET_INTRO_JSON_PROD=${{ env.NEXT_PUBLIC_GET_INTRO_JSON_PROD }}" >> .env
+        echo "NEXT_PUBLIC_GET_INTRO_JSON=${{ env.NEXT_PUBLIC_GET_INTRO_JSON }}" >> .env
+        echo "NEXT_PUBLIC_SEND_MAIL_URL_PROD=${{ env.NEXT_PUBLIC_SEND_MAIL_URL_PROD }}" >> .env
+        echo "NEXT_PUBLIC_SEND_MAIL_URL=${{ env.NEXT_PUBLIC_SEND_MAIL_URL }}" >> .env
+        echo "NEXT_PUBLIC_SEND_ERROR_LOG_PROD=${{ env.NEXT_PUBLIC_SEND_ERROR_LOG_PROD }}" >> .env
+        echo "NEXT_PUBLIC_SEND_ERROR_LOG=${{ env.NEXT_PUBLIC_SEND_ERROR_LOG }}" >> .env
+        echo "NEXT_PUBLIC_BUILD_WORD=${{ env.NEXT_PUBLIC_BUILD_WORD }}" >> .env
+
+    - name: Configure Docker
+      run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+
+    - name: Build Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: docker/Dockerfile
+        push: false
+        tags: ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+    - name: Remove previous backup
+      run: |
+        gcloud artifacts docker images delete ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup --delete-tags || true
+  
+    - name: Backup latest image
+      run: |
+        if docker pull ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest; then
+          docker tag ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup
+          docker push ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:backup
+        else
+          echo "The 'latest' tag does not exist, skipping..."
+        fi
+
+    - name: Tag and Push Docker image
+      run: |
+        docker tag ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
+        docker push ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
+
+  deploy-setting-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+  
+      - name: Setup Google Cloud Authentication
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+    
+      - name: Configure Docker
+        run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+  
+      - name: Setup environments file
+        run: |
+          # Create docker-compose.env
+          echo "NGINX_CONTAINER=${{ env.NGINX_CONTAINER }}" >> docker-compose.env
+          echo "NGINX_PORT_1=${{ env.NGINX_PORT_1 }}" >> docker-compose.env
+          echo "NGINX_PORT_2=${{ env.NGINX_PORT_2 }}" >> docker-compose.env
+          echo "WEB_CONTAINER=${{ env.WEB_CONTAINER }}" >> docker-compose.env
+          echo "WEB_IMAGE=${{ env.WEB_IMAGE }}" >> docker-compose.env
+          echo "WEB_PORT_1=${{ env.WEB_PORT_1 }}" >> docker-compose.env
+  
+          # Create nginx.env
+          echo "NGINX_HTTP_PORT=${{ env.NGINX_HTTP_PORT }}" >> nginx.env
+          echo "NGINX_DOMAIN=${{ env.NGINX_DOMAIN }}" >> nginx.env
+          echo "LOCAL_WEB_URL=${{ env.LOCAL_WEB_URL }}" >> nginx.env
+          echo "NGINX_HTTPS_PORT=${{ env.NGINX_HTTPS_PORT }}" >> nginx.env
+          echo "CHAIN_PEM=${{ env.CHAIN_PEM }}" >> nginx.env
+          echo "PRI_PEM=${{ env.PRI_PEM }}" >> nginx.env
+    
+      - name: Create Nginx configuration file
+        run: |
+          # Create runner projects file
+          gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "mkdir -p ${{ env.WORK_PROJECT_DIR }}" || exit 1
+  
+          # nginx setting file Deploy
+          gcloud compute scp nginx.env ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/. --zone ${{ env.GCE_ZONE }} || exit 1
+          gcloud compute scp ./etc/nginx/conf.d/default_template.conf ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/. --zone ${{ env.GCE_ZONE }} || exit 1
+  
+          # Create default.conf
+          gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+            ls -l ${{ env.WORK_PROJECT_DIR }}
+            . ${{ env.WORK_PROJECT_DIR }}/nginx.env
+            export NGINX_HTTP_PORT=\${NGINX_HTTP_PORT}
+            export NGINX_DOMAIN=\${NGINX_DOMAIN}
+            export LOCAL_WEB_URL=\${LOCAL_WEB_URL}
+            export NGINX_HTTPS_PORT=\${NGINX_HTTPS_PORT}
+            export CHAIN_PEM=\${CHAIN_PEM}
+            export PRI_PEM=\${PRI_PEM}
+            cd ${{ env.WORK_PROJECT_DIR }}
+            touch default.conf
+            sudo chmod 666 default.conf
+            envsubst  < default_template.conf > default.conf
+            sed -i -e 's/URI_VALUE/\$uri/g' default.conf
+            sed -i -e 's/HOST_VALUE/\$host/g' default.conf
+            sed -i -e 's/REMOTE_ADDR_VALUE/\$remote_addr/g' default.conf
+            sed -i -e 's/PROXY_X_FORWARDED_FOR/\$proxy_add_x_forwarded_for/g' default.conf
+            sed -i -e 's/SCHEME_VALUE/\$scheme/g' default.conf
+          " || exit 1
+  
+          # default.conf Copy
+          gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+            sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} ${{ env.WORK_PROJECT_DIR }}/default.conf
+            mkdir -p ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d
+            sudo cp -fp ${{ env.WORK_PROJECT_DIR }}/default.conf ${{ env.GCE_PROJECTS }}/etc/nginx/conf.d/default.conf
+          " || exit 1
+  
+      - name: Deploy docker-compose to GCE
+        run: |
+          # docker-compose.env and docker-compose.yml Deploy
+          gcloud compute scp docker-compose.env ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/. --zone ${{ env.GCE_ZONE }} || exit 1
+          gcloud compute scp ./docker/docker-compose.yml ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/. --zone ${{ env.GCE_ZONE }} || exit 1
+  
+          # docker-compose.env and docker-compose.yml Copy
+          gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+            cd ${{ env.WORK_PROJECT_DIR }}
+            ls -l
+            sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} docker-compose.*
+            sudo cp -fp docker-compose.* ${{ env.GCE_PROJECTS }}/.
+            ls -l ${{ env.GCE_PROJECTS }}
+          " || exit 1
+  
+      - name: Deploy containerManager to GCE
+        run: |
+          # Creation of service directory for work
+          gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- "mkdir -p ${{ env.WORK_PROJECT_DIR }}/services" || exit 1
+  
+          #  Deploy containerManager files
+          gcloud compute scp ./scripts/docker/dockerComposeService.sh ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/services/. --zone ${{ env.GCE_ZONE }} || exit 1
+          gcloud compute scp ./scripts/docker/containerManager.sh ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/services/. --zone ${{ env.GCE_ZONE }} || exit 1
+          gcloud compute scp ./etc/services/*.service ${{ env.GCE_INSTANCE }}:${{ env.WORK_PROJECT_DIR }}/services/. --zone ${{ env.GCE_ZONE }} || exit 1
+  
+          # Setting containerManager
+          gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+            cd ${{ env.WORK_PROJECT_DIR }}/services
+  
+            sudo chmod 755 *.service
+            sudo chmod 755 *.sh
+            sudo chown root:root *.service
+            sudo chown ${{ env.GCE_USER }}:${{ env.GCE_USER }} *.sh
+            sudo cp -fp *.service /etc/systemd/system/.
+            sudo cp -fp *.sh ${{ env.GCE_PROJECTS }}/.
+  
+            ls -al ${{ env.GCE_PROJECTS }}
+          " || exit 1
+  
+      - name: Reload Services
+        run: |
+            gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+              sudo systemctl daemon-reload
+              sudo systemctl enable containerManager
+              systemctl status containerManager
+            " || exit 1
+
+      - name: Delete temporary files
+        run: |
+          gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+            rm -rf ${{ env.WORK_PROJECT_DIR }}/*
+            ls -al ${{ env.WORK_PROJECT_DIR }}
+          " || exit 1
+
+  reduce-disk-space:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Google Cloud Authentication
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+  
+    - name: Configure Docker
+      run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+
+    - name: Update Docker Compose
+      run: |
+        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+          cd ${{ env.GCE_PROJECTS }}
+          sudo -u ${{ env.GCE_USER }} docker system prune -f
+          sudo -u ${{ env.GCE_USER }} docker volume prune -f
+        " || exit 1
+
+  docker-compose-start:
+    runs-on: ubuntu-latest
+    needs: ["build-web", "deploy-setting-files", "reduce-disk-space"]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Google Cloud Authentication
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+  
+    - name: Configure Docker
+      run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+
+    - name: Update Docker Compose
+      run: |
+        gcloud compute ssh ${{ env.GCE_INSTANCE }} --zone ${{ env.GCE_ZONE }} -- -o StrictHostKeyChecking=no "
+          cd ${{ env.GCE_PROJECTS }}
+          sudo -u ${{ env.GCE_USER }} bash ./dockerComposeService.sh update_web
+          sudo -u ${{ env.GCE_USER }} bash ./dockerComposeService.sh start_web
+        " || exit 1

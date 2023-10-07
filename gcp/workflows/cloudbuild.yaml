@@ -1,0 +1,94 @@
+options:
+    volumes:
+    - name: 'ssh'
+      path: '/root/.ssh'
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/web-app-image/versions/1
+      env: 'WEP_APP_IMAGE'
+    - versionName: projects/$PROJECT_ID/secrets/repo-web-app/versions/1
+      env: 'REPO_WEB_APP'
+    - versionName: projects/$PROJECT_ID/secrets/location/versions/1
+      env: 'LOCATION'
+  
+steps:
+# SSHキーとknown_hostsファイルをセットアップ
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    gcloud secrets versions access latest --secret=secret-name > /root/.ssh/id_github
+    chmod 600 /root/.ssh/id_github
+    ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
+
+# GitHubからclone
+- name: 'gcr.io/cloud-builders/git'
+  args:
+  - '-c'
+  - 'core.sshCommand=ssh -i /root/.ssh/id_github -o UserKnownHostsFile=/root/.ssh/known_hosts'
+  - 'clone'
+  - 'git@github.com:kojikawazu/next-ts-intro-web-app.git'
+
+# ファイル確認
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    cd ./next-ts-intro-web-app && ls -l
+
+# Docker を設定
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['login', 'asia-northeast1-docker.pkg.dev']
+
+# 環境変数の設定
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    set -e
+
+    cd next-ts-intro-web-app
+    gcloud secrets versions access latest --secret=node-env > temp.txt
+    echo "NODE_ENV=$(cat temp.txt)" > .env
+    gcloud secrets versions access latest --secret=app-env > temp.txt
+    echo "APP_ENV=$(cat temp.txt)" >> .env
+    gcloud secrets versions access latest --secret=next-public-get-intro-json-prod > temp.txt
+    echo "NEXT_PUBLIC_GET_INTRO_JSON_PROD=$(cat temp.txt)" >> .env
+    gcloud secrets versions access latest --secret=next-public-get-intro-json > temp.txt
+    echo "NEXT_PUBLIC_GET_INTRO_JSON=$(cat temp.txt)" >> .env
+    gcloud secrets versions access latest --secret=next-public-send-mail-url-prod > temp.txt
+    echo "NEXT_PUBLIC_SEND_MAIL_URL_PROD=$(cat temp.txt)" >> .env
+    gcloud secrets versions access latest --secret=next-public-send-mail-url > temp.txt
+    echo "NEXT_PUBLIC_SEND_MAIL_URL=$(cat temp.txt)" >> .env
+    gcloud secrets versions access latest --secret=next-public-send-error-log-prod > temp.txt
+    echo "NEXT_PUBLIC_SEND_ERROR_LOG_PROD=$(cat temp.txt)" >> .env
+    gcloud secrets versions access latest --secret=next-public-send-error-log > temp.txt
+    echo "NEXT_PUBLIC_SEND_ERROR_LOG=$(cat temp.txt)" >> .env
+    rm temp.txt
+
+# ステップ 5: 最新のイメージをバックアップ
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    docker pull $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE:latest || true
+    if [ $? -eq 0 ]; then
+      docker tag $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE:latest $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE:backup
+      docker push $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE:backup
+    fi
+  secretEnv: ['WEP_APP_IMAGE', 'REPO_WEB_APP', 'LOCATION']
+
+# ステップ 6: Docker イメージをビルドしてプッシュ
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    docker build -t $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE -f ./next-ts-intro-web-app/docker/Dockerfile ./next-ts-intro-web-app
+    docker push $$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPO_WEB_APP/$$WEP_APP_IMAGE
+  secretEnv: ['WEP_APP_IMAGE', 'REPO_WEB_APP', 'LOCATION']

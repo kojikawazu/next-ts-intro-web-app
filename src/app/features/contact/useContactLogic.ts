@@ -20,12 +20,11 @@ import {
 import { RootState } from '@/app/features/store';
 
 // Constants
-const ERROR_NAME      = MESSAGES.MAIL.CONTACT_ERROR_NAME    || "再度入力してください";
-const ERROR_EMAIL     = MESSAGES.MAIL.CONTACT_ERROR_EMAIL   || "再度入力してください";
-const ERROR_MESSAGE   = MESSAGES.MAIL.CONTACT_ERROR_MESSAGE || "再度入力してください";
-const CONFIRM_DATA    = MESSAGES.MAIL.CONTACT_CONFIRM       || "メッセージ送信してもよろしいでしょうか？";
-const TITLE_PREFIX    = MESSAGES.MAIL.MAIN_TITLE_PREFIX     || "からのお問い合わせ";
-const SEND_MAIL_URL   = (isEnvProd() ? process.env.NEXT_PUBLIC_SEND_MAIL_URL_PROD : process.env.NEXT_PUBLIC_SEND_MAIL_URL) || "";
+const ERROR_NAME      = MESSAGES.MAIL.CONTACT_ERROR_NAME ;
+const ERROR_EMAIL     = MESSAGES.MAIL.CONTACT_ERROR_EMAIL;
+const ERROR_MESSAGE   = MESSAGES.MAIL.CONTACT_ERROR_MESSAGE;
+const CONFIRM_DATA    = MESSAGES.MAIL.CONTACT_CONFIRM;
+const TITLE_PREFIX    = MESSAGES.MAIL.MAIN_TITLE_PREFIX;
 
 const VISIBLE_COUNT = 4500;
 const TOTAL_COUNT   = 5000;
@@ -54,11 +53,9 @@ export const useContactLogic = () => {
 
         if (!contactName || !isValidLength(contactName, 10) || !isValidSpecialCharacters(contactName)) 
             errors.contactName = ERROR_NAME;
-    
-        if (!contactEmail || !isValidEmail(contactEmail)) 
+        if (!contactEmail || !isValidEmail(contactEmail))
             errors.contactEmail = ERROR_EMAIL;
-    
-        if (!contactMessage || !isValidSpecialCharacters(contactMessage)) 
+        if (!contactMessage || !isValidSpecialCharacters(contactMessage))
             errors.contactMessage = ERROR_MESSAGE;
 
         dispatch(setValidationErrors(errors));
@@ -91,6 +88,7 @@ export const useContactLogic = () => {
      */
      const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        let envSendMailUrl = (isEnvProd() ? process.env.NEXT_PUBLIC_SEND_MAIL_URL_PROD : process.env.NEXT_PUBLIC_SEND_MAIL_URL) || "";
 
         if (validate()) {
             // 確認ダイアログの表示
@@ -100,7 +98,7 @@ export const useContactLogic = () => {
                 //    return ;
                 //}
                 // 環境変数(メール送付API)なければ送信不可
-                if (!SEND_MAIL_URL) {
+                if (!envSendMailUrl) {
                     dispatch(sendContactFailed("error"));
                     handleSendNotice();
                     return ;
@@ -109,9 +107,8 @@ export const useContactLogic = () => {
                 // メール送信のロジック
                 dispatch(sendContactStart());
 
-                console.log(contactEmail);
                 // APIエンドポイントとパラメータを設定
-                const API_ENDPOINT = SEND_MAIL_URL;
+                const API_ENDPOINT = envSendMailUrl;
                 const emailData = {
                     name: contactName,
                     from: contactEmail,

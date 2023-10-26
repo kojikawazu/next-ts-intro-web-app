@@ -5,7 +5,7 @@ import { MESSAGES } from "@/app/shared//constants/constants";
  * @returns true 本番環境 false 本番環境ではない
  */
 export const isEnvProd = () => {
-    const ENV = process.env.NODE_ENV || MESSAGES.ENV.PROD;
+    const ENV = process.env.NODE_ENV;
     return (ENV === MESSAGES.ENV.PROD);
 }
 
@@ -14,7 +14,7 @@ export const isEnvProd = () => {
  * @returns true 開発環境 false 開発環境ではない
  */
 export const isEnvDev = () => {
-    const ENV = process.env.NODE_ENV || MESSAGES.ENV.PROD;
+    const ENV = process.env.NODE_ENV;
     return (ENV === MESSAGES.ENV.DEV);
 }
 
@@ -23,6 +23,6 @@ export const isEnvDev = () => {
  * @returns true テスト環境 false テスト環境ではない
  */
 export const isEnvTest = () => {
-    const ENV = process.env.NODE_ENV || MESSAGES.ENV.PROD;
+    const ENV = process.env.NODE_ENV;
     return (ENV === MESSAGES.ENV.TEST);
 }

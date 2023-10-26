@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /** ダイアログの状態 */
-interface CareerDialogState {
+export interface CareerDialogState {
     isDialogOpen: boolean;
     currentIndex: number;
 }

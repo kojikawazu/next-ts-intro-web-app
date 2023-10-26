@@ -1,14 +1,14 @@
 import { isEnvProd, isEnvDev } from '@/app/shared/utils//utilities';
 import { customLog } from '@/app/shared/utils/logUtilities';
 
-const SEND_ERROR_LOG  = (isEnvProd() ? process.env.NEXT_PUBLIC_SEND_ERROR_LOG_PROD : process.env.NEXT_PUBLIC_SEND_ERROR_LOG) || "";
-
 /**
  * Cloud Functionsへログ送信
  * @param logs
  * @param loglevel
  */
 export const sendLogsToGCF = async (logs: string[], logLevel: 'ERROR' | 'INFO' | 'DEBUG' = 'INFO') => {
+  const SEND_ERROR_LOG  = (isEnvProd() ? process.env.NEXT_PUBLIC_SEND_ERROR_LOG_PROD : process.env.NEXT_PUBLIC_SEND_ERROR_LOG) || "";
+  
   const payload = { 
     messages: logs,
     level: logLevel

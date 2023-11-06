@@ -22,7 +22,7 @@ https://introtechkk.com
 
 - フロントエンド
   - 言語 
-    - TypeScript
+    - TypeScript 5
   - FW 
     - Next.js 13
     - TailwindCSS
@@ -32,7 +32,7 @@ https://introtechkk.com
 - バックエンドAPI
   - サーバレス
     - Cloud Functions
-    - Java Script
+    - JavaScript
   - 実行環境
     - Node.js 20
  

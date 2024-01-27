@@ -80,10 +80,20 @@ docker-compose run --rm certbot certonly --webroot --webroot-path=/var/www/certb
 # 秘密鍵
 /etc/letsencrypt/live/introtechkk.com/privkey.pem
 
-# 生成：2023年09月23日
-# 有効期限：2023年12月21日
-
 # NGINXのリロード
-docker-compose down
-docker-compose up -d
+./dockerComposeService.sh down
+./dockerComposeService.sh start_all
+```
+
+## 証明書の更新
+
+```bash
+# 証明書の最高神
+docker-compose --env-file docker-compose.env run --rm certbot certonly --webroot --webroot-path=/var/www/certbot --email Eメール --agree-tos --no-eff-email --force-renewal -d ドメイン
+# 
+./dockerComposeService.sh down
+./dockerComposeService.sh start_all
+
+ docker-compose --env-file docker-compose.env
+
 ```

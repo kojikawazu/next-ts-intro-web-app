@@ -1,14 +1,9 @@
-
-
-
-
 ## Production用イメージを使う(Artifact Registry)
----
+--
 
 #### サービスアカウント
 使用サービスアカウントに以下IAMを付与する。
 - Artifact Registry 読み取り
-
 
 #### まずはDockerに対する認証を行う
 
@@ -28,4 +23,8 @@ gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 
 # コンテナプル & ビルド & 起動
 docker-compose up --build -d
+↓
+# 環境ファイルが追加されたので
+docker-compose --env-file docker-compose.yml up --build -d
+docker-compose --env-file docker-compose.yml down
 ```
